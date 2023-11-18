@@ -1,0 +1,172 @@
+w{% load static %}
+
+<html>
+	<head>
+		<link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+		<title>CheckMyNews</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<style type="text/css">
+.carousel-caption{
+	font-size: 65px;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;}
+      img:not(.media-img){
+	      max-width: 100%;}
+      p{      font-size: large;}
+      li{     font-size: large;}
+      h1{     font-size: xxx-large;}
+      h2{     font-size: xx-large;}
+      h3{     font-size: x-large;}
+      h4{     font-size: x-large;}
+
+      .headerp{font-size: x-large;}
+		</style>
+
+		<script type="text/javascript">
+$(document).ready(function() {
+	$('a[href*=\\#]').on('click', function(event){     
+		event.preventDefault();
+		$('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
+	});      
+});
+		</script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118113605-1"></script>
+		<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-118113605-1');
+		</script>
+
+		<!-- Facebook Pixel Code -->
+		<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1137750199667219');
+fbq('track', 'PageView');
+fbq('track', 'ViewContent');
+		</script>
+
+		<noscript><img height="1" width="1" style="display:none"
+				      src="https://www.facebook.com/tr?id=1137750199667219&ev=PageView&noscript=1"
+	  /></noscript>
+		<!-- End Facebook Pixel Code -->
+	</head>
+
+
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="#" class="navbar-brand"><img src='{% static "enabled_48.png" %}' height="50" width="50" style="float:left;margin-top:-15px">CheckMyNews</a>
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				</div>
+			</div>
+		</div> 
+
+		<div id="about-transpad" style="padding-bottom:20px;color:white;background-color: #2C3E50">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 style="text-align: center; margin-top:70px">CheckMyNews Longitudinal Study 1</h1>
+					</div>	
+
+				</div>
+			</div>
+		</div>	
+
+	<div class="container" style="margin-top: 30px">
+	
+		<div id="consentInfo"  class="jumbotron">
+
+			We need your help to <b>monitor what information gets amplified on Facebook!</b> You will be asked to <b>install a monitoring tool</b> we developed and keep it active 
+			for 6 weeks and <b>participate in 5 surveys</b> (that will altogether take less than 30 minutes to complete).
+
+			<br/>
+
+			<h4>Who we are and what we do: </h4>
+			We are researchers from the MIAI Multidisciplinary Institute on Artificial Intelligence and the Max Planck Institute in Europe and the purpose of this study is to measure if 
+			there are systemic biases in the quality of content users receive on Facebook from news medias among different psycho-socio-demographic groups. You can see how our previous 
+			work pushed Facebook to make its platform safer and more transparent for users at the end of the study description. 
+
+                        <br/>
+
+                        <h4>Reward for your participation: </h4>
+                        You will receive an initial reward of <b>0.75 pounds</b> upon setting up the study (installing our tool, browsing your Facebook timeline a few moments and filling a short
+                        socio-demographic survey). You will get an additional <b>3.5 pounds bonus</b> at the end of the study (in 6 weeks) if you filled the four additional surveys, 
+                        and you kept our tool active on the browser where you check Facebook. At the end of the study, we will provide you with a <b>personalized report</b> that analyzes your
+                        answers to our surveys and the content from news medias you receive on Facebook.
+
+                        <h4><a target="_blank" href="https://adanalystplus.imag.fr/study_details">Task details: </a></h4>
+                                <ol>
+                                        <li><small><b>Install our monitoring tool on Chrome</b> using this 
+						<a target="_blank" href="https://chrome.google.com/webstore/detail/social-media-monitor-stud/onmjcacepoljnpainfckaminjelkmicn?hl=fr&authuser=1">link</a>,
+						read and accept the consent and keep the tool active for a period of 6 weeks.
+					</small></li>
+                                        <li><small>Fill out the 5 surveys (approx. one each week). A popup will appear when you have a new survey to complete. The popup is triggered by visiting 
+						   Facebook and may be in the background. Otherwise you can access the surveys by clicking on Start Survey in the extension menu.
+					</small></li>
+                                        <li><small>Browse normally Facebook from the browser where you installed the tool.</small></li>
+
+                                </ol>
+
+
+			<h4>What data we collect: </h4>
+			Our monitoring tool works silently in the background while you are browsing Facebook without any overhead to your browsing experience. 
+			<b>The tool collects information about the content you RECEIVE on your timeline and does not collect information about the content you SHARE on Facebook</b>. 
+			We collect data about posts you see on your timeline that are public or that refer to a news article  (e.g., we collect the posts you see on your timeline that 
+			refer to articles on nytimes.com). 
+			<b>We DO NOT collect your personal comments, messages or the photos and content you share</b> with your friends. All data is <b>pseudonymized</b> and 
+			<b>we do not send to our servers any personally identifiable information</b> (e.g., your email, name, phone number). Please check the 
+			<a target="_blank" href="https://adanalystplus.imag.fr/privacy-policy">Privacy Policy</a> 
+			for a detailed description 
+			of the data we collect. Our universities are very attentive and vigilant regarding personal data protection issues, and our monitoring tool has been verified by 
+			our universities and meets the highest standards in terms of security and privacy.
+
+			<br/>
+			<br/>
+			Thank you for your participation! Your input helps us understand systemic biases in information exposure online! 
+
+			<br/>
+			<h4>Referrals for our previous work: </h4>
+			You can learn here how our research is making social media platforms more transparent and safe: 
+			<br />
+        			<ol>
+					<li><small><a target="_blank" href="https://www.theguardian.com/technology/2018/mar/19/facebook-political-ads-social-media-history-online-democracy">https://www.theguardian.com/technology/2018/mar/19/facebook-political-ads-social-media-history-online-democracy</a></small></li>
+					<li><small><a target="_blank" href="https://www.wired.com/story/facebook-bug-could-let-advertisers-see-your-phone-number/">https://www.wired.com/story/facebook-bug-could-let-advertisers-see-your-phone-number/</a></small></li>
+                                        <li><small><a target="_blank" href="https://www.telegraph.co.uk/technology/2018/01/09/facebook-bug-let-advertisers-find-phone-number/">https://www.telegraph.co.uk/technology/2018/01/09/facebook-bug-let-advertisers-find-phone-number/</a></small></li>
+                                        <li><small><a target="_blank" href="https://www.bloomberg.com/news/articles/2018-03-26/does-facebook-s-ad-tool-mislead-voters">https://www.bloomberg.com/news/articles/2018-03-26/does-facebook-s-ad-tool-mislead-voters</a></small></li>
+                                        <li><small><a target="_blank" href="https://qz.com/1245941/why-am-i-seeing-this-ad-explanations-on-facebook-are-incomplete-and-misleading-a-study-says/">https://qz.com/1245941/why-am-i-seeing-this-ad-explanations-on-facebook-are-incomplete-and-misleading-a-study-says/</a></small></li>
+                                        <li><small><a target="_blank" href="https://www.abc.net.au/news/science/2018-03-19/facebook-targeted-ads-are-explanations-transparent-enough/9539784">https://www.abc.net.au/news/science/2018-03-19/facebook-targeted-ads-are-explanations-transparent-enough/9539784</a></small></li>
+                                        <li><small><a target="_blank" href="https://www.economist.com/science-and-technology/2018/03/22/to-understand-digital-advertising-study-its-algorithms">https://www.economist.com/science-and-technology/2018/03/22/to-understand-digital-advertising-study-its-algorithms</a></small></li>
+
+				</ol>
+			Here is a link to our previous independent auditing systems: <a target="_blank" href="https://adanalyst.mpi-sws.org/">https://adanalyst.mpi-sws.org/</a>. 
+		</div>
+	</div>
+	</body>
+</html>
+

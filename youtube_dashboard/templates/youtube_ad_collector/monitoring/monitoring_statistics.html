@@ -1,0 +1,714 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Monitoring Statistics</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+        {% load static %}
+
+    <!-- Bootstrap CSS
+                ============================================ -->
+    <link rel="stylesheet" type="text/css" href="{% static 'report-styles/bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/bootstrap-table.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/morris.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'report-styles/style.css' %}">
+
+    <style>
+
+        #header-fixed {
+	        position: fixed;
+   		top: 0px; display:none;
+    		background-color:white;
+	}
+
+	.loader {
+  		border: 16px solid #f3f3f3;
+ 		border-radius: 50%;
+  		border-top: 16px solid #3498db;
+  		width: 500px;
+  		height: 500px;
+		margin : auto;
+  		-webkit-animation: spin 2s linear infinite; /* Safari */
+  		animation: spin 2s linear infinite;
+	}
+
+	/* Safari */
+	@-webkit-keyframes spin {
+  		0% { -webkit-transform: rotate(0deg); }
+  		100% { -webkit-transform: rotate(360deg); }
+	}
+
+	@keyframes spin {
+  		0% { transform: rotate(0deg); }
+  		100% { transform: rotate(360deg); }
+	}
+
+      </style>
+
+</head>
+
+<body>
+     
+
+
+
+	{% include "monitoring/monitoring-header.html" %}
+
+        <div class="advanced-form-area mg-b-15" style="margin-top : 60px;">
+            <div class="container-fluid">
+                <div class="row">
+                        <div class="sparkline10-list mg-tb-30 responsive-mg-t-0 table-mg-t-pro-n dk-res-t-pro-0 nk-ds-n-pro-t-0" style="margin-left: 40px; margin-right: 40px;">
+                            <div class="sparkline10-graph">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="chosen-select-single mg-b-20">
+                                                <b>
+							                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        	<div class="form-select-list"> </div>
+                                                         </div>
+                                                </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+	    </div>
+	
+        <div id="loader" class="loader" style="visibility: hidden; display:none;"></div>
+
+
+        <div id="information-div" style="visibility:hidden; display:none;">
+
+
+        <div class="analytics-sparkle-area" style="margin-bottom : 60px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="analytics-sparkle-line reso-mg-b-30">
+                            <div class="analytics-content">
+                                <h5>Total Ads</h5>
+                                <h2 style="min-height: 42px;"><span class="counter" id="totalAds"> </span> <span class="tuition-fees">Ad</span> </h2>
+                                <span class="text-success" id="adsPercent"></span>
+                                <div class="progress m-b-0">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" id="adsPercent-bar"></div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="analytics-sparkle-line reso-mg-b-30">
+                            <div class="analytics-content">
+                                <h5>Total posts from news organisations</h5>
+                                <h2 style="min-height: 42px;"><span class="counter" id="totalNews"></span> <span class="tuition-fees">Post</span></h2>
+                                <span class="text-success" id="newsPercent"></span>
+                                <div class="progress m-b-0">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" id="newsPercent-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="analytics-sparkle-line reso-mg-b-30">
+                            <div class="analytics-content">
+                                <h5>Total public posts</h5>
+                                <h2 style="min-height: 42px;"><span class="counter" id="totalPublic"></span> <span class="tuition-fees">Post</span></h2>
+                                <span class="text-success" id="publicPercent"></span>
+                                <div class="progress m-b-0">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" id="publicPercent-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="analytics-sparkle-line reso-mg-b-30">
+                            <div class="analytics-content">
+                                <h5>Total posts</h5>
+                                <h2 style="min-height: 42px;"><span class="counter" id="totalPosts"></span> <span class="tuition-fees">Post</span></h2>
+                                <span class="text-success" id="postsPercent"></span>
+                                <div class="progress m-b-0">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" id="postsPercent-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+       <div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>Still Alive users</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p>Since the beginning of the experiment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #FF0000;"></i>Users</h5>
+                                </li>
+                            </ul>
+                            <div id="active-tool-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       <div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>Daily active users on Facebook</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p>Since the beginning of the experiment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #FF0000;"></i>Users</h5>
+                                </li>
+                            </ul>
+                            <div id="active-users-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>Daily active users on News domains </b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p>Since the beginning of the experiment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #FF0000;"></i>Users</h5>
+                                </li>
+                            </ul>
+                            <div id="active-domains-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+       <div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>Daily Statistics</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p>Since the beginning of the experiment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #006DF0;"></i>Ads</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #933EC5;"></i>News Posts</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #65b12d;"></i>Public Posts</h5>
+                                </li>
+                            </ul>
+                            <div id="statistics-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+     <div class="all-content-wrapper">
+        <div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>Surveys answers</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #006DF0;"></i>Number of concerned users</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #65b12d;"></i>Number of answers</h5>
+                                </li>
+                            </ul>
+                            <div id="morris-bar-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <div class="data-table-area mg-b-15" style="margin-top : 60px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline13-list">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    <h1> All Users <span class="table-project-n">Statistics</span></h1>
+                                </div>
+                            </div>
+                            <div class="sparkline13-graph">
+                                   <table id="table" data-show-export="true" data-toggle="table" class="table table-hover">   
+   					<thead>
+                                            <tr>
+                                                <th data-field="id">ID</th>
+						<th data-field="prolificId">Prolific Id</th>
+                                                <th data-field="date">Installation date</th>
+<!--                                                <th data-field="code">Installation code</th> -->
+                                                <th style="width:120px">Surveys</th>
+                                                <th data-field="days">Active days</th>
+						<th data-field="time">Total Time on Facebook</th>
+						<th data-field="last_time">Last time on Facebook</th>
+                                                <th data-field="postsAll">Total Posts</th>
+						<th data-field="adsAll">Total Ads</th>
+                                                <th data-field="newsPostsAll">Total news posts</th>
+                                                <th data-field="publicPostsAll">Total public posts</th>
+                                                <th data-field="publicPostsAll">Today time</th>
+                                                <th data-field="posts">Today Posts</th>
+                                                <th data-field="ads" >Today ads</th>
+                                                <th data-field="newsPosts">Today news posts</th>
+                                                <th data-field="publicPosts" >Today public posts</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableBody">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- Static Table End -->
+	</div>
+    </div>
+
+    <!-- jquery
+		============================================ -->
+    <script src="{% static 'report-scripts/jquery-1.12.4.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- bootstrap JS
+		============================================ -->
+    <script src="{% static 'report-scripts/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'report-scripts/bootstrap-table.js' %}"></script>
+    <script src="{% static 'report-scripts/tableExport.js' %}"></script>
+    <script src="{% static 'report-scripts/bootstrap-table-export.js' %}"></script>
+
+
+    <script src="{% static 'report-scripts/tableExport.js' %}"></script>
+
+    <script src="{% static 'report-scripts/raphael-min.js' %}"></script>
+
+    <script src="{% static 'report-scripts/morris.js' %}"></script>
+
+
+    <script>
+
+/*
+	var select = document.getElementById("select-interval");
+	
+	var date = new Date();
+	date.setHours(0,0,0,0);
+	var option = document.createElement("option");
+	option.text = "Today";
+	option.value = date.getTime()
+	select.add(option);
+
+
+	var date = new Date();
+	date.setDate(date.getDate() - 2);
+        date.setHours(0,0,0,0);
+        var option = document.createElement("option");
+        option.text = "Last three days";
+        option.value = date.getTime();
+        select.add(option);
+
+        var date = new Date();
+        date.setDate(date.getDate() - 6);
+        date.setHours(0,0,0,0);
+        var option = document.createElement("option");
+        option.text = "Last week";
+        option.value = date.getTime();
+        select.add(option);
+
+        var date = new Date();
+        date.setDate(date.getDate() - 29);
+        date.setHours(0,0,0,0);
+        var option = document.createElement("option");
+        option.text = "Last month";
+        option.value = date.getTime();
+        select.add(option);
+
+        var option = document.createElement("option");
+        option.text = "Since the beginning";
+        option.value = 0;
+        select.add(option);
+
+
+	var lastTimeStamp = undefined
+	select.onchange = function(){
+                lastTimeStamp = select.value;
+		getData(lastTimeStamp)
+	 }
+*/
+
+	 function getData(timestamp) {
+                $('#information-div').css("visibility", "hidden");
+                $('#information-div').css("display", "none");
+
+                $('#loader').css("visibility", "visible");
+                $('#loader').css("display", "block");
+
+		sendRequest(timestamp);
+	 }
+
+	 function sendRequest(timestamp) {
+                $.ajax({
+                        type:'POST',
+                        url:'get_monitoring_stats?user='+user,
+                        data: {'timestamp':timestamp},
+                        success:function(resp){
+                                if (resp.status!=='success') {
+                                        return
+                                }
+
+                                displayTable(resp["table_statistics"]);
+                                displayGeneralInfo(resp);
+				displaySurveysChart(resp["surveys"]);
+				displayTimelineChart(resp["timeline"]);
+                                $('#loader').css("visibility", "hidden");
+                                $('#loader').css("display", "none");
+                                $('#information-div').css("visibility", "visible");
+                                $('#information-div').css("display", "block");
+
+				window.setTimeout(function(){sendRequest(lastTimeStamp);}, 15 * 60 * 1000);
+                        }
+                })
+
+	 }
+
+	 function displayTable(array) {
+                var tbody = document.getElementById("tableBody")
+		tbody.innerHTML = '';
+		array.forEach(function(element, i) {
+			var tdid = document.createElement('td');
+			tdid.innerHTML = element.user_id ;
+
+                        var tdprolificId = document.createElement('td');
+                        tdprolificId.innerHTML = element.prolificid;
+
+                        var tdinstallation = document.createElement('td');
+                        tdinstallation.innerHTML = timeConverter(element.installation);
+
+//                        var tdcode_generated = document.createElement('td');
+//                        tdcode_generated.innerHTML = element.code_generated;
+ 
+                        var tdsurveys = document.createElement('td');
+                        tdsurveys.innerHTML = element.surveys;
+			tdsurveys.style.minWidth = "120px";
+
+                        var tddays = document.createElement('td');
+                        tddays.innerHTML = element.days;
+
+                        var tdtimeAll = document.createElement('td');
+                        tdtimeAll.innerHTML = element.timeall;
+
+			var tdlast_time = document.createElement('td')
+			if(element.last_time_facebook)
+				tdlast_time.innerHTML = timeConverter(element.last_time_facebook)
+			else
+				tdlast_time.innerHTML = "Before 15/10";
+
+
+                        var tdpostsAll = document.createElement('td');
+                        tdpostsAll.innerHTML = element.postsall;
+
+                        var tdadsAll = document.createElement('td');
+                        tdadsAll.innerHTML = element.adsall;
+
+                        var tdnewspostsAll = document.createElement('td');
+                        tdnewspostsAll.innerHTML = element.newspostsall;
+
+                        var tdpublicpostsAll = document.createElement('td');
+                        tdpublicpostsAll.innerHTML = element.publicpostsall;
+
+
+                        var tdtime = document.createElement('td');
+                        tdtime.innerHTML = element.time;
+
+
+                        var tdposts = document.createElement('td');
+                        tdposts.innerHTML = element.posts;
+
+                        var tdads = document.createElement('td');
+                        tdads.innerHTML = element.ads;
+
+                        var tdnewsposts = document.createElement('td');
+                        tdnewsposts.innerHTML = element.newsposts;
+
+                        var tdpublicposts = document.createElement('td');
+                        tdpublicposts.innerHTML = element.publicposts;
+
+			var tr = document.createElement('tr');
+			tr.setAttribute("data-index", i);
+			tr.appendChild(tdid);
+			tr.appendChild(tdprolificId);
+                        tr.appendChild(tdinstallation);
+		//	tr.appendChild(tdcode_generated);
+			tr.appendChild(tdsurveys);
+                        tr.appendChild(tddays);
+			tr.appendChild(tdtimeAll);
+			tr.appendChild(tdlast_time);
+                        tr.appendChild(tdpostsAll);
+                        tr.appendChild(tdadsAll);
+                        tr.appendChild(tdnewspostsAll);
+                        tr.appendChild(tdpublicpostsAll);
+                        tr.appendChild(tdtime);
+                        tr.appendChild(tdposts);
+			tr.appendChild(tdads);
+			tr.appendChild(tdnewsposts);
+			tr.appendChild(tdpublicposts);
+
+			tbody.appendChild(tr);
+		})
+	 }
+
+	 function displayGeneralInfo(resp) {
+		var totalAds = document.getElementById("totalAds");
+		totalAds.innerHTML = resp.totals.ads;
+                var totalNews = document.getElementById("totalNews");
+                totalNews.innerHTML = resp.totals.newsposts;
+                var totalPublic = document.getElementById("totalPublic");
+                totalPublic.innerHTML = resp.totals.publicposts;
+                var totalPosts = document.getElementById("totalPosts");
+                totalPosts.innerHTML = resp.totals.posts;
+
+                var totalAds = document.getElementById("adsPercent");
+                totalAds.innerHTML = resp.actives.ads + " active users out of " + resp.totalUsers;
+                var totalNews = document.getElementById("newsPercent");
+                totalNews.innerHTML = resp.actives.newsposts + " active users out of " + resp.totalUsers;
+                var totalPublic = document.getElementById("publicPercent");
+                totalPublic.innerHTML = resp.actives.publicposts + " active users out of " + resp.totalUsers;
+                var totalPosts = document.getElementById("postsPercent");
+                totalPosts.innerHTML = resp.actives.posts + " active users out of " + resp.totalUsers;
+
+                var totalAds = document.getElementById("adsPercent-bar");
+		totalAds.style.width = ((resp.actives.ads / resp.totalUsers) * 100) + "%";
+                var totalNews = document.getElementById("newsPercent-bar");
+                totalNews.style.width = ((resp.actives.newsposts / resp.totalUsers) * 100) +"%";
+                var totalPublic = document.getElementById("publicPercent-bar");
+                totalPublic.style.width = ((resp.actives.publicposts / resp.totalUsers) * 100) +"%";
+                var totalPosts = document.getElementById("postsPercent-bar");
+                totalPosts.style.width = ((resp.actives.posts / resp.totalUsers) * 100) +"%"
+	
+	 }
+
+	function displaySurveysChart(surveys) {
+		Morris.Bar({
+		        element: 'morris-bar-chart',
+		        data: surveys,
+		        xkey: 'survey',
+       		 	ykeys: ['concerned', 'answered'],
+        		labels: ['Concerned', 'Answered'],
+        		barColors:['#006DF0', '#65b12d'],
+        		hideHover: 'auto',
+        		barSizeRatio:0.45,
+       		 	gridLineColor: '#eef0f2',
+        		resize: true
+   		});
+		window.dispatchEvent(new Event('resize'));
+	}
+
+        function displayTimelineChart(data) {
+		console.log(data)
+                Morris.Area({
+                        element: 'active-tool-chart',
+                        data: data,
+                        xkey: 'day',
+                        ykeys: ['tool'],
+                        labels: ['Still alive users'],
+                        pointSize: 1,
+                        fillOpacity: 0,
+                        pointStrokeColors:['#FF0000'],
+                        behaveLikeLine: true,
+                        gridLineColor: '#e0e0e0',
+                        lineWidth: 1,
+                        hideHover: 'auto',
+                        lineColors: ['#FF0000'],
+                        resize: true
+                });
+
+
+                Morris.Area({
+                        element: 'active-domains-chart',
+                        data: data,
+                        xkey: 'day',
+                        ykeys: ['users_domain'],
+                        labels: ['active users on News Domains'],
+                        pointSize: 1,
+                        fillOpacity: 0,
+                        pointStrokeColors:['#FF0000'],
+                        behaveLikeLine: true,
+                        gridLineColor: '#e0e0e0',
+                        lineWidth: 1,
+                        hideHover: 'auto',
+                        lineColors: ['#FF0000'],
+                        resize: true
+                });
+
+
+                Morris.Area({
+                        element: 'active-users-chart',
+                        data: data,
+                        xkey: 'day',
+                        ykeys: ['users'],
+                        labels: ['Active users on Facebook'],
+                        pointSize: 1,
+                        fillOpacity: 0,
+                        pointStrokeColors:['#FF0000'],
+                        behaveLikeLine: true,
+                        gridLineColor: '#e0e0e0',
+                        lineWidth: 1,
+                        hideHover: 'auto',
+                        lineColors: ['#FF0000'],
+                        resize: true
+                });
+
+                Morris.Area({
+                        element: 'statistics-chart',
+                        data: data,
+                        xkey: 'day',
+                        ykeys: ['ads', 'newsposts', 'publicposts'],
+                        labels: ['Ads', 'News posts', 'Publicposts'],
+                        pointSize: 3,
+                        fillOpacity: 0,
+                     	pointStrokeColors:['#006DF0', '#933EC5', '#65b12d'],
+                        behaveLikeLine: true,
+                        gridLineColor: '#e0e0e0',
+                        lineWidth: 1,
+                        hideHover: 'auto',
+                        lineColors: ['#006DF0', '#933EC5', '#65b12d'],
+                        resize: true
+                });
+                window.dispatchEvent(new Event('resize'));
+
+        }
+
+
+	function timeConverter(UNIX_timestamp){
+		if(UNIX_timestamp == 0) return "" 
+  		var a = new Date(UNIX_timestamp);
+  		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  		var year = a.getFullYear();
+  		var month = months[a.getMonth()];
+  		var date = a.getDate();
+  		var hour = a.getHours();
+  		var min = a.getMinutes();
+  		var sec = a.getSeconds();
+  		var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  		return time;
+	}
+
+
+
+//	$("#select-interval").val($("#select-interval option:first").val());
+//	lastTimeStamp = $("#select-interval").val();
+
+        var date = new Date();
+        date.setHours(0,0,0,0);
+	lastTimeStamp = date.getTime()
+	getData(lastTimeStamp);
+	
+    </script>
+</body>
+
+</html>

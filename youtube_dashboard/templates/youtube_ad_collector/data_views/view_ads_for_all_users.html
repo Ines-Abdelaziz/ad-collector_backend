@@ -1,0 +1,486 @@
+{% load static %}
+
+<html>
+  <head>
+          <link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+
+<title>Ads</title>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+<!--    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+      
+      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+      
+      <style>
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+          
+          .centerme {
+              position: relative;
+              top: 35%;
+              transform: translateY(-35%);
+            }
+
+
+            .col-centered {
+                float: none;
+                margin: 0 auto;
+            }
+
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+</style>
+      
+      
+      <script type="text/javascript">
+          var adsForDay = 'get_ads_for_day_for_all_users';
+          var activeDates = {{active_dates|safe}};
+          var allUsers = {{users|safe}};
+        var selectedUser = {{selected_user|safe}};
+
+    function get_selected_user_from_value(val) {
+            if (val==="All Users") {
+            return -1;
+            }
+
+            return parseInt(val.replace("User: ",''));
+      }
+
+
+
+
+          var dt = '';
+          if (activeDates.length>0) {
+              var str  = activeDates[0];
+            var parts = str.split("/");
+                dt = new Date(parseInt(parts[2], 10),
+                  parseInt(parts[1], 10) - 1,
+                  parseInt(parts[0], 10));
+    
+          }
+          console.log( activeDates[0])
+          console.log(dt)
+          //          Pad zeros for dates
+
+
+
+          function createLoader(){
+              $('#all_ads').html('<div class="col-md-offset-5 container loader"></div>')
+              
+          }
+          
+          function createLoader(){
+              $('#all_ads').html('<div class = "jumbotron " style="height:500px"><div class="col-md-offset-5 centerme loader"></div></div>')
+              
+          }
+          
+          function createAdList(top_ads,selected_user) {
+                                   var html ='<ul class="list-group">';
+        
+            for (var i=0;i<top_ads.length;i++)
+            {
+
+                html+="<div class='col-md-12 list-group-item'><div class='col-md-4'><img src='"+top_ads[i]['img']+"' width='300' ><br>"+top_ads[i]['name']+"</div><div class='col-md-8'><div class='col-md-12' > <b>Time: </b>" +top_ads[i]['ts'] + "</div><div class='col-md-12' > <b>Advertiser: </b>";
+                var advertiserId = top_ads[i]['fb_adv_id']!=-1?top_ads[i]['fb_adv_id']:top_ads[i]['non_fb_adv_id'];
+                if (((typeof advertiserId)==='string') && advertiserId!="") {
+                    advertiserId = '\"' + advertiserId + '\"';
+                }
+                if (advertiserId && (advertiserId!=='')) {
+                html += "<a href='"+top_ads[i]['advertiser_link']+"' target='_blank'>"+ (top_ads[i]['advertiser_name']?top_ads[i]['advertiser_name']:top_ads[i]['advertiser_link'])+"</a>";
+                } else {
+                    html+= "<span class=\"text-danger\">Collecting advertiser for this advertisement..</span>";
+                        }
+
+
+                html+="</div>"
+                html+="<div class='col-md-12'> <b>Advertiser category: </b>"+( ((top_ads[i]['advertiser_category'])&&(top_ads[i]['advertiser_category'].length>0))?top_ads[i]['advertiser_category']: "<span class=\"text-danger\">Cannot retrieve type of advertiser..</span>") +"</div>"
+
+
+
+                if (top_ads[i]['expl_profile'].length!=0) {
+                    html+="<div class='col-md-12' > <b>This ad has been targeted using: </b>";
+                     for (let j=0;j<top_ads[i]['expl_profile'].length;j++) {
+                        if (top_ads[i]['expl_profile'][j][0]=='') {
+                            html += top_ads[i]['expl_profile'][j][1] + ", ";
+                            continue;
+                        }
+                        html += top_ads[i]['expl_profile'][j][0]+  " (" +top_ads[i]['expl_profile'][j][1]+")" + ", ";
+                     }
+
+
+
+
+
+                    html = html.slice(0,html.length-2);
+                    html +="</div>";
+                }
+
+
+
+                     if (top_ads[i]['advertiser_expl_profile'].length!=0) {
+                    html+="<div class='col-md-12' > <b>The advertiser targeted <span class='text-danger'>all users</span> with: </b>";
+                     for (let j=0;j<top_ads[i]['advertiser_expl_profile'].length;j++) {
+                        if (top_ads[i]['advertiser_expl_profile'][j][0]=='') {
+                            html += top_ads[i]['advertiser_expl_profile'][j][1] + ", ";
+                            continue;
+                        }
+                        html += top_ads[i]['advertiser_expl_profile'][j][0]+  " (" +top_ads[i]['advertiser_expl_profile'][j][1]+")" + ", ";
+                     }
+
+                      html = html.slice(0,html.length-2);
+                    html +="</div>";
+                }
+            if (selected_user==-1) {
+            html+="<div class='col-md-12'> <b>Number of users that received the ad this day: </b>"+ top_ads[i]['n_users'] +"</div>"
+            }
+
+
+            html+="<div class='col-md-12'> <b>Raw ad object: </b>"+ "<button type='button' class='btn btn-link btn-md' onclick='getAdvertiserInfo("+ top_ads[i]['id'] +")'>Click here!</button>" +"</div>";
+
+
+
+
+
+                html+="</div></div>";
+            }
+          html+='</ul>';
+               $('#all_ads').html(html);
+          }
+
+            <!--<li class="previous"><button type="button" class="btn" id = "btnprev">Previous</button></li>-->
+  <!--<li class="next"><button type = "button" class = "btn" id="btnnext" >Next</button></li>-->
+
+function createButtons(day,nextPage,prevPage,isFirst,isLast,selected_user) {
+var firstButton = '<li class="previous"><a  class="page-link" href="#" onclick="refreshAds(\''+day+'\', -1,-1,'+prevPage+','+selected_user+')">Previous</a></li>';
+if (isFirst) {
+    firstButton = '<li class="previous disabled" ><a  class="page-link" href="#" >Previous</a></li>';
+    }
+
+var secondButton = '<li class="next"><a  class="page-link" href="#" onclick="refreshAds(\''+day+'\', -1,'+nextPage+',-1,'+selected_user+')">Next</a></li>';
+if (isLast) {
+    secondButton = '<li class="next disabled" ><a  class="page-link" href="#"  >Next</a></li>';
+    }
+
+
+    $('#pager').html(firstButton+secondButton);
+
+
+};
+
+function createDemographicStatus(selected_user,age,gender,location) {
+    if (selected_user==-1) {
+        $('#demographicInfo').html('');
+        return
+    }
+
+    $('#demographicInfo').html("Based on the most recent explanations, the user's age is <b>" + age + "</b>, the user's gender is <b>"+ gender+ "</b> and the user lives in  <b>" + location +"</b>");
+     return
+
+};
+
+function refreshAds(value, date,max_id=-1,min_id=-1,selected_user=-1) {
+          createLoader()
+          console.log(value)
+//          console.log(date)
+//         alert('The chosen date is ' + value);
+         var count = 4;
+
+            function doReq(count,value) {
+                console.log(value,max_id,min_id)
+                $.post(adsForDay,{"day":value,"max_id":max_id,"min_id":min_id,"selected_user":selected_user},
+
+              function(data) {
+                console.log(data)
+                if (data.status==='success') {
+
+                    createAdList(data.daily_ads,data.selected_user);
+                    createButtons(value,data.nextPage,data.prevPage,data.isFirst,data.isLast,data.selected_user);
+                    if (data.selected_user===-1) {
+                    createDemographicStatus(data.selected_user);
+                    return
+                    }
+
+                    createDemographicStatus(data.selected_user,data.age,data.gender,data.location);
+                    return
+
+                }
+
+                if (data.reason==='Cookie') {
+                    console.log('Cookie problem. Redoing the request')
+                    count--;
+                    if (count>0) {
+                        doReq(count,value);
+                        return
+                    }
+                }
+
+            }) };
+            doReq(count,value);
+
+         // Hide the datepicker div when something is selected
+
+//         $("#datepicker").hide();
+            }
+          
+          $(document).ready(function() {
+
+
+              $("#datepicker").datepicker({ 
+     dateFormat: 'dd/mm/yy',          
+      beforeShowDay: function (date) {
+          function pad(num, size) {
+            var s = "000000000" + num;
+            return s.substr(s.length-size);
+          }
+       //getDate() returns the day (0-31)
+//          console.log(date)
+         let  dateStr = pad(date.getDate(),2) +'/'+pad((date.getMonth()+1),2)+'/' + date.getFullYear();
+//          console.log(dateStr)
+//          console.log(activeDates)
+//          console.log(activeDates.indexOf(dateStr))
+       if (activeDates.indexOf(dateStr)>=0) {
+           return [true, ''];
+       }
+       return [false, ''];
+    },
+      onSelect: function(value,date) {
+
+     var val = $('#pickUser').val();
+     var selected_user = get_selected_user_from_value(val);
+
+      refreshAds(value,date,-1,-1,selected_user);
+
+      }
+              });
+              if (dt!==''){
+                    $("#datepicker").datepicker("setDate", dt );
+                   $('.ui-datepicker-current-day').click();
+
+              }
+
+
+
+                $('#pickUser').on('change', function() {
+              var val =  this.value;
+              console.log(val);
+              var selected_user = get_selected_user_from_value(val);
+              var value = $('#datepicker').val();
+                refreshAds(value, '',max_id=-1,min_id=-1,selected_user);
+
+
+
+        });
+             
+          })
+        
+
+      </script>
+    </head>
+    <body>
+
+
+    <script>
+        function nFormatter(num, digits) {
+          var si = [
+//            { value: 1E18, symbol: "E" },
+//            { value: 1E15, symbol: "P" },
+//            { value: 1E12, symbol: "T" },
+            { value: 1E9,  symbol: "B" },
+            { value: 1E6,  symbol: "M" },
+            { value: 1E3,  symbol: "k" }
+          ], rx = /\.0+$|(\.[0-9]*[1-9])0+$/, i;
+          for (i = 0; i < si.length; i++) {
+            if (num >= si[i].value) {
+              return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+            }
+          }
+          return num.toFixed(digits).replace(rx, "$1");
+        }
+
+        function nFormatterWrapper(num) {
+            return nFormatter(num,3);
+        }
+
+
+      function emptyAdvertisers() {
+          $('#rawAdBody').empty();
+
+          $('#rawAdBody').addClass('loader');
+          $('#rawAdBody').addClass('col-centered');
+      }
+
+           function getAdvertiserInfo(databaseId) {
+      emptyAdvertisers();
+
+      $('#rawAdModal').modal();
+
+            $.ajax({
+      type:'POST',
+      url:'get_specific_raw_ad_by_id',
+      data: {'id':databaseId},
+      success:function(resp){
+      $('#rawAdBody').removeClass('loader');
+      $('#rawAdBody').removeClass('col-centered');
+
+
+          if (resp.status!=='success') {
+
+            <!--show error message-->
+            var html = '<div class="col-md-4"><div class="col-md-12 "> <img class="img-responsive" style="max-width: 100%;" src="'+img_url+'" > </div></div>';
+            html += '<div class="col-md-8">'
+            html += '<div class=" col-md-12 alert alert-danger">Cannot retrieve raw  ad!</div> <br>';
+            html += '</div>'
+            $('#rawAdBody').html(html);
+
+            return
+          }
+
+
+
+        var html = resp.raw_ad;
+
+        $('#rawAdBody').html(html);
+
+
+
+
+
+      }})
+
+      }
+
+
+
+    </script>
+
+  <div class="modal fade" id="rawAdModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" >Raw ad</h4>
+        </div>
+        <div class="modal-body" >
+          <div class="row">
+        <div class="loader col-centered "  id="rawAdBody">
+
+          </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+        
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand"><img src="{% static "enabled_48.png" %}" height="50" width="50" style="float:left;margin-top:-15px">AdAnalyst</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <!--<li><a href="./view_data_about_me">Data</a></li>-->
+            <!--<li><a href="./view_advertisers">Advertisers</a></li>-->
+          <!--<li><a href="./view_all_ads.html">Ads</a></li>-->
+            <!--<li><a href="./contact_us.html">Contact us</a></li>-->
+
+<!--            <li><a href="#">Advertisements</a></li>-->
+<!--            <li><a href="#">Log Out</a></li>-->
+          </ul>
+        </div>
+      </div>
+    </div> 
+
+        
+           <div class="container" style="margin-top: 100px">
+               <div class="col-md-12">
+                   <div class="col-md-4">
+                       <h1>Ads</h1>
+                       <span>Check the daily unique ad consumption, by clicking on any date in the calendar!</span>
+                       <br />
+                                              <br />
+
+                       <div id="demographicInfo"></div>
+                   </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label for="pickUser">Select user:</label>
+                      <select class="form-control" id="pickUser">
+                          {% ifequal selected_user -1 %}
+                          <option selected>All Users</option>
+                            {% else %}
+                            <option >All Users</option>
+                              {% endifequal %}
+
+                          {% for user_id in users %}
+                          {% ifequal selected_user user_id %}
+                          <option selected>User: {{user_id}}</option>
+                            {% else %}
+                          <option >User: {{user_id}}</option>
+                      {% endifequal %}
+                      {% endfor %}
+
+                      </select>
+                    </div>
+                    </div>
+
+                  <div class="col-md-3  pull-right" id="datepicker" ></div>               <br />
+
+
+               </div>
+               <br />
+              <br />
+                              <br />
+
+                <div class = "col-md-12">
+               <div class="col-md-12" id="all_ads"></div>
+                <div class="col-md-4 col-md-offset-4">
+               <ul class="pager " id="pager">
+
+</ul></div>
+                 </div>
+
+ <footer>
+         <p>You can find more information on the host of this internet web site here : <a href="https://imprint.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Imprint/Impressum</a> | <a href="https://data-protection.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Data Protection</a>
+ </p></footer>
+               
+        </div>
+
+    </body>
+</html>

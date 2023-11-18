@@ -1,0 +1,440 @@
+w{% load static %}
+
+<html>
+	<head>
+		<link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+		<title>CheckMyNews</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<style type="text/css">
+.carousel-caption{
+	font-size: 65px;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;}
+      img:not(.media-img){
+	      max-width: 100%;}
+      p{      font-size: large;}
+      li{     font-size: large;}
+      h1{     font-size: xxx-large;}
+      h2{     font-size: xx-large;}
+      h3{     font-size: x-large;}
+      h4{     font-size: x-large;}
+
+      .headerp{font-size: x-large;}
+		</style>
+
+		<script type="text/javascript">
+$(document).ready(function() {
+	$('a[href*=\\#]').on('click', function(event){     
+		event.preventDefault();
+		$('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
+	});      
+});
+		</script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118113605-1"></script>
+		<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-118113605-1');
+		</script>
+
+		<!-- Facebook Pixel Code -->
+		<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1137750199667219');
+fbq('track', 'PageView');
+fbq('track', 'ViewContent');
+		</script>
+
+		<noscript><img height="1" width="1" style="display:none"
+				      src="https://www.facebook.com/tr?id=1137750199667219&ev=PageView&noscript=1"
+	  /></noscript>
+		<!-- End Facebook Pixel Code -->
+	</head>
+
+
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="#" class="navbar-brand"><img src='{% static "enabled_48.png" %}' height="50" width="50" style="float:left;margin-top:-15px">CheckMyNews</a>
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+<!--
+				<div class="navbar-collapse collapse" id="navbar-main">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#about-transpad" onclick="$('html, body').animate({scrollTop: $('#about-transpad').offset().top}, 1000);">About</a></li>
+						<li><a href="#overview" onclick="$('html, body').animate({scrollTop: $('#overview').offset().top}, 1000);">Ad Statistics</a></li>
+
+						<li><a href="#how-it-works" onclick="$('html, body').animate({scrollTop: $('#how-it-works').offset().top}, 1000);">How it works</a></li>
+						<li><a href="#getting-started" onclick="$('html, body').animate({scrollTop: $('#getting-started').offset().top}, 1000);">Installation</a></li>
+						<li><a href="#research" onclick="$('html, body').animate({scrollTop: $('#research').offset().top}, 1000);">Research</a></li>
+
+						<li><a href="#about-us" onclick="$('html, body').animate({scrollTop: $('#about-us').offset().top}, 1000);">Who are we?</a></li>
+-->
+					</ul>
+				</div>
+			</div>
+		</div> 
+
+		<!--
+		<div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top: 40px;">
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+
+			<div class="carousel-inner" style="height: 350px">
+				<div class="item active">
+					<img src='{% static "data_about_me.png" %}' height="350px" width="800px" style="margin-left: 20%">
+				</div>
+
+				<div class="item">
+					<img src='{% static "dasrters.png" %}' height="350px" width="800px" style="margin-left: 20%">
+				</div>
+
+				<div class="item">
+					<img src='{% static "das.png" %}' height="350px" width="800px" style="margin-left: 20%">
+				</div>
+			</div>
+
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+
+-->
+		<div id="about-transpad" style="color:white;background-color: #2C3E50">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 style="text-align: center; margin-top:70px">Study Setup</h1>
+					</div>	
+
+					<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+						<div class="media mb-10">
+							<div class="media-body" >
+
+								<p class = "headerp"> To correctly setup the study, follow the instructions below ... </p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+
+
+
+		<div id="getting-started" >
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 15px">
+						<h1 style="text-align: center">Installation</h1>
+					</div>
+
+					<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+						<div class="media mb-10">
+							<div class="media-body" >
+								<p style="text-align: center" class="headerp">Add to  
+									<a href='https://chrome.google.com/webstore/detail/social-media-monitor-stud/onmjcacepoljnpainfckaminjelkmicn?hl=en&authuser=1' target="_blank" class="btn btn-lg"  >
+										<i class="glyphicon glyphicon-download" style="margin-top:3px;float:left;"></i>&nbsp;&nbsp;Chrome
+									</a> 
+								</p>
+							</div>
+
+						</div>
+					</div>	
+
+					<div class="col-md-12" style="margin-top:40px">
+						<div class="col-md-6">
+							<img src="{% static 'consent_form_2.png' %}" class= "media-object media-img" style="height:150px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#cform_modal">
+
+						</div>
+
+						<div class="col-md-6" style="margin-top:40px">
+							<p>Sign the consent.</p>
+						</div>
+
+						<div id="cform_modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<img src="{% static 'consent_form_2.png' %}" class="media-img" height="500px">
+								</div>
+							</div>
+						</div>
+					</div>
+
+                                        <div class="col-md-12" style="margin-top:40px">
+                                                <div class="col-md-6">
+
+                                                        <img src="{% static 'pin_extension.png' %}" class="media-object media-img" style="width: 350px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#pop_icon_modal"/>
+                                                </div>
+
+                                                <div class="col-md-6" style="margin-top:40px">
+                                                        <p>Pin the extension icon.</p>
+                                                </div>
+
+                                                <div id="pop_icon_modal" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                        <img src="{% static 'pop_icon.png' %}" class="media-img" height="500px">
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+                                        </div>
+<!--
+                                        <div class="col-md-12" style="margin-top:40px">
+                                                <div class="col-md-4">
+
+                                                        <img src="{% static 'pop_icon.png' %}" class="media-object media-img" style="height:150px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;curs$
+                                                </div>
+
+                                                <div class="col-md-8; col-md-offset-1" style="margin-top:40px">
+                                                        <p>Click on the extension icon.</p>
+                                                </div>
+
+                                                <div id="pop_icon_modal" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                        <img src="{% static 'pop_icon.png' %}" class="media-img" height="500px">
+                                                                </div>
+                                                        </div>
+                                                </div>
+
+                                        </div>
+
+-->
+				</div>
+				<div class="alert alert-danger" style="margin-top:40px">
+					<strong>Warning!</strong> If you are using some ad blocker like <a href="https://adblockplus.org/" target="_blank" >AdBlock Plus</a>, you need to <a href="https://adblockplus.org/faq_basics#disable" target="_blank">disable</a> it on Facebook so that CheckMyNews works properly. Also, you need to set your <a href="https://www.facebook.com/help/327850733950290?helpref=faq_content" target="_blank">language in Facebook</a> to English (US) or French (France). Currently, we do not support other languages.
+				</div>
+			</div>
+
+
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12" style="margin-top: 15px">
+                                                <h1 style="text-align: center">Answer Surveys</h1>
+                                        </div>
+
+                                        <div class="col-md-12" style="margin-top:40px">
+                                                <div class="col-md-6">
+
+                                                        <img src="{% static 'start_survey.png' %}" class="media-object media-img" style="width: 350px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#pop_icon_modal"/>   
+						</div>
+
+                                                <div class="col-md-6" style="margin-top:40px">
+                                                        <p>When you see the notification icon, click on the extension's icon and click on "Start survey".</p>
+                                                </div>
+
+
+                                        </div>
+
+
+                                        <div class="col-md-12" style="margin-top:40px">
+                                                <div class="col-md-6">
+
+                                                        <img src="{% static 'start_answering.png' %}" class="media-object media-img" style="width: 350px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#pop_icon_modal"/>
+                                                </div>
+
+                                                <div class="col-md-6" style="margin-top:40px">
+                                                        <p>When you see the notification icon, click on the extension's icon and click on "Start survey".</p>
+                                                </div>
+
+
+                                        </div>
+
+                                </div>
+
+			</div>
+
+
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12" style="margin-top: 15px">
+                                                <h1 style="text-align: center">Claim your reward</h1>
+                                        </div>
+
+                                        <div class="col-md-12" style="margin-top:40px">
+                                                <div class="col-md-6">
+
+                                                        <img src="{% static 'start_rewards.png' %}" class="media-object media-img" style="width: 350px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#pop_icon_modal"/>
+                                                </div>
+
+                                                <div class="col-md-6" style="margin-top:40px">
+                                                        <p>When you answer a survey and you browse your <a href="https://www.facebook.com" target="_blank">Facebook timeline</a> for few minutes, click on the extension's icon and click on "rewards".</p>
+                                                </div>
+
+
+                                        </div>
+
+
+                                        <div class="col-md-12" style="margin-top:40px">
+                                                <div class="col-md-6">
+
+                                                        <img src="{% static 'get_reward.png' %}" class="media-object media-img" style="width: 350px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#pop_icon_modal"/>
+                                                </div>
+
+                                                <div class="col-md-6" style="margin-top:40px">
+                                                        <p>If you have completed your survey, and you have minimum Facebook activity you will find your reward here !</p>
+                                                </div>
+
+
+                                        </div>
+
+                                </div>
+
+                        </div>
+
+
+<!--
+			<div id="how-it-works" style="color:white;background-color: #2C3E50">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12" style="margin-top: 15px">
+							<h1 style="text-align: center">How does it work?</h1>
+							<p class = "headerp"  style="text-align: center;margin-top: 20px"> </p>
+						</div>
+
+						<p>AdAnalyst analyzes the ads you receive in Facebook to show you aggregate statistics about the ads and the advertisers that target you. It works silently in the background while you are browsing Facebook without any overhead to your browsing experience.</p>
+
+						<div class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">              
+							<h3>What data we collect from you:</h3> 
+							<ul class="list-group">
+								<li class="list-group-item" style="background-color: #2C3E50">The ads you receive while you browse Facebook</li>
+								<li class="list-group-item" style="background-color: #2C3E50">The accompanied explanations that Facebook provides</li>
+								<li class="list-group-item" style="background-color: #2C3E50">Periodically, your <a href="https://www.facebook.com/ads/preferences">Ads Preferences</a> page</li>
+								<li class="list-group-item" style="background-color: #2C3E50">Hashed versions of your user id, email and phone number</li>
+							</ul>
+							<br/>
+							<br/>
+
+							<h3>What data we DO NOT collect from you:</h3> 
+							<ul class="list-group">
+								<li class="list-group-item" style="background-color: #2C3E50">Your messages</li>
+								<li class="list-group-item" style="background-color: #2C3E50">Your posts</li>
+								<li class="list-group-item" style="background-color: #2C3E50">Your likes</li>
+								<li class="list-group-item" style="background-color: #2C3E50">Anything else that we do not explicitly state</li>
+							</ul>
+							<br/>
+							<br/>
+
+							<h3>How is my data going to be used</h3>               
+							<p>Your data is going to be used in our research, but only in an aggregated way. All traces of data are pseudonymized before they arrive on our servers.</p>
+							<br/>
+							<br/>
+							<h3>Is my data going to be safe?</h3>             
+							<p>We will store your data in the servers of <a href="https://www.mpi-sws.org/">the Max Planck Institute for Software Systems (MPI-SWS)</a>,  protected by the MPI-SWS firewall. You are the only one who can access your data through the <a href="https://developers.facebook.com/docs/facebook-login">Facebook Authentication</a> process.</p>
+						</div>
+					</div>      
+				</div>
+			</div>
+
+-->
+
+<!--
+			<div id="about-us" style="">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12" style="margin-top: 15px">
+							<h1 style="text-align: center;">Who are we?</h1>
+						</div>
+
+						<div class="col-md-12" style="margin-top: 40px">
+							<ul class="list-group" style="margin-top: 10px">
+								<li class="list-group-item" style="border: none"><a href="https://www.eurecom.fr/~andreou">Athanasios Andreou</a> - Postdoc at <a href="https://www.cnrs.fr" target="_blank">CNRS</a>-<a href="https://www.liglab.fr">LIG</a>, France</li>
+								<li class="list-group-item" style="border: none"><a href="https://lig-membres.imag.fr/gogao/">Oana Goga</a> - Research Scientist at <a href="http://www.cnrs.fr/" target="_blank">CNRS</a>, France</li>
+								<li class="list-group-item" style="border: none"><a href="https://people.mpi-sws.org/~gummadi/" target="_blank">Krishna P. Gummadi</a> - Scientific Director at <a href="http://www.mpi-sws.org/" target="_blank">MPI-SWS</a>, Germany</li>
+								<li class="list-group-item" style="border: none"><a href="http://lig-membres.imag.fr/loiseapa/" target="_blank">Patrick Loiseau</a> - Research Scientist at <a href="https://www.inria.fr" target="_blank">Inria</a>, France</li>
+								<li class="list-group-item" style="border: none"><a href="http://www.ccs.neu.edu/home/amislove/" target="_blank">Alan Mislove</a> - Professor at <a href="http://www.northeastern.edu/" target="_blank">Northeastern University</a>, USA</li>
+							</ul><br/><br/>
+						</div>
+					</div>
+				</div>
+			</div>	
+
+			<div id="logos" style="">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-md-2">
+							<a href="http://www.mpi-sws.org/" target="_blank"><img src="static/mpi-logo.jpg"></a>
+						</div>
+						<div class="col-md-2">
+							<a href="http://www.northeastern.edu/" target="_blank"><img src="static/neu-seal.jpg"></a>
+						</div>
+
+						<div class="col-md-2">
+							<a href="https://www.univ-grenoble-alpes.fr" target="_blank"> <img src="static/logo-uga.png"></a>
+						</div>
+						<div class="col-md-2">
+							<a href="http://www.grenoble.cnrs.fr/" target="_blank"><img src="static/logo-cnrs.jpg" ></a>
+						</div>
+						<div class="col-md-2">
+							<a href="http://liglab.fr/" target="_blank"><img src="static/LIG_coul.jpg"></a>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="support" style="">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-md-12" style="margin-bottom: 100;margin-top:50">
+							<h3> Supported by: </h3>
+
+							<div class="col-md-2 col-md-offset-3">
+								<a href="https://www.imt.fr/" target="_blank"><img src="static/logo-imt.png"></a>
+							</div>
+							<div class="col-md-2">
+								<a href="http://datatransparencylab.org/" target="_blank"><img src="static/dtl-logo.png" ></a>
+							</div>
+
+							<div class="col-md-2">
+								<a href="http://www.agence-nationale-recherche.fr/" target="_blank"><img src="static/anr-logo.gif" ></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+-->
+
+		</div>
+		</div> 
+
+	</body>
+</html>
+

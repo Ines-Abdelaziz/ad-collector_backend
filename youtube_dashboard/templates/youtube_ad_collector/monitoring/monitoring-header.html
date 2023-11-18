@@ -1,0 +1,43 @@
+        <div class="all-content-wrapper" style="margin-left: 0">
+                <div class="header-advance-area">
+                        <div class="header-top-area" style="left: 0">
+                                <div class="container-fluid">
+                                        <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="header-top-wraper">
+                                                                <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <div class="header-top-menu tabl-d-n">
+                                                                                <ul class="nav navbar-nav mai-top-nav">
+                                                                                    <li class="nav-item"><a href="monitoring_statistics" class="nav-link menu_items">Monitoring Statistics</a></li>
+                                        <!--                                                <li class="nav-item"><a href="monitoring_not_completed_surveys" class="nav-link">Users that didn't fill surveys</a></li> -->
+                                                                                    <li class="nav-item"><a href="monitoring_users_behavior" class="nav-link menu_items">Users behavior</a></li>
+                                                                                    <li class="nav-item"><a href="monitoring_explanations_and_preferences" class="nav-link menu_items">Explanations and preferences</a></li>
+                                                                                    <li class="nav-item"><a href="monitoring_extension_errors" class="nav-link menu_items">Extension errors</a></li>
+                                                                                    <li class="nav-item"><a href="monitoring_all_ads_and_posts" class="nav-link menu_items">View ads and posts</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+
+    <script>
+        var url = new URL(window.location.href);
+        var user = url.searchParams.get("user");
+
+        var links = document.getElementsByClassName("menu_items");
+        for (let i=0; i < links.length; i++) {
+                links[i].href = links[i].href + "?user="+user
+
+        }
+    </script>
+
+
+

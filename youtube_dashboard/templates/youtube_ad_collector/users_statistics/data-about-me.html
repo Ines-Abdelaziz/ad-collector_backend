@@ -1,0 +1,810 @@
+    {% load static %}
+
+<html>
+  <head>
+    <link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+  	<title>Data</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'report-styles/bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/meanmenu.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/morris.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/responsive.css' %}">
+
+    <script src="{% static 'report-scripts/modernizr-2.8.3.min.js' %}"></script>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    
+    <script type="text/javascript" src="{% static "jqcloud.js" %}"> </script>
+
+    <style type="text/css">
+      .jqcloud-word{
+        cursor: pointer;
+      }
+    </style>
+      
+      
+        <style type="text/css">
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+          
+          .centerme {
+              position: relative;
+              top: 35%;
+              transform: translateY(-35%);
+            }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+    
+    <script type="text/javascript">
+      
+      var words_interests = {{top_interest_wordcloud|safe}};
+
+      var words_demographics = {{top_demo_wordcloud|safe}}; 
+
+      var words_behaviours = {{top_behav_wordcloud|safe}};
+
+      var words_bio={{top_bio_wordcloud|safe}};
+
+      var words_missing_attributes = {{missing_attributes_wordcloud|safe}}
+      
+      var current_page_interests = -1;
+      var currpage_niche_interests = -1;
+      var currpage_newest_demo = -1;
+
+      function closeWordcloudAds(){
+        $("#top_wordcloud_objects").hide("slow");
+        $("#top_wordcloud_objects").empty();
+        $('html,body').animate({scrollTop: $("#wordcloud_interests").offset().top}, 'slow'); 
+      }
+
+        
+        function createLoader(){
+          $('#top_wordcloud_objects').html('<div class = "jumbotron " style="height:500px"><div class="col-md-offset-5 centerme loader"></div></div>');
+            $('html,body').animate({scrollTop: $("#top_wordcloud_objects").offset().top}, 'slow');       
+
+      }
+      function loadTopAds(data,cat,name) {
+          var getAdsForCategory= 'get_ads_for_attribute_category';
+          // console.log(data)
+          // console.log(typeof data)
+          console.log(data,cat,name,(name?name:data));
+          var count = 4;
+          createLoader()
+            function doReq(count,data,cat,name) {
+                $.post(getAdsForCategory,{"expl_cat":cat,"attribute":data},
+              
+              function(resp) {
+                console.log(resp);
+                if (resp.status==='success') {
+                    var ads = JSON.parse(resp.advertisements);
+
+                  $("#top_wordcloud_objects").empty();
+                  var html="<div class=\"col-md-12\"><h3>Top advertisements you receive because you have the attribute <i>" + (name?name:data) + "</i>: <div style='float:right;cursor:pointer' onclick='closeWordcloudAds()'><span class='glyphicon glyphicon-remove'></span></div></h3><hr> <br/><br/>";
+                  html +='<ul class="list-group">'
+
+                  for (var i=0;i<ads.length;i++)
+                  {
+                    html+="<div class='col-md-12 list-group-item' style='margin-bottom:20px'><div class='col-md-4'><img src='";
+
+                    if (ads[i]['logo']!="data:image/png;base64,"){
+                      html+=ads[i]['logo'];
+                    }
+                    else {
+                      html+="static/no-image.png";
+                    }
+                    ads[i]['logo']
+
+                    html+="' height='200' width='300'  onerror=\"this.onerror=null;this.src='static/no-image.png';\" ></div><div class='col-md-8'><div class='col-md-12'>"+ads[i]['name']+"</div><br/><br/><br/><div class='col-md-12' > <b>Advertiser: </b>";
+                    if (ads[i]['advertiser_name']!=","){
+                      html+="<a href ='https://www.facebook.com/"+ads[i]['advertiser_fb']+"' target='_blank'>"+ads[i]['advertiser_name']+"<a/></div><div class='col-md-12' > <b>Number of Impressions:</b> " + ads[i]['freq'] + "</div></div></div>";
+                    } else {
+                      html+= ads[i]['non_fb_advertiser_name']+"</div><div class='col-md-12'> <b>Number of Impressions:</b> " + ads[i]['freq'] + "</div></div></div>";
+                    }
+                  }
+                  html+= '</ul>';
+                  html+="<br/><br/><br/><br/><br/><br/><br/><br/>";
+
+                  $("#top_wordcloud_objects").append(html);
+                  $("#top_wordcloud_objects").show("slow");
+                  $('html,body').animate({scrollTop: $("#top_wordcloud_objects").offset().top}, 'slow');                      
+                    return              
+                  }
+              
+                  if (data.reason==='Cookie') {
+                      console.log('Cookie problem. Redoing the request')
+                      count--;
+                      if (count>0) {
+                          doReq(count,data,cat,name);
+                          return
+                      }
+                    }                
+                })};
+            doReq(count,data,cat,name);
+
+//        var ads;
+//        if (cat==="Interests"){
+//          var ind=words_interests.findIndex(x => x.text==data);
+//          ads = JSON.parse(words_interests[ind]['advertisements']);
+//        }
+//        else if (cat==="Demographics"){
+//          var ind=words_demographics.findIndex(x => x.text==data);
+//          ads = JSON.parse(words_demographics[ind]['advertisements']);
+//        }
+//        else {
+//          var ind=words_behaviours.findIndex(x => x.text==data);
+//          ads = JSON.parse(words_behaviours[ind]['advertisements']);
+//        }
+//      
+              
+      }    
+
+      function findWordInterestByHtmlId(htmlId){
+        for (var x=0;x<words_interests.length;x++)
+          if (words_interests[x]['attr']['id']===htmlId) {
+            return [words_interests[x]['text'],words_interests[x]['attribute_id']];
+          }
+      }
+
+
+
+      function loadTopAdsInterests(htmlId,cat){
+        [attribute_name,attribute_id] = findWordInterestByHtmlId(htmlId);
+        loadTopAds(attribute_id,cat,attribute_name);
+      }
+
+
+
+      $(document).ready(function() {
+
+        for (var x=0;x<words_interests.length;x++){
+          words_interests[x]['handlers']={click:function(par =x) {loadTopAdsInterests(par['target'].id,"Interests")}};
+        }
+          
+        for (var x=0;x<words_demographics.length;x++){
+          words_demographics[x]['handlers']={click:function(par=x){loadTopAds(par['target']['innerText'],"Demographics")}};
+        }
+
+        for (var x=0;x<words_behaviours.length;x++){
+          words_behaviours[x]['handlers']={click:function(par=x){loadTopAds(par['target']['innerText'],"Behaviors")}};
+        }
+
+        for (var x=0;x<words_bio.length;x++){
+          words_bio[x]['handlers']={click:function(par=x){loadTopAds(par['target']['innerText'],"Biographical Data")}};
+        }
+
+        <!--for (var x=0;x<words_missing_attributes.length;x++){-->
+          <!--words_missing_attributes[x]['handlers']={click:function(par=x){loadTopAds(par['target']['innerText'],'Interests')}};-->
+        <!--}-->
+
+        $("#wordcloud_interests").jQCloud(words_interests,{
+          autoResize: true,
+          colors: ['#FA950E','#FA800C','#FA6A0A','#FA5508','#FA3E06','#FA2803'].reverse(),              
+          fontSize: {
+              from: 0.1,
+              to: 0.02
+            }              
+        });
+
+        $("#wordcloud_demographics").jQCloud(words_demographics,{
+          autoResize: true,
+          colors: ['#FA950E','#FA800C','#FA6A0A','#FA5508','#FA3E06','#FA2803'].reverse(),              
+          fontSize: {
+              from: 0.1,
+              to: 0.02
+            }              
+        });
+
+        $("#wordcloud_behaviours").jQCloud(words_behaviours,{
+          autoResize: true,
+          colors: ['#FA950E','#FA800C','#FA6A0A','#FA5508','#FA3E06','#FA2803'].reverse(),              
+          fontSize: {
+              from: 0.1,
+              to: 0.02
+            }              
+        });
+
+        $("#wordcloud_bio").jQCloud(words_bio,{
+          autoResize: true,
+          colors: ['#FA950E','#FA800C','#FA6A0A','#FA5508','#FA3E06','#FA2803'].reverse(),              
+          fontSize: {
+              from: 0.1,
+              to: 0.02
+            }              
+        });
+
+     <!--$("#wordcloud_missing").jQCloud(words_missing_attributes,{-->
+          <!--autoResize: true,-->
+          <!--colors: ['#FA950E','#FA800C','#FA6A0A','#FA5508','#FA3E06','#FA2803'].reverse(),-->
+          <!--fontSize: {-->
+              <!--from: 0.1,-->
+              <!--to: 0.02-->
+            <!--}-->
+        <!--});-->
+
+        function makeMissingAttributeTable(words) {
+            var innerHtml = '  <table class="table table-bordered table-hover">  <thead><tr> <th>Attribute</th> <th>Type</th> <th>Nb of facebook users sharing this attribute</th> </tr> </thead><tbody>';
+            for (let i=0;i<words.length;i++) {
+                innerHtml+='<tr class="clickable-row" style="cursor:pointer">';
+                innerHtml+='<td>' + words[i]['text'] +'</td>';
+                innerHtml+='<td>' + words[i]['type'] +'</td>';
+                innerHtml+='<td>' + nFormatterWrapper(words[i]['weight']) +'</td>';
+                innerHtml += '</tr>';
+            }
+            innerHtml += '</tbody></table>';
+            $('#wordcloud_missing').html(innerHtml);
+
+            $('#wordcloud_missing > .table > tbody > tr').click(function(e) {
+                let attribute = $(e.currentTarget).children(":first").text();
+                let category = $(e.currentTarget).children(":nth-child(2)").text();
+                loadTopAds(attribute,category);
+                });
+        }
+
+        makeMissingAttributeTable(words_missing_attributes)
+      });
+    </script>
+    
+    <script type="text/javascript">
+        
+        function nFormatter(num, digits) {
+          var si = [
+//            { value: 1E18, symbol: "E" },
+//            { value: 1E15, symbol: "P" },
+//            { value: 1E12, symbol: "T" },
+            { value: 1E9,  symbol: "B" },
+            { value: 1E6,  symbol: "M" },
+            { value: 1E3,  symbol: "k" }
+          ], rx = /\.0+$|(\.[0-9]*[1-9])0+$/, i;
+          for (i = 0; i < si.length; i++) {
+            if (num >= si[i].value) {
+              return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+            }
+          }
+          return num.toFixed(digits).replace(rx, "$1");
+        }
+        
+        function nFormatterWrapper(num) {
+            return nFormatter(num,3);
+        }
+        
+	function load_next_interests(n,direction=1){
+	     var startIndex = -1;
+	     if(direction == 1)
+		startIndex = (current_page_interests + 1) * n;	
+	     else if(current_page_interests > 0)
+		startIndex = (current_page_interests - 1) * n;
+	     n++;
+	     var count = 4;
+	     function doReq(count){ 
+	     $.post('get_next_interests',{'startIndex':startIndex,'number_interests':n},
+		    function(data){
+			console.log(data);
+			var interests = JSON.parse(data.interests);
+			if(data.status == 'success'){	
+			var html = "";
+			if(interests.length > 0)
+				current_page_interests += direction;
+		       	if(current_page_interests > 0)
+				html += "<div class='col-md-1'><img src='static/prev48.png' style='cursor:pointer; margin-top:50px;width:40px' onclick='load_next_interests(5,-1)'/></div>";
+		        else
+				html += "<div class='col-md-1'><img src='static/prev48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	
+			var end = (interests.length < pageSize)?interests.length : pageSize;
+  			for (var x=0;x<end;x++)
+  			{
+  				html += "<div class=\"col-md-2\"><img src=\""+interests[x]['logo']+"\" onerror=\"this.onerror=null;this.src='static/no-image.png';\" height=\"150\" width=\"150\"/><p style=\"font-size: 14px;text-align: center;margin-top: 2px;\">"+interests[x]['name']+"</p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\">"+interests[x]['category']+"</p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\"><i>"+interests[x]['description']+"</i></p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\"> Added on: "+interests[x]['ts']+"</p></div>";
+  			}
+
+			if(interests.length > pageSize)
+				html += "<div class='col-md-1'><img src='static/next48.png' style='cursor:pointer;margin-top:50px;width:40px' onclick='load_next_interests(5,1)'/></div>";	
+  			else
+				html += "<div class='col-md-1'><img src='static/next48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	
+			$('#newest_interests').empty();
+  			$('#newest_interests').append(html);
+			return;
+			}
+
+			if (data.reason==='Cookie') {
+                    		console.log('Cookie problem. Redoing the request')
+                    		count--;
+                    		if (count>0) {
+                        		doReq(count);
+                        		return
+                    		}
+                	}
+
+		    }
+		    		    
+		);
+	     };
+
+	     doReq(count);
+	     
+	}
+
+	var current_page_behaviours = -1;
+	function load_next_behaviours(n,direction=1){
+	     var startIndex = -1;
+	     if(direction == 1)
+		startIndex = (current_page_behaviours + 1) * n;	
+	     else if(current_page_behaviours > 0)
+		startIndex = (current_page_behaviours - 1) * n;
+	     n++;
+	     var count = 4;
+	     function doReq(count){ 
+	     $.post('get_next_behaviours',{'startIndex':startIndex,'number_behaviours':n},
+		    function(data){
+			console.log(data);
+			var behaviours = JSON.parse(data.behaviours) ;
+			if(data.status == 'success'){	
+			var html = "";
+			if(behaviours.length > 0)
+				current_page_behaviours += direction;
+		       	if(current_page_behaviours > 0)
+				html += "<div style='float:left;position:relative;height:200px'><img src='static/prev48.png' style='cursor:pointer; margin-top:50px; width:40px' onclick='load_next_behaviours(5,-1)'/></div>";
+		        else
+				html += "<div style='float:left;position:relative;height:200px'><img src='static/prev48.png' style='margin-top:50px; width:40px;opacity:0.5'/></div>";
+
+  			var end = (behaviours.length < pageSize) ? behaviours.length : pageSize;
+	    		for (var x=0;x<end;x++)
+  			{
+          html += "<div class=\"col-md-2\" style=\"margin-right: 20px\"><div class=\"col-md-12\" style=\"box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;height: 150px;width:185px;margin-bottom:7px\"><p style=\"font-size: 12px;text-align: center;margin-top: 50px\"><b>"+behaviours[x]['name']+"</b></p><p style=\"font-size: 9px;text-align: center;\">"+behaviours[x]['description']+"</p></div><p style=\"font-size: 10px;text-align: center;margin-left:20px\"> Added on: "+behaviours[x]['ts']+"</p></div>"
+  			}
+
+		      if(behaviours.length > pageSize)
+ 				html += "<div style='float:right;height:200px;position:absolute;right:0'><img src='static/next48.png' style='cursor:pointer;margin-top:50px;width:40px' onclick='load_next_behaviours(5,1)'/></div>";	
+  			else
+				html += "<div style='float:right;height:200px;position:absolute;right:0'><img src='static/next48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	
+
+			
+	    
+	    		$('#newest_behaviours').empty();
+  			$('#newest_behaviours').append(html);
+			return;
+			}
+
+			if (data.reason==='Cookie') {
+                    		console.log('Cookie problem. Redoing the request')
+                    		count--;
+                    		if (count>0) {
+                        		doReq(count);
+                        		return
+                    		}
+                	}
+
+		    }
+		    		    
+		);
+	     };
+
+	     doReq(count);
+	     
+	}
+
+	function render_total_attr(){
+		html ="";
+		if (number_interests > 0)
+			html += "<h4>Number of interest-based attributes: "+ number_interests +" </h4>";
+		
+		if (number_behaviours > 0)
+			html += "<h4>Number of behaviour-based attributes: "+ number_behaviours +" </h4>";
+	
+		if (number_demo > 0)
+			html += "<h4>Number of demographics-based attributes: "+ number_demo+" </h4>";
+
+		$('#total_attr').html(html);
+	}
+
+
+	function render_niche_attributes(direction = 1){
+	       html="";
+	    if(currpage_niche_interests==0 && direction == -1)return;	    
+	    currpage_niche_interests += direction;
+	    var startIdx_niche = currpage_niche_interests * pageSize;
+	    var end = (startIdx_niche+pageSize < niche_attributes.length )? (startIdx_niche + pageSize) : niche_attributes.length;
+	    if(currpage_niche_interests >0)
+		html += "<div style='float:left;position:relative;height:100px'><img src='static/prev48.png' style='cursor:pointer;margin-top:50px; width:40px' onclick='render_niche_attributes(-1)'></div>";
+   	    else
+		html += "<div style='float:left; position:relative;height:100px'><img src='static/prev48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	
+   	  for (var x=startIdx_niche;x < end; x++)
+  	  {
+          if (niche_attributes[x]['description'].length>90){
+            niche_attributes[x]['description']= niche_attributes[x]['description'].slice(0,90) +"..."
+          }
+
+          html += "<div class=\"col-md-2\" style=\"margin-right: 20px\"><div class=\"col-md-12\" style=\"box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;height: 180px;width:185px;margin-bottom:7px\"><p style=\"font-size: 12px;text-align: center;margin-top: 25px\"><b>"+niche_attributes[x]['name']+"</b></p><p style=\"font-size: 9px;text-align: center;\">"+niche_attributes[x]['description']+"</p><p style=\"font-size: 9px;text-align: center;\" > <b>Nb of facebook users sharing this attribute:</b> "+nFormatterWrapper(niche_attributes[x]['audience_size'])+"</p></div><p style=\"font-size: 10px;text-align: center;margin-left:20px\"> Added on: "+niche_attributes[x]['ts']+"</p></div>"
+    			}
+	    if(end < niche_attributes.length)
+		html += "<div style='height:100px; position:absolute;right:0'><img src='static/next48.png' style='cursor:pointer; margin-top:50px; width:40px' onclick='render_niche_attributes(1)'></div>";
+   	    else
+		html += "<div style='height:100px;position:absolute;right:0'><img src='static/next48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	  		
+	$('#niche_interests').empty();
+  	$('#niche_interests').append(html);		
+            
+            
+
+	}
+
+	function render_newest_demo(direction = 1){
+	    html="";
+	if(currpage_newest_demo == 0 && direction == 1) return;
+	currpage_newest_demo += direction;
+	var start = currpage_newest_demo * pageSize;
+	var end = (start + pageSize < newest_demographics.length) ? (start + pageSize) : newest_demographics.length;
+     	
+     	if(currpage_newest_demo > 0)
+		html += "<div style='float:left;position:relative;height:100px'><img src='static/prev48.png' style='cursor:pointer;margin-top:50px; width:40px' onclick='render_newest_demo(-1)'></div>";
+   	    else
+		html += "<div style='float:left; position:relative;height:100px'><img src='static/prev48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	
+
+
+  	for (var x=start;x<end;x++)
+  	{
+          if (newest_demographics[x]['description'].length>90){
+            newest_demographics[x]['description']= newest_demographics[x]['description'].slice(0,90) +"..."
+          }
+
+  				html += "<div class=\"col-md-2\" style=\"margin-right: 20px\"><div class=\"col-md-12\" style=\"box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;height: 150px;width:185px;margin-bottom:7px\"><p style=\"font-size: 12px;text-align: center;margin-top: 50px\"><b>"+newest_demographics[x]['name']+"</b></p><p style=\"font-size: 9px;text-align: center;\">"+newest_demographics[x]['description']+"</p></div><p style=\"font-size: 10px;text-align: center;margin-left:20px\"> Added on: "+newest_demographics[x]['ts']+"</p></div>"
+  			}
+			if(end < newest_demographics.length)
+				html += "<div style='height:200px;position:absolute;right:0'><img src='static/next48.png' style='margin-top:50px;width:40px' onclick='render_newest_demo(1)'></div>";	
+			else
+				html += "<div style='height:200px;position:absolute;right:0'><img src='static/next48.png' style='margin-top:50px;width:40px;opacity:0.5'></div>";	
+  			$('#newest_demographics').empty();
+  			$('#newest_demographics').append(html); 
+
+	}
+
+
+	var number_interests = {{number_interests|safe}};        
+
+	var number_behaviours = {{number_behaviours|safe}}
+
+	var number_demo = {{number_demo|safe}}	
+
+	var newest_interests={{latest_interests|safe}};
+
+        var newest_demographics={{latest_demo|safe}};
+
+        var newest_behaviours={{latest_behav|safe}};
+        
+        var niche_interests = {{niche_interests|safe}};
+        
+        var niche_behaviors = {{niche_behaviors|safe}};
+
+	var niche_attributes = niche_interests.concat(niche_behaviors);
+        
+        //var niche_demographics = {{niche_demographics|safe}};
+	var pageSize = 5;
+
+
+  		$(document).ready(function() {
+			var html="";
+			if(newest_interests.length > 0)
+				current_page_interests += 1;
+			if(current_page_interests > 0)
+				html += "<div class='col-md-1'><img src='static/prev48.png' style='cursor:pointer;margin-top:50px; width:40px' onclick='load_next_interests(5,-1)'/></div>";	
+  			else
+				html += "<div class='col-md-1'><img src='static/prev48.png' style='margin-top:50px;opacity:0.5;width:40px' /></div>";
+		        var end = (newest_interests.length < pageSize)? newest_interests.length : pageSize;
+			for (var x=0; x < end; x++)
+  			{
+  				html += "<div class=\"col-md-2\"><img src=\""+newest_interests[x]['logo']+"\" onerror=\"this.onerror=null;this.src='static/no-image.png';\" height=\"150\" width=\"150\"/><p style=\"font-size: 14px;text-align: center;margin-top: 2px;\">"+newest_interests[x]['name']+"</p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\">"+newest_interests[x]['category']+"</p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\"><i>"+newest_interests[x]['description']+"</i></p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\"> Added on: "+newest_interests[x]['ts']+"</p></div>";
+  			}
+
+		     if(newest_interests.length > pageSize)
+				html += "<div class='col-md-1'><img src='static/next48.png' style='cursor:pointer; margin-top:50px; width:40px' onclick='load_next_interests(5,1)'/></div>";	
+  		        else
+				html += "<div class='col-md-1'><img src='static/next48.png' style='margin-top:50px;opacity:0.5' /></div>";	
+			$('#newest_interests').empty();
+  			$('#newest_interests').append(html);
+
+		        render_newest_demo();	 
+
+  			
+			html="";
+			if(newest_behaviours.length >0){
+				current_page_behaviours = 0;
+			}
+		   	if(current_page_behaviours > 0)
+				html += "<div style='float:left;position:relative;height:200px'><img src='static/prev48.png' style='cursor:pointer; margin-top:50px; width:40px' onclick='load_next_behaviours(5,-1)'/></div>";
+		        else
+				html += "<div style='float:left;position:relative;height:200px'><img src='static/prev48.png' style='margin-top:50px;width:40px;opacity:0.5'/></div>";	
+			var end = (newest_behaviours.length < pageSize)? newest_behaviours.length : pageSize;
+   			for (var x=0;x < end;x++)
+  			{
+          if (newest_behaviours[x]['description'].length>90){
+            newest_behaviours[x]['description']= newest_behaviours[x]['description'].slice(0,90) +"..."
+          }
+
+          html += "<div class=\"col-md-2\" style=\"margin-right: 20px\"><div class=\"col-md-12\" style=\"box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;height: 150px;width:185px;margin-bottom:7px\"><p style=\"font-size: 12px;text-align: center;margin-top: 50px\"><b>"+newest_behaviours[x]['name']+"</b></p><p style=\"font-size: 9px;text-align: center;\">"+newest_behaviours[x]['description']+"</p></div><p style=\"font-size: 10px;text-align: center;margin-left:20px\"> Added on: "+newest_behaviours[x]['ts']+"</p></div>"
+  			}
+
+			if(newest_behaviours.length > pageSize)
+				html += "<div style='height:200px;position:absolute;right:0'><img src='static/next48.png' style='cursor:pointer;margin-top:50px;width:40px' onclick='load_next_behaviours(5,1)'/></div>";	
+  			else
+				html += "<div style='height:200px;position:absolute;right:0'><img src='static/next48.png' style='margin-top:50px;width:40px;opacity:0.5' /></div>";	
+
+			$('#newest_behaviours').empty();
+  			$('#newest_behaviours').append(html);			
+            
+   	         	    render_niche_attributes();
+              
+	    render_total_attr();
+            
+            
+	});    	
+    </script>
+
+   <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(function() {drawChart2(preference_diffs,'chart_div2')});
+        google.charts.setOnLoadCallback(function() {drawChart2(removed_diffs,'chart_div3')});
+
+       function createCustomReport(date,name,added,removed) {
+               var undefined;
+               if (removed===undefined) removed=false;
+//                   console.log(date,name,added)
+          var html ='<div class="pre-scrollable container" style="padding:5px 5px 5px 5px;width:300px;height:400px">'+
+//          '<h5> '+name+' for '+$.format.date(new Date(date),"ddd, MMM, D, yyyy") +' </h5>'+
+                        '<h5> '+name+' for '+date +' </h5>'+
+
+         '<hr style="width: 100%; color: black; height: 1px; background-color:black;" />'
+         
+//            '<h6 class="text-primary">Total: '+total_number+' </h6> ';
+        if (added.length>0) {
+            if (!removed) {
+            html+='<h6 class="text-success">New '+name+': </h6> '+'<ul class="list-group">';
+
+            } else {
+                        html+='<h6 class="text-danger"> Removed '+name+': </h6> '+'<ul class="list-group">';
+
+            }
+          
+
+          for (let i=0;i<added.length;i++) {
+                html+= '<li class="list-group-item">'+ added[i] +'</li>';
+            }
+
+          html+='</ul>';
+        }
+        
+
+        
+
+        html+='</div>';
+        return html
+        }
+
+//        function createCustomReport(date) {
+//          return '<div class="pre-scrollable container" style="padding:5px 5px 5px 5px;width:300px;height:400px">'+
+//          '<h5> Likes for '+$.format.date(date,"ddd, MMM, yyyy") +' </h5>'+
+//         '<hr style="width: 100%; color: black; height: 1px; background-color:black;" />'+
+//         
+//            '<h6 class="text-primary">Total: 232 </h6> '+
+//
+//          '<h6 class="text-success">New likes: </h6> '+
+//          
+//
+//          '<ul class="list-group">'+
+//            '<li class="list-group-item">Game Of Thrones</li>'+
+//           ' <li class="list-group-item">Grimm</li>'+
+//            '<li class="list-group-item">Attack On Titan</li>'+
+//          '</ul>'+
+//          
+//            '<h6 class="text-danger">Removed likes: </h6>'+
+//          
+//
+//          '<ul class="list-group">'+
+//            '<li class="list-group-item">Pawn Stars</li>'+
+//            '<li class="list-group-item">Mortal Kombat</li>'+
+//          '</ul>'+
+//
+//        '</div>'
+//        }
+        var preference_diffs = {{preference_diffs|safe}}
+        var removed_diffs = {{removed_diffs|safe}}
+
+        function drawChart2(data,elementId) {
+
+
+          if (data.length<2) {
+
+            var errMsg = "<div class='col-md-4 col-md-offset-5' style='margin-top:50px;margin-bottom:40px'><p style='font-size:15px'>No preferences data for a timeline!</p></div>";
+            document.getElementById(elementId).innerHTML = errMsg;
+
+          return
+        }
+
+        var dataViz=google.visualization.arrayToDataTable(data);
+
+          var options = {
+            legend: { position: 'top' },
+            height: 400,
+          	vAxis: { 
+              textPosition: 'none',
+              viewWindow: {
+              max:0.3,
+	            min: {{viewsize|safe}}
+              },
+      	    gridlines: {
+              	color: 'transparent'
+                }},
+           	tooltip: { isHtml: true,trigger: 'both' },
+                	pointSize: 15,
+                	pointShape: 'circle'
+                };
+          var chart = new google.visualization.ScatterChart(document.getElementById(elementId));
+
+          chart.draw(dataViz, options);
+        }
+           
+        // var  likeReport = {newEntries:['Game Of Thrones','Pokemon'],oldEntries:['Series'],total:250}
+  	</script>
+
+
+      <!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1137750199667219');
+  fbq('track', 'PageView');
+    fbq('track', 'ViewContent');
+
+
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1137750199667219&ev=PageView&noscript=1"
+/></noscript>
+
+  </head>
+
+  <body>
+
+    {% include "users_statistics/users_statistics-header.html" %}
+
+    <div class="container" style="margin-top: 100px">
+    	<div class="row">
+    		<div class="col-md-12">
+	<h2>Data</h2>
+	 <div class='text-secondary' style="font-size:16px;margin-top:5px; margin-bottom: 15px">This page allows you to check the data Facebook has inferred about you </div> 
+
+	 <div id='total_attr'></div>
+	 <br>
+          <h3>Latest attributes Facebook has inferred about you</h3>
+
+                <hr>
+
+          <div class="col-md-12">
+		  <h4>Interests:</h4>
+	    <em> <span id="total_num_interests"></span> </em>
+	    <p></p>
+            <div id="newest_interests"></div>
+          </div>
+            
+          <div class="col-md-12" style="margin-top:30px">
+ 	    <h4>Behaviours:</h4>
+   	    <p></p>
+            <div id="newest_behaviours"></div>
+	  </div>
+
+          <div class="col-md-12" style="margin-top:30px">
+	     <h4>Demographics:</h4>
+	     <p></p>
+	     <div id="newest_demographics"></div>
+          </div>
+                
+
+                
+                
+                    <div class="container" style="margin-top: 40px">
+    	<div class="row">
+    		<div class="col-md-12">	      
+          <h3>Rare attributes Facebook has inferred about you</h3><br/>
+	  <span>Attributes that are shared by the smallest number of users on Facebook</span><br>
+            <div class="col-md-12" style="margin-top:30px;margin-bottom:20px;">
+               <div id="niche_interests"></div>
+          </div>
+                       
+           <!-- <div class="col-md-12" style="margin-top:30px">
+                <div id="niche_behaviors"></div>
+          </div>
+                
+        <div class="col-md-12" style="margin-top:30px">
+            <div id="niche_demographics"></div>
+	</div>-->
+                
+    		</div>
+
+    		<div class="col-md-12">
+            <h3>Timeline of when Facebook inferred each attribute:</h3><hr>
+	    	<div id="chart_div2"></div>
+    		</div>
+
+          <div class="col-md-12">
+            <h3>Timeline of when Facebook removed each attribute:</h3><hr>
+        <div id="chart_div3"></div>
+        </div>
+
+    		<div class="col-md-12" style="margin-top: 25px">
+          <h3>Top attributes used by advertisers to target you:</h3><hr>
+          <div class="col-md-6">
+            <p style="text-align: center;">Interests</p>
+            <div id="wordcloud_interests" style="height: 325px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;;margin-bottom: 50px;"></div>            
+          </div>
+          <div class="col-md-6">
+            <p style="text-align: center;">Demographics</p>
+            <div id="wordcloud_demographics" style="height: 325px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;;margin-bottom: 50px;"></div>            
+          </div>
+          <div class="col-md-6">
+            <p style="text-align: center;">Behaviours</p>
+            <div id="wordcloud_behaviours" style="height: 325px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;;margin-bottom: 50px;"></div>            
+          </div>
+          <div class="col-md-6">
+            <p style="text-align: center;">Biographical details</p>
+            <div id="wordcloud_bio" style="height: 325px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;;margin-bottom: 50px;"></div>            
+          </div>
+
+          <div class="col-md-12">
+            <p style="text-align: center;">Hidden attributes that you were targeted with, but do not appear in your preference page.</p>
+            <div id="wordcloud_missing" style=""></div>
+          </div>
+    		</div>
+
+
+
+
+
+        <div class="col-md-12">
+          <div id="top_wordcloud_objects"></div>
+        </div>
+    	</div>    	
+    </div>
+                <footer>
+         <p>You can find more information on the host of this internet web site here : <a href="https://imprint.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Imprint/Impressum</a> | <a href="https://data-protection.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Data Protection</a>
+ </p></footer>
+  </body>
+ </html>

@@ -1,0 +1,675 @@
+{% load static %}
+
+<html>
+
+<head>
+    <link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+    <link rel="stylesheet" href='{% static "styles.css" %}'>
+    <title>CheckMyNews</title>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        .centerme {
+            position: relative;
+            top: 35%;
+            transform: translateY(-35%);
+        }
+
+
+        .col-centered {
+            float: none;
+            margin: 0 auto;
+        }
+
+        ._kvn,
+        ._3chq {
+            max-height: 300px;
+            max-width: 500px;
+        }
+
+        .scaledImageFitWidth {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .scaledImageFitHeight {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .uiScaledImageContainer {
+            max-height: 400px;
+            max-width: 600px;
+            justify-content: center;
+        }
+
+        .truncate {
+            max-height: 150px;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #ads {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        //         var top_ads={{top_ads|safe}};
+        //         var userId = {{user_id}};
+        var adsForDay = 'get_news_posts_for_day';
+        var activeDates = {{ active_dates| safe}}
+        var ads_counter = [];
+        var dt = '';
+        if (activeDates.length > 0) {
+            var str = activeDates[0];
+            var parts = str.split("/");
+            dt = new Date(parseInt(parts[2], 10),
+                parseInt(parts[1], 10) - 1,
+                parseInt(parts[0], 10));
+
+        }
+        console.log(activeDates[0])
+        console.log(dt)
+        //          Pad zeros for dates
+
+
+        google.charts.load('current', { packages: ['corechart', 'line'] });
+
+        function createLoader() {
+            $('#all_ads').html('<div class="col-md-offset-5 container loader"></div>')
+
+        }
+
+        function remove_html_tag(st) {
+            var div = document.createElement("div");
+            div.innerHTML = st;
+            var text = div.textContent || div.innerText || "";
+            return text;
+        }
+
+        function createLoader() {
+            $('#all_ads').html('<div class = "jumbotron " style="height:500px"><div class="col-md-offset-5 centerme loader"></div></div>')
+
+        }
+
+	function createAdList(top_ads) {
+		var html ='<ul class="list-group">';
+		for (var i=0;i<top_ads.length;i++)
+		{
+			html+="<div class='col-md-12 list-group-item'><div class='col-md-4'><img src='"+top_ads[i]['img']+"' width='300' ><br>"+top_ads[i]['name']+"</div><div class='col-md-8'><div class='col-md-12' > <b>Time: </b>" +top_ads[i]['ts'] + "</div><div class='col-md-12' > <b>Advertiser: </b>";
+			var advertiserId = top_ads[i]['fb_adv_id']!=-1?top_ads[i]['fb_adv_id']:top_ads[i]['non_fb_adv_id'];
+			if (((typeof advertiserId)==='string') && advertiserId!="") {
+				advertiserId = '\"' + advertiserId + '\"';
+                	}
+			if (advertiserId && (advertiserId!=='')) {
+                		html += "<button type='button' class='btn btn-link btn-md' onclick='getAdvertiserInfo("+advertiserId+",\"\",\"\",\"\")'>"+ (top_ads[i]['advertiser_name']?top_ads[i]['advertiser_name']:top_ads[i]['advertiser_link'])+"</button>";
+                	} else {
+                    		html+= "<span>Collecting...</span>";
+                        }
+
+	                html+="</div>"
+        	        html+="<div class='col-md-12'> <b>Advertiser category: </b>"+( ((top_ads[i]['advertiser_category'])&&(top_ads[i]['advertiser_category'].length>0))?top_ads[i]['advertiser_category']: "<span>Collecting...</span>") +"</div>"
+			html+=   "<div class='col-md-12' > <b>Targeting types: </b>";
+                      	if (top_ads[i]['is_waist']==false) {
+		        	if (top_ads[i]['compact_explanation']) {
+                          		if (top_ads[i]['compact_explanation'][0]=='') {
+                              			html += top_ads[i]['compact_explanation'][1];
+                          		}
+                       			else {
+                              			html += top_ads[i]['compact_explanation'][0]+  " (" +top_ads[i]['compact_explanation'][1]+")" ;
+					}
+				} 
+			} 
+		
+			else if (top_ads[i]['is_waist']==true) {
+				for (var waist_i=0;waist_i<top_ads[i]['compact_waist_explanations'].length;waist_i++) {
+					var waist_compact_exp =top_ads[i]['compact_waist_explanations'][waist_i]
+                              		html += waist_compact_exp[0][0]+  " (" +waist_compact_exp[1]+"), " ;
+				}
+				if (top_ads[i]['compact_waist_explanations'].length!=0) {
+                                	html = html.substring(0,html.length-2)
+                              	}
+                   	}
+
+                    	html+="</div> <br>";
+
+   	      		html+="<div class='col-md-12' > <b>The advertiser targeted <span class='text-danger'>other users</span> with: </b>";
+	      		if ((top_ads[i]['advertiser_expl_profile'].length!=0) ) {
+                     		for (let j=0;j<top_ads[i]['advertiser_expl_profile'].length;j++) {
+                        		if (top_ads[i]['advertiser_expl_profile'][j][0]=='') {
+                            			html += top_ads[i]['advertiser_expl_profile'][j][1] + ", ";
+                            			continue;
+                        		}
+                        		html += top_ads[i]['advertiser_expl_profile'][j][0]+  " (" +top_ads[i]['advertiser_expl_profile'][j][1]+")" + ", ";
+                     		}
+
+                      		html = html.slice(0,html.length-2);
+                   	}
+		
+			html += "</div>";   
+
+                      	if (top_ads[i]['is_waist']==false) {
+	  			html+="<div class='col-md-12' > <b>Facebook Explanation text</b> (available only for old-type explanations):  " +( (top_ads[i]['explanation'] && top_ads[i]['explanation']!='')?('<small>' + top_ads[i]['explanation']+'</small>'):'<span>Collecting...</span>')+ "</div>";
+            		}
+               
+                	html+="</div></div>";
+            	}
+          	html+='</ul>';
+               	$('#all_ads').html(html);
+          }
+
+
+        function drawLineChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date')
+            data.addColumn('number', 'Number of news posts')
+
+            var arr_data = [];
+            for (var i = 0; i < ads_counter.length; i++) {
+                var item = [];
+                var curDate = new Date(ads_counter[i]['d']);
+                item.push(curDate.getDate() + "/" + (curDate.getMonth() + 1) + "/" + curDate.getFullYear());
+                item.push(ads_counter[i]['cnt']);
+                arr_data.push(item)
+
+                if (i < ads_counter.length - 1) {
+                    curDate.setDate(curDate.getDate() + 1);
+                    var nextDate = new Date(ads_counter[i + 1]['d']);
+                    while (curDate.getTime() < nextDate.getTime()) {
+                        var emp_item = [];
+                        emp_item.push(curDate.getDate() + "/" + (curDate.getMonth() + 1) + "/" + curDate.getFullYear());
+                        emp_item.push(0);
+                        arr_data.push(emp_item);
+                        curDate.setDate(curDate.getDate() + 1);
+                    }
+                }
+            }
+            console.log(arr_data);
+            data.addRows(arr_data);
+
+            var options = {
+                legend: { position: 'none' },
+                hAxis: { title: 'News posts you received from the last 3 months', textPosition: 'none' },
+                vAxis: { title: '' },
+                title: 'Number of news posts per day'
+            };
+            var chart = new google.visualization.LineChart(document.getElementById("chart_counter"));
+            chart.draw(data, options);
+        }
+
+
+
+
+
+        $(document).ready(function () {
+	    var done = false;
+
+            $("#datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                beforeShowDay: function (date) {
+                    function pad(num, size) {
+                        var s = "000000000" + num;
+                        return s.substr(s.length - size);
+                    }
+                    //getDate() returns the day (0-31)
+                    //          console.log(date)
+                    let dateStr = pad(date.getDate(), 2) + '/' + pad((date.getMonth() + 1), 2) + '/' + date.getFullYear();
+                    //          console.log(dateStr)
+                    //          console.log(activeDates)
+                    //          console.log(activeDates.indexOf(dateStr))
+                    if (activeDates.indexOf(dateStr) >= 0) {
+                        return [true, ''];
+                    }
+                    return [false, ''];
+                },
+                onSelect: function (value, date) {
+                    console.log(value);
+                    createLoader()
+                    console.log(value)
+                    console.log(date)
+                    //         alert('The chosen date is ' + value); 
+                    var count = 4;
+
+                    function doReq(count, value) {
+                        $.post(adsForDay, { "day": value },
+                            function (data) {
+                                console.log(data)
+                                if (data.status === 'success') {
+
+                                    createAdList(data.daily_ads);
+                                    ads_counter = data.ads_counter;
+
+                                    //google.charts.load('current', {packages:['corechart','line']});
+				    if(done === false) {
+	                                    google.charts.setOnLoadCallback(drawLineChart);
+					    done = true;
+				    }					
+
+                                    return;
+
+                                }
+
+                                if (data.reason === 'Cookie') {
+                                    console.log('Cookie problem. Redoing the request')
+                                    count--;
+                                    if (count > 0) {
+                                        doReq(count, value);
+                                        return
+                                    }
+                                }
+
+                            })
+                    };
+                    doReq(count, value);
+
+                    // Hide the datepicker div when something is selected
+
+                    //         $("#datepicker").hide(); 
+                }
+            });
+            if (dt !== '') {
+                $("#datepicker").datepicker("setDate", dt);
+                $('.ui-datepicker-current-day').click();
+
+            }
+
+        })
+
+
+    </script>
+
+
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1137750199667219');
+        fbq('track', 'PageView');
+        fbq('track', 'ViewContent');
+
+
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1137750199667219&ev=PageView&noscript=1" /></noscript>
+
+
+
+</head>
+
+<body>
+
+
+    <script>
+        function nFormatter(num, digits) {
+            var si = [
+                //            { value: 1E18, symbol: "E" },
+                //            { value: 1E15, symbol: "P" },
+                //            { value: 1E12, symbol: "T" },
+                { value: 1E9, symbol: "B" },
+                { value: 1E6, symbol: "M" },
+                { value: 1E3, symbol: "k" }
+            ], rx = /\.0+$|(\.[0-9]*[1-9])0+$/, i;
+            for (i = 0; i < si.length; i++) {
+                if (num >= si[i].value) {
+                    return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+                }
+            }
+            return num.toFixed(digits).replace(rx, "$1");
+        }
+
+        function nFormatterWrapper(num) {
+            return nFormatter(num, 3);
+        }
+
+
+        function emptyAdvertisers() {
+            $('#modalAdvertiserName').empty();
+            $('#modalAdvertiserBody').empty();
+
+            $('#modalAdvertiserBody').addClass('loader');
+            $('#modalAdvertiserBody').addClass('col-centered');
+        }
+
+        function getAdvertiserInfo(advertiserId, advertiserName, webSite, img_url) {
+            emptyAdvertisers();
+
+            $('#advertiserModal').modal();
+
+            $('#modalAdvertiserName').html('<h1>' + advertiserName + '<h1>')
+            $.ajax({
+                type: 'POST',
+                url: 'get_advertiser_info',
+                data: { 'advertiser': advertiserId },
+                success: function (resp) {
+                    $('#modalAdvertiserBody').removeClass('loader');
+                    $('#modalAdvertiserBody').removeClass('col-centered');
+
+
+                    if (resp.status !== 'success') {
+
+            var html = '<div class="col-md-4"><div class="col-md-12 "> <img class="img-responsive" style="max-width: 100%;" src="' + img_url + '" > </div></div>';
+                        html += '<div class="col-md-8">'
+                        html += '<div class="col-md-12"> <b>Website: </b><a href="' + webSite + '" target="_blank">' + webSite + '</a></div> <br> <br>';
+                        html += '<div class=" col-md-12 alert alert-danger">Cannot retrieve more info for advertiser!</div> <br>';
+                        html += '</div>'
+                        $('#modalAdvertiserBody').html(html);
+
+                        return
+                    }
+
+
+
+                    var html = '<div class="col-md-4"><div class="col-md-12 "> <img class="img-responsive" style="max-width: 100%;" src="' + resp.info.img_url + '" > </div></div>';
+
+                    html += '<div class="col-md-8">'
+
+                    var website = resp.info.website ? resp.info.website : advertiserName;
+
+                    html += '<div class="col-md-12"> <b>Website: </b><a href="' + website + '" target="_blank">' + website + '</a></div>';
+
+                    var advertiserPrimaryCategory = resp.info.primary_category ? resp.info.primary_category + '/ ' : ''
+
+                    var advertiserCategory = resp.info.category ? resp.info.category.slice(1, -1) : '<span class="text-danger">Cannot retrieve category of advertiser..</span>'
+
+                    html += '<div class="col-md-12"> <b>Advertiser category: </b>' + advertiserPrimaryCategory + advertiserCategory + '</div>'
+
+
+
+
+          var likes = resp.info.likes ? nFormatterWrapper(resp.info.likes) : '<span class="text-danger">Cannot retrieve likes of advertiser..</span>'
+                    html += '<div class="col-md-12"> <b>Nb of likes: </b>' + likes + '</div>';
+
+                    var nbAds = resp.stats.adcount;
+                    html += '<div class="col-md-12"> <b>Nb of ads you received: </b>' + nbAds + '</div>';
+
+
+                    var minDay = resp.stats.minday;
+                    var maxDay = resp.stats.maxday;
+
+                    if (minDay && maxDay) {
+                        html += '<div class="col-md-12"> <b>You received the first ad on: </b>' + minDay + '</div>';
+                        html += '<div class="col-md-12"> <b>You received the last ad on: </b>' + maxDay + '</div>';
+                    }
+
+
+                    if (resp.user_exps.length > 0) {
+                        html += "<div class='col-md-12' > <b>The advertiser targeted <span class='text-danger'>you</span> with: </b>";
+                        for (let j = 0; j < resp.user_exps.length; j++) {
+                            if (resp.user_exps[j][0] == '') {
+                                html += resp.user_exps[j][1] + ", ";
+                                continue;
+                            }
+                            html += resp.user_exps[j][0] + " (" + resp.user_exps[j][1] + ")" + ", ";
+                        }
+                        html = html.slice(0, -1);
+
+                        html += '</div>'
+
+                    }
+
+
+
+                    if (resp.all_exps.length > 0) {
+                        html += "<div class='col-md-12' > <b>The advertiser targeted <span class='text-danger'>other users</span> with: </b>";
+                        for (let j = 0; j < resp.all_exps.length; j++) {
+                            if (resp.all_exps[j][0] == '') {
+                                html += resp.all_exps[j][1] + ", ";
+                                continue;
+                            }
+                            html += resp.all_exps[j][0] + " (" + resp.all_exps[j][1] + ")" + ", ";
+                        }
+                        html = html.slice(0, -1);
+                        html += '</div>'
+
+                    }
+
+                    html += '</div>'
+
+                    var top_ads = resp.top_adv_ads;
+
+                    if (top_ads.length) {
+                        html += '<br/> <div class="col-md-12" ><h3  > Top Ads: </h3></div>';
+
+                        html += '<ul class="list-group">';
+
+                        for (var i = 0; i < top_ads.length; i++) {
+
+                            html += "<div class='col-md-12 list-group-item'><div class='col-md-4'><img src='" + top_ads[i]['img'] + "' style='width:100%' ><br>" + top_ads[i]['name'] + "</div><div class='col-md-8'><div class='col-md-12' > <b>Number of impressions: </b>" + top_ads[i]['noads'] + "</div>";
+                            // html+="<div class='col-md-12' > <b>Explanation:</b> " +( (top_ads[i]['explanation'] && top_ads[i]['explanation']!='')?('<small>'+top_ads[i]['explanation']+'</small>'):'<span class="text-danger">Collecting the explanation for this advertisement..</span>')+ "</div>";
+
+                            // if (top_ads[i]['compact_explanation']) {
+                            //    html+=   "<div class='col-md-12' > <b>Compact explanation: </b>";
+                            //         if (top_ads[i]['compact_explanation'][0]=='') {
+                            //             html += top_ads[i]['compact_explanation'][1];
+                            //         }
+                            //         else {
+                            //         html += top_ads[i]['compact_explanation'][0]+  " (" +top_ads[i]['compact_explanation'][1]+")" ;}
+                            //     html+="</div> <br>";
+
+                            // }
+                            // 
+                            //    html+=   "<div class='col-md-12' > <b>Targeting types: </b>";
+                            //    
+                            html += "<div class='col-md-12' > <b>Targeting types: </b>";
+
+                            if (top_ads[i]['is_waist'] == false) {
+                                if (top_ads[i]['compact_explanation']) {
+                                    if (top_ads[i]['compact_explanation'][0] == '') {
+                                        html += top_ads[i]['compact_explanation'][1];
+                                    }
+                                    else {
+                                        html += top_ads[i]['compact_explanation'][0] + " (" + top_ads[i]['compact_explanation'][1] + ")";
+                                    }
+
+                                }
+                            } else if (top_ads[i]['is_waist'] == true) {
+
+                                for (var waist_i = 0; waist_i < top_ads[i]['compact_waist_explanations'].length; waist_i++) {
+                                    var waist_compact_exp = top_ads[i]['compact_waist_explanations'][waist_i]
+                                    html += waist_compact_exp[0][0] + " (" + waist_compact_exp[1] + "), ";
+                                }
+
+                                if (top_ads[i]['compact_waist_explanations'].length != 0) {
+                                    html = html.substring(0, html.length - 2)
+                                }
+                            }
+
+
+
+                            html += "</div> <br>";
+
+
+                            if (top_ads[i]['expl_profile'].length != 0) {
+                                html += "<div class='col-md-12' > <b>All users have received this ad for: </b>";
+                                for (let j = 0; j < top_ads[i]['expl_profile'].length; j++) {
+                                    if (top_ads[i]['expl_profile'][j][0] == '') {
+                                        html += top_ads[i]['expl_profile'][j][1] + ", ";
+                                        continue;
+                                    }
+                                    html += top_ads[i]['expl_profile'][j][0] + " (" + top_ads[i]['expl_profile'][j][1] + ")" + ", ";
+                                }
+
+
+
+
+
+                                html = html.slice(0, html.length - 2);
+                                html += "</div>";
+                            }
+
+
+                            if (top_ads[i]['is_waist'] == false) {
+                                html += "<div class='col-md-12' > <b>Facebook Explanation text</b> (available only for old-type explanations):  " + ((top_ads[i]['explanation'] && top_ads[i]['explanation'] != '') ? ('<small>' + top_ads[i]['explanation'] + '</small>') : '<span>Collecting...</span>') + "</div>";
+                            }
+
+
+
+
+
+                            html += "</div></div>";
+                            //              html+="<div class='col-md-12'><div class='col-md-4'><img src='"+top_advertisers['categories'][sel_cat][i]['logo']+"' height='100' width='100'></div><div class='col-md-8'><div class='col-md-12'>"+top_advertisers['categories'][sel_cat][i]['name']+"</div><br/><br/><br/><div class='col-md-12' style='font-size:12px'> By: <a href ='"+top_advertisers['categories'][sel_cat][i]['advertiser_name']+"'>"+top_advertisers['categories'][sel_cat][i]['advertiser_name']+"<a/></div><div class='col-md-12' style='font-size:12px'> Count:" + top_advertisers['categories'][sel_cat][i]['freq'] + "</div></div></div><br/><hr>";
+                            html += "</div>"
+                        }
+                        html += '</ul>';
+                    }
+
+
+
+                    $('#modalAdvertiserBody').html(html);
+
+
+
+
+
+                }
+            })
+
+        }
+
+
+
+    </script>
+
+    <div class="modal fade" id="advertiserModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="modalAdvertiserName"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="loader col-centered " id="modalAdvertiserBody">
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="./landing_page" class="navbar-brand"><img src="{% static "enabled_48.png" %}" height="50"
+                        width="50" style="float:left;margin-top:-15px">CheckMyNews</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="./view_all_ads">Ads</a></li>
+                        <li><a href="">News Posts</a></li>
+                        <li><a href="./view_all_public_posts">Public Posts</a></li>
+                        <li><a href="./monitoring_statistics" target="_blank">Monitoring</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" style="margin-top: 100px">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <h2>News Posts</h2>
+                <div class='text-secondary' style="font-size:16px;margin-top:5px; margin-bottom: 15px">Check your daily
+                    news post consumption, by clicking on any date in the calendar!</div>
+
+            </div>
+            <div class='col-md-5'>
+                <div id='chart_counter'></div>
+            </div>
+            <div class="col-md-3 pull-right" id="datepicker"></div> <br />
+
+
+        </div>
+        <br />
+        <br />
+        <br />
+
+
+        <div class="col-md-12" id="all_ads"></div>
+        <footer>
+            {% comment %} <p>You can find more information on the host of this internet web site here : <a
+                    href="https://imprint.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Imprint/Impressum</a> | <a
+                    href="https://data-protection.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Data Protection</a>
+                {% endcomment %}
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

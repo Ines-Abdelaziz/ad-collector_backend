@@ -1,0 +1,275 @@
+<html>
+  <head>
+    <style type="text/css">
+      #ad_loc {
+        height: 100%;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      
+      
+      
+       <!-- How I'm targeted donut -->
+    <script type="text/javascript">
+    google.charts.load('current', {'packages':['timeline','corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+        function createCustomHTMLContent(flagURL, totalGold, totalSilver, totalBronze) {
+  return '<div style="padding:5px 5px 5px 5px;">' +
+      '<img src="' + flagURL + '" style="width:75px;height:50px"><br/>' +
+      '<table class="medals_layout">' + '<tr>' +
+      '<td><img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Gold_medal.svg" style="width:25px;height:25px"/></td>' +
+      '<td><b>' + totalGold + '</b></td>' + '</tr>' + '<tr>' +
+      '<td><img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Silver_medal.svg" style="width:25px;height:25px"/></td>' +
+      '<td><b>' + totalSilver + '</b></td>' + '</tr>' + '<tr>' +
+      '<td><img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Bronze_medal.svg" style="width:25px;height:25px"/></td>' +
+      '<td><b>' + totalBronze + '</b></td>' + '</tr>' + '</table>' + '</div>';
+}
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Attribute');
+      data.addColumn('date', 'Season Start Date');
+      data.addColumn('date', 'Season End Date');
+          data.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+
+      data.addRows([
+['Likes', new Date(2017, 2, 29), new Date(2017, 2, 29),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 8), new Date(2017, 3, 8),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 8), new Date(2017, 3, 8),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 8), new Date(2017, 3, 8),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 9), new Date(2017, 3, 9),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 10), new Date(2017, 3, 10),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 10), new Date(2017, 3, 10),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 12), new Date(2017, 3, 12),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 3, 13), new Date(2017, 3, 13),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 13), new Date(2017, 3, 13),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 13), new Date(2017, 3, 13),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 14), new Date(2017, 3, 14),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 14), new Date(2017, 3, 14),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 15), new Date(2017, 3, 15),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 16), new Date(2017, 3, 16),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 3, 17), new Date(2017, 3, 17),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 18), new Date(2017, 3, 18),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 18), new Date(2017, 3, 18),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 19), new Date(2017, 3, 19),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 3, 19), new Date(2017, 3, 19),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 19), new Date(2017, 3, 19),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 20), new Date(2017, 3, 20),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 21), new Date(2017, 3, 21),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 3, 21), new Date(2017, 3, 21),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 3, 22), new Date(2017, 3, 22),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 22), new Date(2017, 3, 22),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 3, 23), new Date(2017, 3, 23),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 24), new Date(2017, 3, 24),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 24), new Date(2017, 3, 24),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 3, 24), new Date(2017, 3, 24),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 25), new Date(2017, 3, 25),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 25), new Date(2017, 3, 25),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 3, 28), new Date(2017, 3, 28),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 3, 30), new Date(2017, 3, 30),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 3), new Date(2017, 4, 3),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 3), new Date(2017, 4, 3),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 4, 3), new Date(2017, 4, 3),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 4), new Date(2017, 4, 4),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 5), new Date(2017, 4, 5),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 7), new Date(2017, 4, 7),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 8), new Date(2017, 4, 8),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 8), new Date(2017, 4, 8),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 9), new Date(2017, 4, 9),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 9), new Date(2017, 4, 9),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 10), new Date(2017, 4, 10),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 10), new Date(2017, 4, 10),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 4, 11), new Date(2017, 4, 11),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 12), new Date(2017, 4, 12),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 13), new Date(2017, 4, 13),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 13), new Date(2017, 4, 13),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 14), new Date(2017, 4, 14),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 15), new Date(2017, 4, 15),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 16), new Date(2017, 4, 16),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 16), new Date(2017, 4, 16),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 19), new Date(2017, 4, 19),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 20), new Date(2017, 4, 20),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 20), new Date(2017, 4, 20),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 21), new Date(2017, 4, 21),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Interests', new Date(2017, 4, 21), new Date(2017, 4, 21),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 24), new Date(2017, 4, 24),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 4, 24), new Date(2017, 4, 24),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 25), new Date(2017, 4, 25),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 26), new Date(2017, 4, 26),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 4, 26), new Date(2017, 4, 26),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 4, 27), new Date(2017, 4, 27),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Behavioral/Demographics', new Date(2017, 4, 28), new Date(2017, 4, 28),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Likes', new Date(2017, 4, 28), new Date(2017, 4, 28),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+['Advertisers', new Date(2017, 4, 29), new Date(2017, 4, 29),createCustomHTMLContent('https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_the_USA.svg', 1, 2, 3)],
+
+      ]);
+
+      var options = {
+        height: 300,
+          width:800,
+        timeline: {
+          groupByRowLabel: true,
+            pointSize: 30,
+            pointShape: 'circle'
+        },
+           tooltip: { isHtml: true }
+           
+      };
+
+      var chart = new google.visualization.Timeline(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }   
+        
+    </script>
+      
+     <script type="text/javascript">
+//      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+        var data = google.visualization.arrayToDataTable([['Date', 'Advertisers','Behavioral/Demographics','Interests','Likes',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+[new Date(2017, 2, 29),1,NaN,NaN,NaN,createCustomReport(new Date(2017, 2, 29))],
+[new Date(2017, 3, 5),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 5))],
+[new Date(2017, 3, 6),NaN,2,3,NaN,createCustomReport(new Date(2017, 3, 6))],
+[new Date(2017, 3, 7),1,2,3,NaN,createCustomReport(new Date(2017, 3, 7))],
+[new Date(2017, 3, 8),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 3, 8))],
+[new Date(2017, 3, 9),1,NaN,NaN,4,createCustomReport(new Date(2017, 3, 9))],
+[new Date(2017, 3, 10),1,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 10))],
+[new Date(2017, 3, 11),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 3, 11))],
+[new Date(2017, 3, 12),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 3, 12))],
+[new Date(2017, 3, 13),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 3, 13))],
+[new Date(2017, 3, 14),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 3, 14))],
+[new Date(2017, 3, 15),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 3, 15))],
+[new Date(2017, 3, 16),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 16))],
+[new Date(2017, 3, 17),NaN,NaN,3,NaN,createCustomReport(new Date(2017, 3, 17))],
+[new Date(2017, 3, 18),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 3, 18))],
+[new Date(2017, 3, 19),1,NaN,3,NaN,createCustomReport(new Date(2017, 3, 19))],
+[new Date(2017, 3, 20),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 20))],
+[new Date(2017, 3, 21),NaN,2,3,NaN,createCustomReport(new Date(2017, 3, 21))],
+[new Date(2017, 3, 22),NaN,NaN,3,NaN,createCustomReport(new Date(2017, 3, 22))],
+[new Date(2017, 3, 23),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 3, 23))],
+[new Date(2017, 3, 24),NaN,2,3,4,createCustomReport(new Date(2017, 3, 24))],
+[new Date(2017, 3, 25),NaN,2,3,NaN,createCustomReport(new Date(2017, 3, 25))],
+[new Date(2017, 3, 26),1,NaN,3,NaN,createCustomReport(new Date(2017, 3, 26))],
+[new Date(2017, 3, 27),NaN,2,NaN,4,createCustomReport(new Date(2017, 3, 27))],
+[new Date(2017, 3, 28),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 28))],
+[new Date(2017, 3, 29),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 29))],
+[new Date(2017, 3, 30),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 3, 30))],
+[new Date(2017, 4, 1),NaN,NaN,3,NaN,createCustomReport(new Date(2017, 4, 1))],
+[new Date(2017, 4, 2),NaN,2,NaN,4,createCustomReport(new Date(2017, 4, 2))],
+[new Date(2017, 4, 3),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 3))],
+[new Date(2017, 4, 4),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 4, 4))],
+[new Date(2017, 4, 5),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 5))],
+[new Date(2017, 4, 6),1,2,NaN,NaN,createCustomReport(new Date(2017, 4, 6))],
+[new Date(2017, 4, 7),1,2,NaN,NaN,createCustomReport(new Date(2017, 4, 7))],
+[new Date(2017, 4, 8),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 8))],
+[new Date(2017, 4, 9),NaN,NaN,3,NaN,createCustomReport(new Date(2017, 4, 9))],
+[new Date(2017, 4, 10),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 10))],
+[new Date(2017, 4, 11),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 4, 11))],
+[new Date(2017, 4, 12),1,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 12))],
+[new Date(2017, 4, 13),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 13))],
+[new Date(2017, 4, 14),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 4, 14))],
+[new Date(2017, 4, 15),1,NaN,3,NaN,createCustomReport(new Date(2017, 4, 15))],
+[new Date(2017, 4, 16),1,2,NaN,NaN,createCustomReport(new Date(2017, 4, 16))],
+[new Date(2017, 4, 17),NaN,2,NaN,4,createCustomReport(new Date(2017, 4, 17))],
+[new Date(2017, 4, 18),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 4, 18))],
+[new Date(2017, 4, 19),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 4, 19))],
+[new Date(2017, 4, 20),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 20))],
+[new Date(2017, 4, 21),NaN,2,NaN,NaN,createCustomReport(new Date(2017, 4, 21))],
+[new Date(2017, 4, 22),1,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 22))],
+[new Date(2017, 4, 23),1,NaN,NaN,4,createCustomReport(new Date(2017, 4, 23))],
+[new Date(2017, 4, 24),1,2,3,4,createCustomReport(new Date(2017, 4, 24))],
+[new Date(2017, 4, 25),1,2,NaN,NaN,createCustomReport(new Date(2017, 4, 25))],
+[new Date(2017, 4, 26),NaN,NaN,NaN,4,createCustomReport(new Date(2017, 4, 26))],
+[new Date(2017, 4, 27),1,2,NaN,NaN,createCustomReport(new Date(2017, 4, 27))],
+[new Date(2017, 4, 28),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 28))],
+[new Date(2017, 4, 29),NaN,2,3,4,createCustomReport(new Date(2017, 4, 29))],
+[new Date(2017, 4, 30),NaN,NaN,NaN,NaN,createCustomReport(new Date(2017, 4, 30))]
+
+
+
+        ]);
+
+        var options = {
+//          title: 'Company Performance',
+          legend: { position: 'top' },
+             height: 300,
+          width:800,
+            vAxis: { 
+                textPosition: 'none',
+//                 ticks: [{v:1,f:'Advertisers'},{v:2,f:'Behavioral/Demographics'},{v:3,f:'Interests'},{v:4,f:'Likes'}]
+                viewWindow: {
+                    max:0.3,
+                    min:5
+                },
+                gridlines: {
+                    color: 'transparent'
+                }
+                   },
+            hAxis:{
+//                 gridlines: {
+//                    color: 'transparent'
+//                }
+            },
+           tooltip: { isHtml: true,trigger: 'both' },
+            pointSize: 15,
+            pointShape: 'circle'
+
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div2'));
+
+        chart.draw(data, options);
+      }
+         
+var  likeReport = {newEntries:['Game Of Thrones','Pokemon'],oldEntries:['Series'],total:250}
+
+function createCustomReport(date) {
+  return '<div class="pre-scrollable container" style="padding:5px 5px 5px 5px;width:300px;height:400px">'+
+  '<h5> Likes for '+$.format.date(date,"ddd, MMM, D, yyyy") +' </h5>'+
+ '<hr style="width: 100%; color: black; height: 1px; background-color:black;" />'+
+ 
+    '<h6 class="text-primary">Total: 232 </h6> '+
+
+  '<h6 class="text-success">New likes: </h6> '+
+  
+
+  '<ul class="list-group">'+
+    '<li class="list-group-item">Game Of Thrones</li>'+
+   ' <li class="list-group-item">Grimm</li>'+
+    '<li class="list-group-item">Attack On Titan</li>'+
+  '</ul>'+
+  
+    '<h6 class="text-danger">Removed likes: </h6>'+
+  
+
+  '<ul class="list-group">'+
+    '<li class="list-group-item">Pawn Stars</li>'+
+    '<li class="list-group-item">Mortal Kombat</li>'+
+  '</ul>'+
+
+'</div>'
+}
+    </script> 
+      
+    </head>
+    <body>
+    
+    <div id="chart_div"> 
+        </div>
+        <br />
+        <div id="chart_div2"> 
+        </div>
+    
+    
+    
+    
+    </body>
+</html>

@@ -1,0 +1,301 @@
+{% load i18n %}
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% trans "YouTube ad Collector Dashboard"%}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'report-styles/bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/meanmenu.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/morris.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/responsive.css' %}">
+
+    <script src="{% static 'report-scripts/modernizr-2.8.3.min.js' %}"></script>
+
+
+</head>
+
+
+<body>
+<!-- Start Welcome area -->
+
+{% include "users_statistics/users_statistics-header.html" %}
+
+
+<div class="all-content-wrapper" style="margin-left: 0">
+    <div class="analytics-sparkle-area" style="margin-top: 75px;">
+        <div class="container-fluid">
+            <div class="row">
+                <h3 style="margin-left: 10px;">General statistics</h3>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="analytics-sparkle-line reso-mg-b-30">
+                        <div class="analytics-content">
+                            <h5>{% trans "Number of videos watched"%}</h5>
+                            <h2 style="min-height: 42px;">
+                                        <span class="counter">
+
+                                           {{distinct_videos}}
+
+                                        </span></h2>
+
+                            <span class="text-success">{% trans "It's more than 20% of our users"%}</span>
+                            <div class="progress m-b-0">
+                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                     style="width:{{20}}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="analytics-sparkle-line reso-mg-b-30">
+                        <div class="analytics-content">
+                            <h5>{% trans "Total number of ads received "%}</h5>
+                            <h2 style="min-height: 42px;">
+                                    <span>
+                                        {{total_ads}}
+
+                                    </span>
+                            </h2>
+                            <span class="text-danger">{% trans "It's more than 20% of our users"%}</span>
+                            <div class="progress m-b-0">
+                                <div class="progress-bar progress-bar-danger" role="progressbar"
+                                     style="width:{{20}}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="analytics-sparkle-line reso-mg-b-30 table-mg-t-pro dk-res-t-pro-30">
+                        <div class="analytics-content">
+                            <h5>{% trans "Total video ads received"%}</h5>
+                            <h2 style="min-height: 42px;">
+                                    <span class="counter">
+                                        {{total_video_ads}}
+                                    </span>
+                                <span class="tuition-fees">
+                                    </span>
+                            </h2>
+                            <span class="text-info">{% trans "It's more than 34 of our users"%}</span>
+                            <div class="progress m-b-0">
+                                <div class="progress-bar progress-bar-info" role="progressbar"
+                                     style="width:{{34}}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="analytics-sparkle-line table-mg-t-pro dk-res-t-pro-30">
+                        <div class="analytics-content">
+                            <h5>{% trans "Average ads per video"%}</h5>
+                            <h2 style="min-height: 42px;">
+                                    <span class="counter">
+                                        {{average_ads_videos}}
+
+                                    </span>
+                                <span class="tuition-fees">
+                                    </span>
+                            </h2>
+                            <span class="text-inverse">{% trans "It's more than 34 of our users"%}</span>
+                            <div class="progress m-b-0">
+                                <div class="progress-bar progress-bar-inverse" role="progressbar"
+                                     style="width:{{34}}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-sales-area mg-tb-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>{% trans "Daily Statistics"%}</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p> {% trans "Only for last 45 days"%}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #006DF0;"></i>{% trans "Total Ads"%}</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #933EC5;"></i>{% trans "Videos watched"%}</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #65b12d;"></i>{% trans "Video Ads"%}</h5>
+                                </li>
+                            </ul>
+                            <div id="extra-area-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+	    	</div>
+	    </div>
+        </div>
+<div class="container" style="margin-top: 20px;margin-left: 0">
+    <div class="row">
+
+        <div class="col-md-12" style="margin-top: 20px">
+            <h3>Top five advertisers that reached you </h3>
+            <hr>
+            <div class="col-md-12">
+                <div id="newest_pii">
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-12" style="margin-top: 20px">
+            <h3>Top five attributes used to target you</h3>
+            <hr>
+            <div class="col-md-12">
+                <div id="newest_clicked">
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="margin-top: 20px">
+            <h3>Top five type of targeting used to reach you</h3>
+            <hr>
+            <div class="col-md-12">
+                <div id="targeting_five">
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jquery
+		============================================ -->
+    <script src="{% static 'report-scripts/jquery-1.12.4.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <!-- bootstrap JS
+		============================================ -->
+    <script src="{% static 'report-scripts/bootstrap.min.js' %}"></script>
+    <!-- price-slider JS
+		============================================ -->
+    <script src="{% static 'report-scripts/jquery-price-slider.js' %}"></script>
+    <!-- morrisjs JS
+		============================================ -->
+    <script src="{% static 'report-scripts/raphael-min.js' %}"></script>
+    <script src="{% static 'report-scripts/morris.js' %}"></script>
+    <!--
+        <script src="{% static 'report-scripts/morris-active.js' %}"></script>
+    -->
+    <!-- morrisjs JS
+		============================================ -->
+
+    <script src="{% static 'report-scripts/jquery.sparkline.min.js' %}"></script>
+    <script src="{% static 'report-scripts/jquery.charts-sparkline.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+        advertiserList = JSON.parse("{{advertisers|escapejs}}".split("'").join("\""));
+        console.log(advertiserList)
+        html = ""
+
+        for (var i=0;i<advertiserList.length;i++)
+            {
+            var advertiserName = advertiserList[i]['advertiser']
+            console.log(advertiserName)
+
+                html+="<div class='col-md-2'><p style='text-align:center;' ><img width='100px' height='100px' src=\"{% static 'youtubeadvertising.png' %}\"></p><p style='font-size: 14px;text-align: center;margin-top: 5px;'> "+advertiserList[i]['advertiser']+" </p><p style='font-size: 10px;text-align: center;margin-top: -9px;'> "+advertiserList[i]['num_ads']+" ads </p></div>";
+
+            }
+        $('#newest_pii').html(html);
+
+        attributesList = JSON.parse("{{attributes|escapejs}}".split("'").join("\""));
+        console.log(attributesList)
+        html2 = ""
+         for (var i=0;i<attributesList.length;i++)
+            {
+		attributName = attributesList[i]['attribute'].replace(/ /g,'')+".png";
+                attributNamePath = "{% static "" %}"+attributName;
+		console.log('attribut '+attributNamePath);
+                html2+="<div class='col-md-2'><p style='text-align:center;' href=''><img width='80px' height='80px' src="+attributNamePath+" /></p><p style='font-size: 14px;text-align: center;margin-top: 5px;'>"+attributesList[i]['attribute']+" </p><p style='font-size: 10px;text-align: center;margin-top: -9px;'> "+attributesList[i]['num_ads']+" ads </p></div>";
+            }
+         $('#newest_clicked').html(html2);
+
+        targetingList = JSON.parse("{{targeting|escapejs}}".split("'").join("\""));
+        console.log(targetingList)
+        html3 = ""
+         for (var i=0;i<targetingList.length;i++)
+            {
+                attributName = targetingList[i]['attribute'].replace(/ /g,'')+".png";
+                attributNamePath = "{% static "" %}"+attributName;
+console.log('attribut '+attributNamePath);
+                html3+="<div class='col-md-2'><p style='text-align:center;' href=''><img width='80px' height='80px' src="+attributNamePath+"/></p><p style='font-size: 14px;text-align: center;margin-top: 5px;' data-toggle='tooltip' data-placement='top' title='"+targetingList[i]['attribute']+" ads are ....'> "+targetingList[i]['attribute']+" ads &#8505;</p><p style='font-size: 10px;text-align: center;margin-top: -9px;'> "+targetingList[i]['num_ads']+" ads </p></div>"
+             }
+         $('#targeting_five').html(html3);
+        });
+
+
+
+    </script>
+
+
+
+ <script>
+        var arrayToDisplay = JSON.parse("{{chartData|escapejs}}".split("'").join("\""));
+
+		console.log(arrayToDisplay);
+                Morris.Area({
+                        element: 'extra-area-chart',
+                        data: arrayToDisplay,
+                                xkey: 'period',
+                                ykeys: ["TOTAL_ADS", "VIDEOS_WATECHED", "VIDEO_ADS"],
+                                labels: ['{%trans "Total Ads"%}', '{%trans "Videos watched"%}', '{%trans "Video Ads"%}'],
+                                pointSize: 3,
+                                fillOpacity: 0,
+                                pointStrokeColors:['#006DF0', '#933EC5', '#65b12d'],
+                                 behaveLikeLine: true,
+                                gridLineColor: '#e0e0e0',
+                                lineWidth: 1,
+                                xLabelFormat: function (d) {
+                                     return ("0" + d.getDate()).slice(-2) + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + d.getFullYear();
+                                    },
+                                hideHover: 'auto',
+                                lineColors: ['#006DF0', '#933EC5', '#65b12d'],
+                                resize: true
+                                    });
+    </script>
+</body>
+
+</html>

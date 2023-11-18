@@ -1,0 +1,277 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Rewards</title>
+
+	<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+
+    <link href="style.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        table {
+            border-radius: 5px;
+            width: 80%;
+            margin: 0px auto;
+            float: none;
+            font-size: x-large;"
+        }
+
+        .containing-tables {
+            background: #f8f8f8;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        .description-title {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .description-text {
+            font-size: large;
+        }
+    </style>
+
+
+        <!-- Facebook Pixel Code -->
+        <script>
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '1014168265725757');
+                fbq('track', 'PageView');
+        </script>
+        <noscript>
+                <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1014168265725757&ev=PageView&noscript=1"/>
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+</head>
+
+<body>
+
+
+{% include "header.html" %}
+
+    {% if prolificId == True %}
+
+    <div id="about-transpad" style="color:white;background-color: #2C3E50; margin-top : 100px">
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12">
+                                                <h1 class="description-title">Hello {{prolificIdText}}</h1>
+                                        </div>
+                                </div>
+                        </div>
+        </div>
+
+    {% endif %}
+
+
+<div class="container" style="margin-top : 50px; width: 100%; padding-left: 0; padding-right: 0">
+
+    <div id="about-transpad" style="color:white;background-color: #2C3E50;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="description-title"> Installation Reward</h1>
+					</div>
+
+					<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+						<div class="media mb-10">
+							<div class="media-body" >
+
+								<p class = "headerp description-text" > 
+                                                                        If you are participating in one of our experiments, you will have a first reward once you install our extension, browse your Facebook timeline for a few moments and fill a short socio-demographic survey. If you did these steps your COMPLETION CODE will appear in the following table. 
+									<br>
+									<br>
+									If the table below is empty, check if you accepted the extension's consent (you can find it by clicking on the extension's icon), check if you disabled AdBlockers on Facebook, and take a few moments to browse your Facebook timeline. Please contact us if the table is still empty despite taking these steps. 
+
+								</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <div class="containing-tables" >
+        <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width : 50%" scope="col">Date Installed</th>
+            <th style="width: 50%" scope="col">Reward code</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr class="table-primary">
+                <td>{{installation.date}}</td>
+<!--                <td>{{installation.code}}</td> -->
+<!--
+		{% if displayProlific is True %} 
+			<td><a href="https://app.prolific.co/submissions/complete?cc=3EA62D6A" target="_blank">Click here to confirm</a></td>
+		{% endif %} 
+--> 
+                        <td>3EA62D6A</td>
+            </tr>
+        </tbody>
+
+    </table>
+    </div>
+
+    <div id="about-transpad" style="color:white;background-color: #2C3E50">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="description-title">End of study Bonus</h1>
+					</div>
+
+					<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+						<div class="media mb-10">
+							<div class="media-body" >
+
+								<p class = "headerp description-text">
+									If you are participating in one of our experiments, you will have to answer some surveys. We also need you to browse your Facebook timeline as you do it normally, but we need you to browse it with the browser you have installed our extension on.
+									<br><br>
+									At the end of the study, if you filled all the surveys and passed the minimum activity checks you will receive a bonus. Keep track of your filled surveys and activity:
+                                				</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+<!--
+    <div class="containing-tables">
+        <table class="table table-striped" >
+
+        <thead>
+        <tr>
+            <th scope="col" style="width : 50%">Date study completed</th>
+            <th scope="col" style="width : 50%">Reward code</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+
+    </table>
+    </div>
+
+-->
+
+    <div class="containing-tables">
+        <table class="table table-striped" >
+
+        <thead>
+        <tr>
+                <td colspan="2"> <b style="margin-left:40%"> Steps finished <b> </td>
+        </tr>
+        <tr>
+            <th scope="col" width="50%">Survey or activity</th>
+            <th scope="col" width="50%">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for survey in surveys %}
+            <tr class="table-primary">
+                <td>Survey : {{survey.survey}}</td>
+                <td>{{survey.date}}</td>
+            </tr>
+        {% endfor %}
+
+        {% for activity in activties %}
+            <tr class="table-primary">
+                <td>Activity : {{activity.reason}}</td>
+                <td>{{activity.date}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="prolificIdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Prolific Id</h3>
+      </div>
+      <div class="modal-body">
+	<div>
+		<p>
+			Please insert your Prolific ID so we can pay you automatically after you fill the 4 mandatory surveys. 
+			You can find your Prolific ID at this <a href="https://app.prolific.co/account/general" target="_blank" > link. </a>
+		</p>
+		<p>
+			Please copy and paste it here
+		</p>
+	</div>
+        <form id="form" name="form" method="POST" action = "{% url 'storeprolificid' %}">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <input required type="text" class="form-control" id="prolificId" name="prolific_id" pattern="[a-zA-Z0-9]{24}">
+	  </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Not now</button>
+        <button type="button" class="btn btn-primary" id="submitForm" onclick="submitForm()">Submit</button>	
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <script>
+
+	var form = document.getElementById("form");
+	form.action = form.action + "?user=" + user;
+
+        var prolificId = "{{prolificId}}";
+        if (prolificId === "False") {
+                $("#prolificIdModal").modal({
+			backdrop: 'static',
+    			keyboard: false
+		});
+        }
+
+
+
+	function submitForm() {
+		if ($('#form').is(':invalid') != 0) {
+			alert("Please insert a valid Prolific Id ");
+		}
+		else {
+	                document.forms["form"].submit();
+		}
+	}
+    </script>
+
+</body>
+</html>
+

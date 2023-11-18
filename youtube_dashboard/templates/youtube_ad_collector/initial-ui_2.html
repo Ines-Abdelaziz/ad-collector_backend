@@ -1,0 +1,1269 @@
+<html>
+  <head>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+ {% load static %}
+    <script type="text/javascript" src="{% static "jqcloud.js" %}"> </script>
+ 
+
+
+    <script type="text/javascript">
+//      function closeWordcloudAds(){
+//        $("#top_wordcloud_objects").hide("slow");
+//        $("#top_wordcloud_objects").empty();
+//        $('html,body').animate({scrollTop: $("#wordcloud").offset().top}, 'slow'); 
+//      }
+//
+//      var all_advertisements={{top_ads_expl_no_map|safe}};
+//      var adv_map={{overview|safe}}
+//      function loadTopAds(wordcloud_category) {
+//        $("#top_wordcloud_objects").empty();
+//        var html="<div class=\"col-md-12\"><h3>Top " + wordcloud_category + " advertisements I receive <div style='float:right;cursor:pointer' onclick='closeWordcloudAds()'><span class='glyphicon glyphicon-remove'></span></div></h3><hr><p> Below are the top 5 " + wordcloud_category + " advertisements I have received: <br/><br/>";
+//        html +='<ul class="list-group">'
+//        for (var i=0;i<all_advertisements[wordcloud_category].length;i++)
+//        {
+//            html+="<div class='col-md-12 list-group-item' style='margin-bottom:20px'><div class='col-md-4'><img src='"+all_advertisements[wordcloud_category][i]['logo']+"' height='200' width='300'></div><div class='col-md-8'><div class='col-md-12'>"+all_advertisements[wordcloud_category][i]['name']+"</div><br/><br/><br/><div class='col-md-12' > <b>Advertiser:</b> <a href ='"+all_advertisements[wordcloud_category][i]['advertiser_name']+"'>"+all_advertisements[wordcloud_category][i]['advertiser_name']+"<a/></div><div class='col-md-12' > <b>Number of Impressions:</b>" + all_advertisements[wordcloud_category][i]['freq'] + "</div></div></div>";
+//        }
+//        html+= '</ul>';
+//        html+="<br/><br/><br/><br/><br/><br/><br/><br/>";
+//
+//        $("#top_wordcloud_objects").append(html);
+//        $("#top_wordcloud_objects").show("slow");
+//        $('html,body').animate({scrollTop: $("#top_wordcloud_objects").offset().top}, 'slow');        
+//      }
+//        /*!       * Create an array of word objects, each representing a word in the cloud       */
+//        var temp_data={'category':'','ads':[{'name':'Advertisement name','image':'fb_logo.png'},{'name':'Advertisement name','image':'fb_logo.png'}]};
+//        var words = [
+//          {text: "Lorem", weight: 13,handlers:{click:function(){temp_data['category']='Lorem';loadTopAds(temp_data)}}},
+//          {text: "Ipsum", weight: 10,handlers:{click:function(){temp_data['category']='Ipsum';loadTopAds(temp_data)}}},
+//          {text: "Dolor", weight: 9,handlers:{click:function(){temp_data['category']='Dolor';loadTopAds(temp_data)}}},
+//          {text: "Sit", weight: 8,handlers:{click:function(){temp_data['category']='Sit';loadTopAds(temp_data)}}},
+//          {text: "Amet", weight: 6,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Consectetur", weight: 5,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Dolor", weight: 9,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Sit", weight: 8,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Amet", weight: 6,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Consectetur", weight: 5,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Dolor", weight: 9,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Sit", weight: 8,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Amet", weight: 6,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Consectetur", weight: 5,handlers:{click:function(){loadTopAds(temp_data)}}},
+//          {text: "Adipiscing", weight: 5,handlers:{click:function(){loadTopAds(temp_data)}}}
+//          /* ... */
+//        ];
+//
+//
+//        words=[]
+//        for (var x=1;x<adv_map.length;x++){
+//          var temp={};
+//          temp['text']=adv_map[x][0];
+//          temp['weight']=adv_map[x][1];
+//          temp['handlers']={click:function(par=x){loadTopAds(par['target']['innerText'])}};
+//          words.push(temp);
+//        }
+//
+//	console.log(words);
+//
+//        $(function() {
+//            $("#wordcloud").jQCloud(words,{
+//              autoResize: true,
+//              colors: ["#800026", "#bd0026", "#fc4e2a", "#fd8d3c", "#feb24c"],              
+//              fontSize: {
+//                  from: 0.08,
+//                  to: 0.02
+//                }              
+//            });
+//        });
+    </script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['geochart','corechart']});
+      google.charts.setOnLoadCallback(drawMap);
+      function drawMap() {
+        var data = google.visualization.arrayToDataTable(
+            {{locs|safe}}
+//            [ 
+//          ['Country', 'Percentage of  ads'],
+//          ['Germany', 7.4],
+//          ['United States', 11.1],
+//          ['Brazil', 14.8],
+//          ['Canada', 18.5],
+//          ['France', 22.2],
+//          ['RU', 25.9],
+//          ['Mumbai, Maharashtra', 14.9],
+//          ['New Delhi', 13.9]
+//        ]
+                                                        
+        );
+
+        var options = {
+          height:350,
+          width:470,
+          legend: 'none'
+        };
+        options['dataMode'] = 'regions';
+
+        var container = document.getElementById('ad_loc');
+        var geomap = new google.visualization.GeoChart(container);
+
+        geomap.draw(data, options);
+      };
+    </script>
+
+
+    <!-- How I'm targeted donut -->
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChartDonut);
+
+        // var button = document.getElementById('b1');
+
+        // button.onclick = function() {
+        //     drawChart();
+        // }
+
+//        var data_map={1:'interests',2:'behave',3:'demo',4:'brokers',5:'custom',6:'soc_nhood',7:'lookalike',8:'likes',9:'prof_data',10: 'check_ins'}          
+        var data_map = {{ov_divs|safe}}
+        function selectHandler(e) {
+          var selection=chart.getSelection();
+          if (selection.length === 0)
+          {
+            for (var x=0;x<10;x++)
+            { 
+              $("#"+data_map[x+1]).hide("slow");
+            }
+            $('#donutchart').removeClass("col-md-3");
+            $('#donutchart').addClass("col-md-12");
+            // $('html,body').animate({scrollTop: $("#donutchart").offset().top},'slow');          
+          }
+          else
+          {
+            for (var x=0;x<10;x++)
+            { 
+              $("#"+data_map[x+1]).hide("slow");
+            }
+            $('#donutchart').removeClass("col-md-12");              
+            $('#donutchart').addClass("col-md-3");
+            $('#b1').show();
+
+  
+            var data = google.visualization.arrayToDataTable(//[
+//              ['Category', 'Percentage'],
+
+                {{overview|safe}}
+//            ['Interests',     698],
+//            ['Age/Gender/Location',     225],
+//            ['Behavorial/Demographics',      90],
+//            ['Data Brokers',     60],
+//            ['Custom Audience',  340],
+//            ['Social Neighborhood', 40],
+//            ['Lookalike Audience', 283],
+//            ['Likes',    50],
+//            ['Profile Data/Check-Ins',    70],
+            //]
+            );
+
+
+            var options = {
+              pieHole: 0.4,
+              pieSliceText: 'none',
+              legend:'none'
+            };              
+
+            chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);  
+            google.visualization.events.addListener(chart, 'select', selectHandler); 
+            // $("#"+data_map[selection[0]['row']+1]).show("slow");
+
+            $("#"+data_map[selection[0]['row']+1]).show("slow")
+            // $.when( $("#"+data_map[selection[0]['row']+1]).show("slow") ).then(function() {
+            //     google.maps.event.trigger(map, 'resize');
+            //   });
+            // google.maps.event.trigger(map, 'resize');
+            
+            // $('html,body').animate({scrollTop: $("#"+data_map[selection[0]['row']+1]).offset().top},'slow');          
+          }
+        } 
+
+        function drawChartDonut() {
+          $('#b1').hide("slow");
+          
+          $('#donutchart').removeClass("col-md-3");
+          $('#donutchart').addClass("col-md-12");
+
+          for (var x=0;x<10;x++)
+            { 
+              $("#"+data_map[x+1]).hide();
+            }          
+
+          var data = google.visualization.arrayToDataTable(
+                 {{overview|safe}}
+//              [
+//            ['Category', 'Percentage'],
+//            ['Interests',     698],
+//            ['Behaviour',      90],
+//            ['Demographics', 110],
+//            ['Data Brokers',     60],
+//            ['Custom Audience',  340],
+//            ['Social Neighborhood', 40],
+//            ['Lookalike Audience', 283],
+//            ['Likes',    50],
+//            ['Biographical Data',    70],
+//            ['Check-Ins',    100]
+//          ]
+          );
+
+
+          var options = {
+            pieHole: 0.4,
+            pieSliceText: 'none'
+          };
+
+          chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+          chart.draw(data, options);
+          google.visualization.events.addListener(chart, 'select', selectHandler);       
+        }
+    </script>
+
+    <!-- My top interests -->
+      <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{interests|safe}}
+//              [
+//            ['Interest', '# ads per day'],
+//            ["Travel", 15],
+//            ["Web dev", 21],
+//            ["Soccer", 17],
+//            ["Friends", 19],
+//            ["Sports", 8],
+//            ["Video Games", 17],
+//            ["Anime", 8],
+//            ["TV shows", 25],
+//            ["Playstation", 8]
+//          ]
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 850,
+            height: 380,
+            bar: {groupWidth: "80%"},
+            legend:'none'
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_interests"));
+          chart.draw(view, options);
+      }
+      </script> 
+
+   <!-- Advertisements from each location -->
+
+  <!-- Top age-brackets I am targeted under -->
+      <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ['Category', 'Percentage of Advertisements'],
+            ['Age', 15],
+            ['Gender', 20],
+            ['Location', 10]
+          ]);
+
+          var options = {
+            pieHole: 0.4,
+            pieSliceText: 'none'
+          };
+
+          // var chart = new google.visualization.PieChart(document.getElementById('age_gen_loc'));
+          // chart.draw(data, options);
+        }
+      </script> 
+
+    <!-- Top age-brackets I am targeted under -->
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([]
+//              {{ages|safe}}
+//              [
+//            ["Age bracket", "# ads per day"],
+//            ["18-21", 15],
+//            ["21-40", 21],
+//            ["18-65+", 17],
+//            ["Above 16", 8],
+//            ["Less than 65", 25],
+//            ["20-25", 19],
+//            ["20-35", 19],
+//          ]
+          
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "60%"},
+            legend: { position: "none" }
+          };
+          // var chart = new google.visualization.BarChart(document.getElementById("top_age_brackets"));
+          // chart.draw(view, options);
+      }
+    </script> 
+
+    <!-- Top behaviours/demographics I am targeted under -->
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{behaviors|safe}}
+//              [
+//            ["Behaviour", "# ads per day"],
+//            ["Android devices", 21],
+//            ["Intl. Traveller", 17],
+//            ["Gmail Users", 8],
+//            ["Expats", 25],
+//            ["FB Page Admins", 19]
+//          ]
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "60%"},
+            legend: 'none'
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_behaviour"));
+          chart.draw(view, options);
+      }
+    </script> 
+      
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{demographics|safe}}
+//              [
+//            ["Demographic", "# ads per day"],
+//            ["Not in hometown", 15],
+//            ["Placeholder #1", 21],
+//            ["Placeholder #2", 17],
+//            ["Placeholder #3", 8],
+//            ["Placeholder #4", 25],
+//            ["Placeholder #5", 19]
+//          ]
+          
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "60%"},
+            legend: 'none'
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_demo"));
+          chart.draw(view, options);
+      }
+    </script> 
+
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{data_brokers_advs|safe}}
+//              [
+//            ["Advertiser", "# ads per day",{type: 'string', role: 'tooltip', 'p': {'html': true}}],
+//            ["SFR", 15,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>SFR</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Peugeot", 21,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Peugeot</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Tassimo", 17,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Tassimo</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"]
+//          ]
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 400,
+            height: 370,
+            legend:'none',
+            tooltip: {isHtml: true},
+            bar: {groupWidth: "40%"},
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_advertisers_databrokers"));
+          chart.draw(view, options);
+      }
+    </script> 
+      
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{data_brokers|safe}}
+//              [
+//            ["Data broker", "# ads per day"],
+//            ["Axciom", 15],
+//            ["Experian", 21],
+//            ["DLX", 17]
+//          ]
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 400,
+            height: 370,
+            legend:'none',            
+            bar: {groupWidth: "40%"}
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_databrokers"));
+          chart.draw(view, options);
+      }
+    </script> 
+
+   <!-- Custom lists targetting me -->
+      
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{pii|safe}}
+//[
+//            ["Advertiser", "# ads per day",{type: 'string', role: 'tooltip', 'p': {'html': true}}],
+//            ["SFR", 15,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>SFR</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Tassimo", 21,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Tassimo</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Orange", 17,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Orange</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Zalandoo", 8,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Zalandoo</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"]
+//
+//          ]
+
+);
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "60%"},
+            tooltip: {isHtml: true},
+            legend: 'none'
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_advertisers_custom"));
+          chart.draw(view, options);
+      }
+    </script>         
+      
+<!--       LOOKALIKE-->
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{lookalike|safe}}
+//              [
+//            ["Advertiser", "# ads per day",{type: 'string', role: 'tooltip', 'p': {'html': true}}],
+//            ["SFR", 15,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>SFR</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Tassimo", 21,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Tassimo</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Orange", 17,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Orange</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//            ["Zalandoo", 8,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Zalandoo</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"]
+//          ]
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "50%"},
+            tooltip: {isHtml: true},            
+            legend: 'none'
+          };
+          var chart = new google.visualization.BarChart(document.getElementById("top_advertisers_lookalike"));
+          chart.draw(view, options);
+      }
+    </script>         
+
+   <!-- Social neighborhood ads targetting me -->
+   <script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Name', '# ads per day'],
+          ['John Smith', 12],
+          ['Jane Doe', 10],
+          ['Michael Young', 15],
+          ['Debra Bradley', 8],
+          ['Nathan Braken', 10]
+        ]);
+
+        var options = {
+          width:500,
+          height:370,
+          legend:'none',
+          bars: 'horizontal' // Required for Material Bar Charts.
+        };
+
+
+          var chart = new google.visualization.BarChart(document.getElementById('soc_nhood_fr'));
+          chart.draw(data, options);
+          }        
+   </script>
+
+   <script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+            {{soc_neigh_advs|safe}}
+//            [
+//          ['Name', '# ads per day',{type: 'string', role: 'tooltip', 'p': {'html': true}}],
+//          ["AirBnb", 12,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>AirBnb</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],          
+//          ["SFR", 10,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30  width=30/><b>Amazon</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//          ["BNP Paribas", 15,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>BNP Paribas</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//          ["Dominos", 8,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Dominos</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"],
+//          ["Deutsche Bank", 10,"<h7><img src='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png' height=30 width=30/><b>Deutsche Bank</b></h7><div style='padding-right:105px'></div><p style='font-size:10px;margin-left:5px'># ads per day: 15</p>"]
+//        ]
+                                                        );
+
+        var options = {
+          width:500,
+          height:370,
+          bars: 'horizontal',
+          tooltip: {isHtml: true},          
+          legend: 'none'
+        };
+
+
+          var chart = new google.visualization.BarChart(document.getElementById('soc_nhood_ad'));
+          chart.draw(data, options);
+          }        
+   </script>   
+  
+   <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+            {{like_pages|safe}}
+//            [
+//          ['Name', '# ads per day'],
+//          ['AirBnb', 12],
+//          ['RyanAir', 10],
+//          ['Alibaba', 15],
+//          ['Walmart', 5],
+//          ['Yelp!', 11]
+//        ]
+        );
+
+        var options = {
+          width:700,
+          height:350,
+          bars: 'horizontal',
+          legend: 'none'
+        };
+
+
+          var chart = new google.visualization.BarChart(document.getElementById('top_likes'));
+          chart.draw(data, options);
+          }        
+   </script>
+
+  <!-- Advertisements based on languages I speak -->
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+            {{bio|safe}}
+//            [
+//          ["Info", "# ads per day"],
+//          ["Speaks English", 15],
+//          ["Undergrad Degree", 21],
+//          ["Speaks Polish", 21],
+//          ["PhD Student", 17]
+//        ]
+        );
+
+        var view = new google.visualization.DataView(data);
+
+        var options = {
+          height: 370,
+          width:700,
+          bar: {groupWidth: "50%"},
+          legend: 'none'
+        };
+        var chart = new google.visualization.BarChart(document.getElementById("prof_bar"));
+        chart.draw(view, options);
+    }
+    </script> 
+
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+            {{mob_dat|safe}}
+//            [
+//          ["Check-In", "# ads per day"],
+//          ["Paris", 15],
+//          ["Germany", 21],
+//          ["McDonalds", 21],
+//          ["Gym", 17]
+//        ]
+        );
+
+        var view = new google.visualization.DataView(data);
+
+        var options = {
+          height: 370,
+          width:700,
+          bar: {groupWidth: "50%"},
+          legend: 'none'
+        };
+        var chart = new google.visualization.BarChart(document.getElementById("check_bar"));
+        chart.draw(view, options);
+    }
+    </script>     
+        
+   <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart2);
+
+        function createCustomReport(date,name,total_number,added,removed) {
+          var html ='<div class="pre-scrollable container" style="padding:5px 5px 5px 5px;width:300px;height:400px">'+
+          '<h5> Likes for '+$.format.date(new Date(date),"ddd, MMM, D, yyyy") +' </h5>'+
+         '<hr style="width: 100%; color: black; height: 1px; background-color:black;" />'+
+         
+            '<h6 class="text-primary">Total: '+total_number+' </h6> ';
+        if (added.length>0) {
+            html+='<h6 class="text-success">New '+name+': </h6> '+
+          
+
+          '<ul class="list-group">';
+            for (let i=0;i<added.length;i++) {
+                html+= '<li class="list-group-item">'+ added[i] +'</li>';
+            }
+
+          html+='</ul>';
+        }
+        
+                    if (removed.length>0) {
+            html+='<h6 class="text-danger">Removed '+name+': </h6> '+
+          
+
+          '<ul class="list-group">';
+            for (let i=0;i<removed.length;i++) {
+                html+= '<li class="list-group-item">'+ removed[i] +'</li>';
+            }
+
+          html+='</ul>';
+        }
+        
+
+        html+='</div>';
+        return html
+        }
+
+
+        function drawChart2() {
+          var data = google.visualization.arrayToDataTable(
+              {{preference_diffs|safe}}
+//              [['Date', 'Advertisers',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}},'Behavioral/Demographics',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}},'Interests',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}},'Likes',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+//  [new Date(2017, 2, 29),NaN,createCustomReport(new Date(2017, 2, 29)),NaN,createCustomReport(new Date(2017, 2, 29)),NaN,createCustomReport(new Date(2017, 2, 29)),NaN,createCustomReport(new Date(2017, 2, 29))],
+//[new Date(2017, 3, 5),NaN,createCustomReport(new Date(2017, 3, 5)),NaN,createCustomReport(new Date(2017, 3, 5)),NaN,createCustomReport(new Date(2017, 3, 5)),4,createCustomReport(new Date(2017, 3, 5))],
+//[new Date(2017, 3, 6),NaN,createCustomReport(new Date(2017, 3, 6)),NaN,createCustomReport(new Date(2017, 3, 6)),NaN,createCustomReport(new Date(2017, 3, 6)),NaN,createCustomReport(new Date(2017, 3, 6))],
+//[new Date(2017, 3, 7),NaN,createCustomReport(new Date(2017, 3, 7)),NaN,createCustomReport(new Date(2017, 3, 7)),3,createCustomReport(new Date(2017, 3, 7)),4,createCustomReport(new Date(2017, 3, 7))],
+//[new Date(2017, 3, 8),NaN,createCustomReport(new Date(2017, 3, 8)),NaN,createCustomReport(new Date(2017, 3, 8)),NaN,createCustomReport(new Date(2017, 3, 8)),NaN,createCustomReport(new Date(2017, 3, 8))],
+//[new Date(2017, 3, 9),1,createCustomReport(new Date(2017, 3, 9)),2,createCustomReport(new Date(2017, 3, 9)),NaN,createCustomReport(new Date(2017, 3, 9)),NaN,createCustomReport(new Date(2017, 3, 9))],
+//[new Date(2017, 3, 10),NaN,createCustomReport(new Date(2017, 3, 10)),2,createCustomReport(new Date(2017, 3, 10)),NaN,createCustomReport(new Date(2017, 3, 10)),NaN,createCustomReport(new Date(2017, 3, 10))],
+//[new Date(2017, 3, 11),NaN,createCustomReport(new Date(2017, 3, 11)),NaN,createCustomReport(new Date(2017, 3, 11)),3,createCustomReport(new Date(2017, 3, 11)),NaN,createCustomReport(new Date(2017, 3, 11))],
+//[new Date(2017, 3, 12),NaN,createCustomReport(new Date(2017, 3, 12)),NaN,createCustomReport(new Date(2017, 3, 12)),NaN,createCustomReport(new Date(2017, 3, 12)),NaN,createCustomReport(new Date(2017, 3, 12))],
+//[new Date(2017, 3, 13),NaN,createCustomReport(new Date(2017, 3, 13)),NaN,createCustomReport(new Date(2017, 3, 13)),NaN,createCustomReport(new Date(2017, 3, 13)),4,createCustomReport(new Date(2017, 3, 13))],
+//[new Date(2017, 3, 14),1,createCustomReport(new Date(2017, 3, 14)),2,createCustomReport(new Date(2017, 3, 14)),3,createCustomReport(new Date(2017, 3, 14)),NaN,createCustomReport(new Date(2017, 3, 14))],
+//[new Date(2017, 3, 15),NaN,createCustomReport(new Date(2017, 3, 15)),NaN,createCustomReport(new Date(2017, 3, 15)),NaN,createCustomReport(new Date(2017, 3, 15)),4,createCustomReport(new Date(2017, 3, 15))],
+//[new Date(2017, 3, 16),NaN,createCustomReport(new Date(2017, 3, 16)),NaN,createCustomReport(new Date(2017, 3, 16)),NaN,createCustomReport(new Date(2017, 3, 16)),4,createCustomReport(new Date(2017, 3, 16))],
+//[new Date(2017, 3, 17),NaN,createCustomReport(new Date(2017, 3, 17)),NaN,createCustomReport(new Date(2017, 3, 17)),NaN,createCustomReport(new Date(2017, 3, 17)),NaN,createCustomReport(new Date(2017, 3, 17))],
+//[new Date(2017, 3, 18),NaN,createCustomReport(new Date(2017, 3, 18)),NaN,createCustomReport(new Date(2017, 3, 18)),3,createCustomReport(new Date(2017, 3, 18)),NaN,createCustomReport(new Date(2017, 3, 18))],
+//[new Date(2017, 3, 19),NaN,createCustomReport(new Date(2017, 3, 19)),NaN,createCustomReport(new Date(2017, 3, 19)),NaN,createCustomReport(new Date(2017, 3, 19)),NaN,createCustomReport(new Date(2017, 3, 19))],
+//[new Date(2017, 3, 20),1,createCustomReport(new Date(2017, 3, 20)),NaN,createCustomReport(new Date(2017, 3, 20)),NaN,createCustomReport(new Date(2017, 3, 20)),NaN,createCustomReport(new Date(2017, 3, 20))],
+//[new Date(2017, 3, 21),NaN,createCustomReport(new Date(2017, 3, 21)),NaN,createCustomReport(new Date(2017, 3, 21)),NaN,createCustomReport(new Date(2017, 3, 21)),NaN,createCustomReport(new Date(2017, 3, 21))],
+//[new Date(2017, 3, 22),NaN,createCustomReport(new Date(2017, 3, 22)),2,createCustomReport(new Date(2017, 3, 22)),NaN,createCustomReport(new Date(2017, 3, 22)),NaN,createCustomReport(new Date(2017, 3, 22))],
+//[new Date(2017, 3, 23),NaN,createCustomReport(new Date(2017, 3, 23)),2,createCustomReport(new Date(2017, 3, 23)),3,createCustomReport(new Date(2017, 3, 23)),NaN,createCustomReport(new Date(2017, 3, 23))],
+//[new Date(2017, 3, 24),1,createCustomReport(new Date(2017, 3, 24)),2,createCustomReport(new Date(2017, 3, 24)),3,createCustomReport(new Date(2017, 3, 24)),4,createCustomReport(new Date(2017, 3, 24))],
+//[new Date(2017, 3, 25),NaN,createCustomReport(new Date(2017, 3, 25)),2,createCustomReport(new Date(2017, 3, 25)),NaN,createCustomReport(new Date(2017, 3, 25)),4,createCustomReport(new Date(2017, 3, 25))],
+//[new Date(2017, 3, 26),1,createCustomReport(new Date(2017, 3, 26)),NaN,createCustomReport(new Date(2017, 3, 26)),3,createCustomReport(new Date(2017, 3, 26)),NaN,createCustomReport(new Date(2017, 3, 26))],
+//[new Date(2017, 3, 27),NaN,createCustomReport(new Date(2017, 3, 27)),NaN,createCustomReport(new Date(2017, 3, 27)),NaN,createCustomReport(new Date(2017, 3, 27)),NaN,createCustomReport(new Date(2017, 3, 27))],
+//[new Date(2017, 3, 28),NaN,createCustomReport(new Date(2017, 3, 28)),NaN,createCustomReport(new Date(2017, 3, 28)),3,createCustomReport(new Date(2017, 3, 28)),NaN,createCustomReport(new Date(2017, 3, 28))],
+//[new Date(2017, 3, 29),1,createCustomReport(new Date(2017, 3, 29)),2,createCustomReport(new Date(2017, 3, 29)),3,createCustomReport(new Date(2017, 3, 29)),NaN,createCustomReport(new Date(2017, 3, 29))],
+//[new Date(2017, 3, 30),NaN,createCustomReport(new Date(2017, 3, 30)),2,createCustomReport(new Date(2017, 3, 30)),3,createCustomReport(new Date(2017, 3, 30)),NaN,createCustomReport(new Date(2017, 3, 30))],
+//[new Date(2017, 4, 1),1,createCustomReport(new Date(2017, 4, 1)),NaN,createCustomReport(new Date(2017, 4, 1)),NaN,createCustomReport(new Date(2017, 4, 1)),NaN,createCustomReport(new Date(2017, 4, 1))],
+//[new Date(2017, 4, 2),NaN,createCustomReport(new Date(2017, 4, 2)),NaN,createCustomReport(new Date(2017, 4, 2)),NaN,createCustomReport(new Date(2017, 4, 2)),4,createCustomReport(new Date(2017, 4, 2))],
+//[new Date(2017, 4, 3),1,createCustomReport(new Date(2017, 4, 3)),NaN,createCustomReport(new Date(2017, 4, 3)),3,createCustomReport(new Date(2017, 4, 3)),4,createCustomReport(new Date(2017, 4, 3))],
+//[new Date(2017, 4, 4),1,createCustomReport(new Date(2017, 4, 4)),2,createCustomReport(new Date(2017, 4, 4)),NaN,createCustomReport(new Date(2017, 4, 4)),4,createCustomReport(new Date(2017, 4, 4))],
+//[new Date(2017, 4, 5),1,createCustomReport(new Date(2017, 4, 5)),2,createCustomReport(new Date(2017, 4, 5)),NaN,createCustomReport(new Date(2017, 4, 5)),NaN,createCustomReport(new Date(2017, 4, 5))],
+//[new Date(2017, 4, 6),NaN,createCustomReport(new Date(2017, 4, 6)),NaN,createCustomReport(new Date(2017, 4, 6)),NaN,createCustomReport(new Date(2017, 4, 6)),NaN,createCustomReport(new Date(2017, 4, 6))],
+//[new Date(2017, 4, 7),NaN,createCustomReport(new Date(2017, 4, 7)),NaN,createCustomReport(new Date(2017, 4, 7)),3,createCustomReport(new Date(2017, 4, 7)),NaN,createCustomReport(new Date(2017, 4, 7))],
+//[new Date(2017, 4, 8),NaN,createCustomReport(new Date(2017, 4, 8)),NaN,createCustomReport(new Date(2017, 4, 8)),3,createCustomReport(new Date(2017, 4, 8)),NaN,createCustomReport(new Date(2017, 4, 8))],
+//[new Date(2017, 4, 9),NaN,createCustomReport(new Date(2017, 4, 9)),2,createCustomReport(new Date(2017, 4, 9)),3,createCustomReport(new Date(2017, 4, 9)),NaN,createCustomReport(new Date(2017, 4, 9))],
+//[new Date(2017, 4, 10),NaN,createCustomReport(new Date(2017, 4, 10)),NaN,createCustomReport(new Date(2017, 4, 10)),3,createCustomReport(new Date(2017, 4, 10)),NaN,createCustomReport(new Date(2017, 4, 10))],
+//[new Date(2017, 4, 11),NaN,createCustomReport(new Date(2017, 4, 11)),NaN,createCustomReport(new Date(2017, 4, 11)),NaN,createCustomReport(new Date(2017, 4, 11)),NaN,createCustomReport(new Date(2017, 4, 11))],
+//[new Date(2017, 4, 12),NaN,createCustomReport(new Date(2017, 4, 12)),2,createCustomReport(new Date(2017, 4, 12)),NaN,createCustomReport(new Date(2017, 4, 12)),NaN,createCustomReport(new Date(2017, 4, 12))],
+//[new Date(2017, 4, 13),NaN,createCustomReport(new Date(2017, 4, 13)),NaN,createCustomReport(new Date(2017, 4, 13)),NaN,createCustomReport(new Date(2017, 4, 13)),NaN,createCustomReport(new Date(2017, 4, 13))],
+//[new Date(2017, 4, 14),NaN,createCustomReport(new Date(2017, 4, 14)),NaN,createCustomReport(new Date(2017, 4, 14)),3,createCustomReport(new Date(2017, 4, 14)),NaN,createCustomReport(new Date(2017, 4, 14))],
+//[new Date(2017, 4, 15),1,createCustomReport(new Date(2017, 4, 15)),2,createCustomReport(new Date(2017, 4, 15)),NaN,createCustomReport(new Date(2017, 4, 15)),NaN,createCustomReport(new Date(2017, 4, 15))],
+//[new Date(2017, 4, 16),NaN,createCustomReport(new Date(2017, 4, 16)),2,createCustomReport(new Date(2017, 4, 16)),NaN,createCustomReport(new Date(2017, 4, 16)),4,createCustomReport(new Date(2017, 4, 16))],
+//[new Date(2017, 4, 17),NaN,createCustomReport(new Date(2017, 4, 17)),2,createCustomReport(new Date(2017, 4, 17)),3,createCustomReport(new Date(2017, 4, 17)),NaN,createCustomReport(new Date(2017, 4, 17))],
+//[new Date(2017, 4, 18),NaN,createCustomReport(new Date(2017, 4, 18)),NaN,createCustomReport(new Date(2017, 4, 18)),NaN,createCustomReport(new Date(2017, 4, 18)),4,createCustomReport(new Date(2017, 4, 18))],
+//[new Date(2017, 4, 19),NaN,createCustomReport(new Date(2017, 4, 19)),NaN,createCustomReport(new Date(2017, 4, 19)),NaN,createCustomReport(new Date(2017, 4, 19)),NaN,createCustomReport(new Date(2017, 4, 19))],
+//[new Date(2017, 4, 20),NaN,createCustomReport(new Date(2017, 4, 20)),2,createCustomReport(new Date(2017, 4, 20)),NaN,createCustomReport(new Date(2017, 4, 20)),NaN,createCustomReport(new Date(2017, 4, 20))],
+//[new Date(2017, 4, 21),NaN,createCustomReport(new Date(2017, 4, 21)),NaN,createCustomReport(new Date(2017, 4, 21)),NaN,createCustomReport(new Date(2017, 4, 21)),NaN,createCustomReport(new Date(2017, 4, 21))],
+//[new Date(2017, 4, 22),NaN,createCustomReport(new Date(2017, 4, 22)),NaN,createCustomReport(new Date(2017, 4, 22)),NaN,createCustomReport(new Date(2017, 4, 22)),4,createCustomReport(new Date(2017, 4, 22))],
+//[new Date(2017, 4, 23),NaN,createCustomReport(new Date(2017, 4, 23)),NaN,createCustomReport(new Date(2017, 4, 23)),NaN,createCustomReport(new Date(2017, 4, 23)),NaN,createCustomReport(new Date(2017, 4, 23))],
+//[new Date(2017, 4, 24),NaN,createCustomReport(new Date(2017, 4, 24)),2,createCustomReport(new Date(2017, 4, 24)),3,createCustomReport(new Date(2017, 4, 24)),NaN,createCustomReport(new Date(2017, 4, 24))],
+//[new Date(2017, 4, 25),NaN,createCustomReport(new Date(2017, 4, 25)),NaN,createCustomReport(new Date(2017, 4, 25)),NaN,createCustomReport(new Date(2017, 4, 25)),4,createCustomReport(new Date(2017, 4, 25))],
+//[new Date(2017, 4, 26),NaN,createCustomReport(new Date(2017, 4, 26)),NaN,createCustomReport(new Date(2017, 4, 26)),NaN,createCustomReport(new Date(2017, 4, 26)),NaN,createCustomReport(new Date(2017, 4, 26))],
+//[new Date(2017, 4, 27),NaN,createCustomReport(new Date(2017, 4, 27)),NaN,createCustomReport(new Date(2017, 4, 27)),3,createCustomReport(new Date(2017, 4, 27)),4,createCustomReport(new Date(2017, 4, 27))],
+//[new Date(2017, 4, 28),NaN,createCustomReport(new Date(2017, 4, 28)),2,createCustomReport(new Date(2017, 4, 28)),3,createCustomReport(new Date(2017, 4, 28)),NaN,createCustomReport(new Date(2017, 4, 28))],
+//[new Date(2017, 4, 29),NaN,createCustomReport(new Date(2017, 4, 29)),2,createCustomReport(new Date(2017, 4, 29)),NaN,createCustomReport(new Date(2017, 4, 29)),NaN,createCustomReport(new Date(2017, 4, 29))],
+//[new Date(2017, 4, 30),NaN,createCustomReport(new Date(2017, 4, 30)),NaN,createCustomReport(new Date(2017, 4, 30)),NaN,createCustomReport(new Date(2017, 4, 30)),NaN,createCustomReport(new Date(2017, 4, 30))]
+//
+//
+//          ]
+          
+          );
+
+          var options = {
+  //          title: 'Company Performance',
+            legend: { position: 'top' },
+               height: 500,
+//            width:1100,
+              vAxis: { 
+                  textPosition: 'none',
+  //                 ticks: [{v:1,f:'Advertisers'},{v:2,f:'Behavioral/Demographics'},{v:3,f:'Interests'},{v:4,f:'Likes'}]
+                  viewWindow: {
+                      max:0.3,
+                      min:4
+                  },
+                  gridlines: {
+                      color: 'transparent'
+                  }
+                     },
+              hAxis:{
+  //                 gridlines: {
+  //                    color: 'transparent'
+  //                }
+              },
+             tooltip: { isHtml: true,trigger: 'both' },
+              pointSize: 15,
+              pointShape: 'circle'
+
+          };
+
+          var chart = new google.visualization.ScatterChart(document.getElementById('chart_div2'));
+
+          chart.draw(data, options);
+        }
+           
+        var  likeReport = {newEntries:['Game Of Thrones','Pokemon'],oldEntries:['Series'],total:250}
+      </script>
+     <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        var exp_cats_daily = {{exp_cats_daily|safe}}
+        for (let i=1;i<exp_cats_daily.length;i++) {
+            exp_cats_daily[i][0] = new Date(exp_cats_daily[i][0])
+        }
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              exp_cats_daily
+//              [
+//            ["Day", "Interests", "Age/Gender/Location", "Behavioral/Demographics", "Data Brokers", "Custom Audience", "Social Neighborhood", "Lookalike Audience", "Likes", "Profile Data/Checkins"], [new Date(2017,2,29), 0, 0, 0, 0, 0, 0, 1, 0, 0], [new Date(2017,3,5), 6, 1, 0, 0, 5, 0, 1, 0, 0], [new Date(2017,3,6), 3, 6, 1, 0, 4, 0, 3, 0, 0], [new Date(2017,3,7), 7, 4, 2, 0, 11, 0, 1, 0, 0], [new Date(2017,3,8), 9, 3, 1, 0, 13, 2, 6, 0, 1], [new Date(2017,3,9), 10, 2, 2, 0, 18, 2, 8, 0, 3], [new Date(2017,3,10), 8, 2, 1, 0, 10, 0, 3, 0, 1], [new Date(2017,3,11), 6, 4, 0, 0, 8, 0, 7, 0, 2], [new Date(2017,3,12), 9, 3, 0, 0, 8, 1, 5, 0, 1], [new Date(2017,3,13), 7, 5, 0, 0, 9, 0, 5, 0, 2], [new Date(2017,3,14), 8, 5, 0, 0, 9, 1, 6, 0, 1], [new Date(2017,3,15), 10, 6, 0, 0, 8, 0, 6, 0, 0], [new Date(2017,3,16), 8, 4, 3, 0, 8, 0, 4, 0, 0], [new Date(2017,3,17), 11, 3, 0, 0, 8, 0, 6, 0, 0], [new Date(2017,3,18), 24, 6, 3, 0, 12, 0, 10, 0, 0], [new Date(2017,3,19), 21, 7, 1, 0, 12, 0, 11, 0, 4], [new Date(2017,3,20), 17, 5, 0, 0, 8, 0, 3, 0, 2], [new Date(2017,3,21), 7, 3, 0, 0, 13, 0, 4, 0, 0], [new Date(2017,3,22), 16, 2, 3, 0, 11, 0, 4, 0, 1], [new Date(2017,3,23), 15, 6, 3, 0, 5, 2, 3, 0, 2], [new Date(2017,3,24), 4, 1, 3, 0, 2, 1, 1, 0, 0], [new Date(2017,3,25), 25, 4, 7, 0, 19, 0, 6, 0, 1], [new Date(2017,3,26), 19, 8, 0, 0, 12, 1, 7, 0, 1], [new Date(2017,3,27), 26, 5, 0, 0, 10, 2, 2, 0, 2], [new Date(2017,3,28), 14, 9, 2, 0, 12, 1, 9, 0, 1], [new Date(2017,3,29), 18, 6, 1, 0, 8, 2, 2, 0, 0], [new Date(2017,3,30), 5, 6, 1, 0, 7, 1, 5, 0, 1], [new Date(2017,4,1), 29, 6, 0, 0, 14, 0, 9, 0, 0], [new Date(2017,4,2), 22, 8, 4, 0, 6, 1, 14, 1, 3], [new Date(2017,4,3), 51, 16, 3, 0, 26, 0, 16, 0, 0], [new Date(2017,4,4), 29, 8, 2, 0, 11, 0, 9, 0, 0], [new Date(2017,4,5), 29, 9, 2, 0, 13, 1, 5, 0, 2], [new Date(2017,4,6), 32, 6, 1, 0, 15, 0, 6, 1, 0], [new Date(2017,4,7), 37, 13, 2, 0, 25, 0, 12, 0, 2], [new Date(2017,4,8), 33, 10, 1, 0, 18, 0, 15, 1, 0], [new Date(2017,4,9), 49, 13, 1, 0, 13, 0, 23, 0, 1], [new Date(2017,4,10), 40, 10, 1, 0, 18, 1, 25, 1, 1], [new Date(2017,4,11), 32, 10, 3, 0, 19, 0, 4, 0, 0], [new Date(2017,4,12), 54, 16, 1, 1, 18, 0, 8, 0, 1], [new Date(2017,4,13), 44, 24, 2, 0, 24, 0, 13, 0, 0], [new Date(2017,4,14), 48, 16, 1, 1, 23, 0, 18, 0, 2], [new Date(2017,4,15), 77, 18, 5, 4, 20, 1, 18, 1, 3], [new Date(2017,4,16), 49, 9, 2, 1, 17, 0, 8, 1, 2], [new Date(2017,4,17), 23, 14, 1, 0, 13, 0, 7, 0, 0], [new Date(2017,4,18), 7, 9, 1, 0, 5, 0, 4, 0, 0], [new Date(2017,4,19), 4, 5, 0, 0, 3, 0, 1, 0, 1], [new Date(2017,4,20), 6, 4, 0, 0, 3, 0, 0, 0, 0], [new Date(2017,4,21), 18, 3, 1, 0, 4, 0, 4, 0, 0], [new Date(2017,4,22), 24, 8, 2, 0, 9, 0, 6, 0, 4], [new Date(2017,4,23), 14, 5, 0, 0, 6, 0, 4, 1, 0], [new Date(2017,4,24), 8, 1, 1, 0, 8, 0, 5, 0, 0], [new Date(2017,4,25), 20, 6, 1, 0, 18, 0, 6, 0, 3], [new Date(2017,4,26), 12, 2, 0, 0, 5, 0, 5, 0, 1], [new Date(2017,4,27), 4, 2, 0, 0, 7, 1, 5, 0, 0], [new Date(2017,4,28), 10, 6, 0, 0, 10, 0, 6, 0, 0], [new Date(2017,4,29), 9, 7, 0, 0, 9, 0, 1, 0, 1], [new Date(2017,4,30), 11, 2, 1, 0, 8, 0, 5, 0, 0],[new Date(2017,4,31), 11, 3, 1, 0, 5, 0, 4, 0, 0]]
+                                                          
+                                                          );
+
+          var options = {
+          isStacked: 'relative',
+          height: 500,
+          legend: {position: 'top', maxLines: 3},
+              
+          vAxis: {
+            minValue: 0,
+            ticks: [0, .25, .5, .75, 1],   
+              gridlines: {
+                color: 'transparent'
+            }
+          },
+              hAxis: {              gridlines: {
+                color: 'transparent'
+            }}
+            
+        };          
+
+          var chart = new google.visualization.SteppedAreaChart(document.getElementById('area_plot'));
+          chart.draw(data, options);
+        }
+      </script>
+
+    <script type="text/javascript">
+        var explanations=['interests','behave','demo','brokers','custom','soc_nhood','lookalike','likes','prof_data','check_ins']
+        var categories=['travel','video games','tv shows','food']
+        var top_advertisers={};
+        top_advertisers['explanations']={};
+        top_advertisers['categories']={};
+
+        var temp={};
+        temp['name']='50% off on bookings to Paris!';
+        temp['logo']='https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png';
+        temp['freq']='10';
+        temp['advertiser_name']='AirBnB';
+        
+        top_advertisers['explanations'] = {{top_ads_expl|safe}}
+
+//        for (var x=0; x < explanations.length; x++)
+//        {
+//          top_advertisers['explanations'][explanations[x]]=[];
+//          top_advertisers['explanations'][explanations[x]].push(temp);          
+//          top_advertisers['explanations'][explanations[x]].push(temp);          
+//          top_advertisers['explanations'][explanations[x]].push(temp);          
+//        }
+        top_advertisers['categories'] = {{top_ads_adv|safe}}
+//        for (var x=0; x < categories.length; x++)
+//        {
+//          top_advertisers['categories'][categories[x]]=[];
+//          top_advertisers['categories'][categories[x]].push(temp);          
+//          top_advertisers['categories'][categories[x]].push(temp);          
+//          top_advertisers['categories'][categories[x]].push(temp);          
+//        }
+
+
+//        var data_map_expl={1:'interests',2:'behave',3:'demo',4:'brokers',5:'custom',6:'soc_nhood',7:'lookalike',8:'likes',9:'prof_data',10: 'check_ins'} 
+        var data_map_expl = {{ov_divs|safe}}
+        var data_map_cat = {{advertiser_cat_divs|safe}}
+//        var data_map_cat={1:'travel',2:'video games',3:'tv shows',4:'food'} 
+
+        var data_cat;
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChartDonutCat);        
+        var prev_sel="";
+        function selectHandlerCat(e) {
+//          cat_title_map=["Travel","Video Games","TV Shows","Food"]
+         var cat_title_map = {{adv_types|safe}}
+          var selection_cat=chart_cat.getSelection();
+          chart_expl.setSelection();
+          if (selection_cat.length === 0)
+          {
+            $("#top_objects").hide("slow");
+            $("#top_objects").empty();
+            $('html,body').animate({scrollTop: $("#donut_cat").offset().top}, 'slow');                      
+          }
+          else
+          {
+            console.log(1);
+            $('html,body').animate({scrollTop: $("#donut_cat").offset().top}, 'slow'); 
+            // $("#top_objects").hide();
+            $("#top_objects").empty();
+            var html="<div class=\"col-md-12\"><h3>Top " + cat_title_map[selection_cat[0]['row']] + " advertisements I receive</h3><hr><p> Below are the top 15 " + cat_title_map[selection_cat[0]['row']] + " advertisements I receive out of "+ data_cat['kc'][selection_cat[0]['row']][1]['Cf'] + " total "+ cat_title_map[selection_cat[0]['row']]+ " advertisements:<br/><br/>";
+            var sel_cat=data_map_cat[selection_cat[0]['row']+1];
+            console.log(2);
+              html +='<ul class="list-group">'
+
+            for (var i=0;i<top_advertisers['categories'][sel_cat].length;i++)
+            {
+                html+="<div class='col-md-12 list-group-item'><div class='col-md-4'><img src='"+top_advertisers['categories'][sel_cat][i]['logo']+"' height='200' width='300'></div><div class='col-md-8'><div class='col-md-12'>"+top_advertisers['categories'][sel_cat][i]['name']+"</div><br/><br/><br/><div class='col-md-12' > <b>Advertiser:</b> <a href ='"+top_advertisers['categories'][sel_cat][i]['advertiser_name']+"'>"+top_advertisers['categories'][sel_cat][i]['advertiser_name']+"<a/></div><div class='col-md-12' > <b>Number of Impressions:</b>" + top_advertisers['categories'][sel_cat][i]['freq'] + "</div></div></div>";
+                
+//              html+="<div class='col-md-12'><div class='col-md-4'><img src='"+top_advertisers['categories'][sel_cat][i]['logo']+"' height='100' width='100'></div><div class='col-md-8'><div class='col-md-12'>"+top_advertisers['categories'][sel_cat][i]['name']+"</div><br/><br/><br/><div class='col-md-12' style='font-size:12px'> By: <a href ='"+top_advertisers['categories'][sel_cat][i]['advertiser_name']+"'>"+top_advertisers['categories'][sel_cat][i]['advertiser_name']+"<a/></div><div class='col-md-12' style='font-size:12px'> Count:" + top_advertisers['categories'][sel_cat][i]['freq'] + "</div></div></div><br/><hr>";
+            }
+              
+            html+= '</ul>';
+
+            html+="<br/><br/><br/><br/><br/><br/><br/><br/>";
+            console.log(3);            
+            $("#top_objects").append(html);
+            $("#top_objects").show("slow");
+            $('html,body').animate({scrollTop: $("#top_objects").offset().top}, 'slow');
+            console.log(4);            
+          }
+        }
+
+
+        function drawChartDonutCat() {
+
+          data_cat = google.visualization.arrayToDataTable(
+              {{advertiser_cat_overview|safe}}
+//              [
+//            ['Category', 'Percentage'],
+//            ['Travel',     698],
+//            ['Video Games',      90],
+//            ['TV Shows', 110],
+//            ['Food',     60]
+//          ]
+          );
+
+
+          var options = {
+            pieHole: 0.4,
+            pieSliceText: 'none',
+            height:300,
+            legend:
+              {
+                textStyle: {fontSize:10}
+              }
+          };
+
+          chart_cat = new google.visualization.PieChart(document.getElementById('donut_cat'));
+          chart_cat.draw(data_cat, options);
+          google.visualization.events.addListener(chart_cat, 'select', selectHandlerCat);       
+        }                 
+      
+    </script>
+    
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChartDonutExpl);
+        // google.charts.setOnLoadCallback(drawChartDonutCat);        
+
+        // var button = document.getElementById('b1');
+
+        // button.onclick = function() {
+        //     drawChart();
+
+        var data_expl;
+        function selectHandlerExpl(e) {
+//          expl_title_map=['Interests','Behaviour','Demographics','Data Brokers','Custom Audience','Social Neighborhood','Lookalike Audience','Likes','Biographical Data','Check-Ins']
+          var expl_title_map = {{expl_types|safe}}
+          var selection=chart_expl.getSelection();
+          chart_cat.setSelection();
+          if (selection.length === 0)
+          {
+            $("#top_objects").hide("slow");
+            $("#top_objects").empty();
+            $('html,body').animate({scrollTop: $("#donut_expl").offset().top},'slow');                      
+          }
+          else
+          {
+            // $("#top_objects").hide("slow");
+//              $("#top_objects").hide();
+
+            $("#top_objects").empty();
+            $('html,body').animate({scrollTop: $("#donut_expl").offset().top},'slow');                      
+            var html="<div class=\"col-md-12\"><h3>Top advertisements I receive based on " + expl_title_map[selection[0]['row']] + "</h3><hr><p> Below are the top 5 advertisements I receive based on " + expl_title_map[selection[0]['row']] + ", out of "+ data_expl['kc'][selection[0]['row']][1]['Cf'] + " total such advertisements:<br/><br/>";
+            var sel=data_map_expl[selection[0]['row']+1];
+            html +='<ul class="list-group">'
+            for (var i=0;i<top_advertisers['explanations'][sel].length;i++)
+            {
+              html+="<div class='col-md-12 list-group-item'><div class='col-md-4'><img src='"+top_advertisers['explanations'][sel][i]['logo']+"' height='200' width='300'></div><div class='col-md-8'><div class='col-md-12'>"+top_advertisers['explanations'][sel][i]['name']+"</div><br/><br/><br/><div class='col-md-12' > <b>Advertiser:</b> <a href ='"+top_advertisers['explanations'][sel][i]['advertiser_name']+"'>"+top_advertisers['explanations'][sel][i]['advertiser_name']+"<a/></div><div class='col-md-12' > <b>Number of Impressions:</b>" + top_advertisers['explanations'][sel][i]['freq'] + "</div></div></div>";
+//              html+="<div class='col-md-4'><div class='col-md-4'><img src='"+top_advertisers['explanations'][sel][i]['logo']+ "' height='100' width='100'></div><div class='col-md-8'><div class='col-md-12'>"+top_advertisers['explanations'][sel][i]['name']+"</div><br/><br/><br/><div class='col-md-12' style='font-size:12px'> By: "+top_advertisers['explanations'][sel][i]['advertiser_name']+"</div><div class='col-md-12' style='font-size:12px'> Count:" + top_advertisers['explanations'][sel][i]['freq'] + "</div></div></div>";
+            }
+              html+= '</ul>'
+            html+="<br/><br/><br/><br/><br/><br/><br/><br/>"
+//            $("#top_objects").append(html);
+          $("#top_objects").html(html);
+
+            $("#top_objects").show("slow");
+            $('html,body').animate({scrollTop: $("#top_objects").offset().top},'slow');                      
+          }
+        }
+
+        function drawChartDonutExpl() {
+          data_expl = google.visualization.arrayToDataTable(
+              {{overview|safe}}
+//              [
+//            ['Category', 'Percentage'],
+//            ['Interests',     698],
+//            ['Behaviour',      90],
+//            ['Demographics', 110],
+//            ['Data Brokers',     60],
+//            ['Custom Audience',  340],
+//            ['Social Neighborhood', 40],
+//            ['Lookalike Audience', 283],
+//            ['Likes',    50],
+//            ['Biographical Data',    70],
+//            ['Check-Ins',    100]
+//          ]
+          );
+
+
+          var options = {
+            pieHole: 0.4,
+            pieSliceText: 'none',
+            height:300,
+            legend:
+                  {
+                    textStyle: {fontSize:10}
+                  }            
+          };
+
+          chart_expl = new google.visualization.PieChart(document.getElementById('donut_expl'));
+          chart_expl.draw(data_expl, options);
+          google.visualization.events.addListener(chart_expl, 'select', selectHandlerExpl);       
+        }        
+    </script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(
+              {{ages|safe}}
+//              [
+//            ["Age bracket", "% ads"],
+//            ["18-20", 0.11],
+//            ["20-25", 0.14],
+//            ["25-30", 0.10],
+//            ["30-33", 0.05],
+//            ["33-40", 0.15],
+//            ["40-45", 0.14],
+//            ["45-50", 0.11],
+//            ["50-65", 0.08],
+//            ["65+", 0.08],            
+//          ]
+          );
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "95%"},
+            legend: { position: "none" },
+          hAxis: {
+                title: 'Age group'
+              }
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById("age_range"));
+          chart.draw(view, options);
+      }
+    </script>      
+  </head>
+
+
+    <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand"><img src="https://www.seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png" height="50" width="50" style="float:left;margin-top:-15px">Ad Transparency</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" target="_blank">Feedback</a></li>
+            <li><a href="#" target="_blank">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: 100px">
+      <div class="row">
+        <div class="col-md-12"><h3>How am I targeted by advertisements on Facebook?</h3><hr><p>The advertisements I see everyday come from:</p>   <div id="b1" style="display:none;cursor: pointer;" onclick="drawChartDonut()"><span class="glyphicon glyphicon-arrow-left" style="font-size: 25px;"></span></div>        
+        </div>
+        <div id="donutchart" style="height: 450px;" class="col-md-12"></div>         
+                <div class="col-md-8">
+          <div id="interests" style="display:none;">
+            <br/>          
+            <div class="col-md-12">
+              <br/>
+              <p style="font-size: 18;text-align: center;">Top interests I am targeted on</p>
+                <div id="top_interests"></div>            
+            </div>            
+          </div>
+          
+          <div id="prof_data" style="display:none;">
+            <br/>
+            <div class="col-md-12">
+              <div class="col-md-12">
+                <p style="font-size: 18px;text-align: center;">Advertisements I receive based on my biographical details</p>
+                <div id="prof_bar"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="check_ins" style="display:none;">
+            <br/>
+            <div class="col-md-12">
+              <div class="col-md-12">
+                <p style="font-size: 18px;text-align: center;">Advertisements I receive based on my check-ins</p>
+                <div id="check_bar"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="likes" style="display:none;">
+            <div class="col-md-12">
+              <br/>
+              <p style="font-size: 18px;text-align: center;margin-bottom: 50px">Advertisements I received based on my likes</p>
+              
+              <div id="top_likes"></div>
+<!-- 
+              <div class="col-md-3">
+                <a href="#">
+                  <img src="https://cdn.worldvectorlogo.com/logos/airbnb-2.svg" width="120" height="120" style="margin-left: 25%">
+                  <p style="text-align: center;margin-top: 28px">AirBnB</p>
+                </a>
+              </div>
+              <div class="col-md-3">
+                <a href="#">
+                  <img src="http://lofrev.net/wp-content/photos/2017/05/ryanair_logo.jpg" width="180" height="120" style="margin-left: 15%">
+                  <p style="text-align: center;margin-top: 28px">RyanAir</p>
+                </a>
+              </div>
+              <div class="col-md-3">
+                <a href="#">
+                  <img src="http://pictures.dealer.com/h/hoffmaneasthartfordfordfd/1736/3e2cbebf3fe880dacff8359f6f1b5d8bx.jpg" width="140" height="120" style="margin-left: 25%">
+                  <p style="text-align: center;margin-top: 28px">Yelp!</p>
+                </a>
+              </div>
+              <div class="col-md-3">
+                <a href="#">
+                  <img src="http://vectorlogo4u.com/wp-content/uploads/2015/11/trip-advisor-logo-png.png" width="180" height="100" style="margin-left: 15%">
+                  <p style="text-align: center;margin-top: 45px">Trip Advisor</p>
+                </a>
+              </div>  -->
+
+
+
+            </div>          
+          </div>
+          <div id="lookalike" style="display:none;">              
+             <br/>
+            <div class="col-md-12">
+            <br/>
+            <p style="font-size: 18px;text-align: center;">Top advertisers using Lookalike Audiences</p>
+              <div id="top_advertisers_lookalike" ></div>
+            </div>
+          </div>
+          <div id="soc_nhood" style="display:none;">
+            <div class="col-md-6">
+              <br/>
+              <p style="font-size: 18px;text-align: center;">Top friends I see advertisements from</p>
+              <div id="soc_nhood_fr" style="height: 250px"></div>            
+            </div>       
+            <div class="col-md-6">
+              <br/>
+              <p style="font-size: 18px;text-align: center;">Top advertisers I see advertisements from</p>
+              <div id="soc_nhood_ad" style="height: 250px"></div>            
+            </div>       
+          </div>
+
+          <div id="custom" style="display:none;">
+            <br/>
+            <div class="col-md-12">
+            <br/>
+            <p style="font-size: 18px;text-align: center;">Top advertisers using Custom Lists</p>
+              <div id="top_advertisers_custom" ></div>
+            </div>
+          </div>
+
+          <div id="brokers" style="display:none;">            
+            <br/>
+            <div class="col-md-6">
+            <p style="font-size: 18px;text-align: center;">Top advertisers using Data Brokers lists</p>
+              <div id="top_advertisers_databrokers" ></div>
+            </div>
+            <div class="col-md-6">
+            <p style="font-size: 18px;text-align: center;">Top Data Brokers</p>
+              <div id="top_databrokers"></div>
+            </div>
+          </div>           
+         
+          <div id="behave" style="display:none;">
+            <br/>
+            <div class="col-md-12">
+            <br/>
+            <p style="font-size: 18px;text-align: center;">My behavior I am targeted under</p>
+              <div id="top_behaviour" ></div>
+            </div>
+          </div>
+
+          <div id="demo" style="display:none;">
+            <br/>
+            <div class="col-md-12">
+            <br/>
+            <p style="font-size: 18px;text-align: center;">Top demographics I am targeted under</p>
+              <div id="top_demo" ></div>
+            </div>
+          </div>          
+        </div>
+
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <h3>What locations am I targeted from?</h3><hr><p>I receive advertisements because I have visited:</p>
+            <div id="ad_loc" style="height: 350px;width: 470px"></div>            
+          </div>
+          <div class="col-md-6">
+            <h3>Which ages are included in the age ranges I am being targeted?</h3><hr><p></p>
+            <div id="age_range" style="height: 350px;width: 1120px"></div>            
+          </div>
+        </div>
+        
+        </div>
+
+        <div class="col-md-12">
+            <h3>How am I targeted over time?</h3><hr><p>Facebook data about me these days:</p>
+          <div id="chart_div2">  
+          </div>                            
+        </div> 
+
+        <div class="col-md-12">
+          <p>Across days, I'm targeted by advertisers by:</p>
+          <div id="area_plot">  
+          </div>                            
+        </div>
+
+        <div class="col-md-12">
+            <h3>What are the top advertisements I receive?</h3><hr>
+          <div class="col-md-6">
+            <p style="font-size:18px;text-align: center;">Based on ad explanations</p>
+          </div>            
+          <div class="col-md-6">
+            <p style="font-size:18px;text-align: center;">Based on advertiser category</p>
+          </div>            
+          <div class="col-md-6">
+            <div id="donut_expl"></div>
+          </div>
+          <div class="col-md-6">
+            <div id="donut_cat"></div>
+          </div>
+          <div class="col-md-12">
+            <div id="top_objects" ></div>
+          </div>
+          <div class="col-md-12">
+            <h3>What are the top advertisements I receive?</h3><hr>
+            <p>Wordcloud of how I'm targeted the most:</p>
+            <div id="wordcloud" style="height: 500px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;;margin-bottom: 50px;"></div>
+            <div id="top_wordcloud_objects"></div>
+          </div> 
+          </div>                            
+        </div>         
+        </div>        
+      </div>  
+    </div>
+  </body>
+</html>

@@ -1,0 +1,461 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Monitoring Statistics</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+        {% load static %}
+
+    <!-- Bootstrap CSS
+                ============================================ -->
+    <link rel="stylesheet" type="text/css" href="{% static 'report-styles/bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/bootstrap-table.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/morris.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'report-styles/style.css' %}">
+    <!-- responsive CSS
+                ============================================ -->
+    <!-- loader -->
+    <style>
+
+        #header-fixed {
+	        position: fixed;
+   		top: 0px; display:none;
+    		background-color:white;
+	}
+
+	.loader {
+  		border: 16px solid #f3f3f3;
+ 		border-radius: 50%;
+  		border-top: 16px solid #3498db;
+  		width: 500px;
+  		height: 500px;
+		margin : auto;
+  		-webkit-animation: spin 2s linear infinite; /* Safari */
+  		animation: spin 2s linear infinite;
+	}
+
+	/* Safari */
+	@-webkit-keyframes spin {
+  		0% { -webkit-transform: rotate(0deg); }
+  		100% { -webkit-transform: rotate(360deg); }
+	}
+
+	@keyframes spin {
+  		0% { transform: rotate(0deg); }
+  		100% { transform: rotate(360deg); }
+	}
+
+      </style>
+
+</head>
+
+<body>
+     
+
+
+
+	{% include "monitoring/monitoring-header.html" %}
+
+
+        <div class="advanced-form-area mg-b-15" style="margin-top : 60px;">
+                <div class="container-fluid">
+                    <div class="row">
+                            <div class="sparkline10-list mg-tb-30 responsive-mg-t-0 table-mg-t-pro-n dk-res-t-pro-0 nk-ds-n-pro-t-0" style="margin-left: 40px; margin-right: 40px;">
+                                <div class="sparkline10-graph">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="chosen-select-single mg-b-20">
+                                                    <b>
+                                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="form-select-list"> </div>
+                                                             </div>
+                                                    </b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+        </div>
+    
+	<div id="loader" class="loader" style="visibility: hidden; display:none;"></div>
+
+        
+	<div id="information-div" style="visibility:hidden; display:none;">
+
+        	<div class="row">
+                	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        	<div class="charts-single-pro responsive-mg-b-30">
+                            		<div class="alert-title">
+                                		<h2>Facebook Interface</h2>
+                                		<p>Number of users using each version of the Facebook interface</p>
+                            		</div>
+                            		<div id="pie-chart">
+                                		<canvas style="height:300px;" id="interface-piechart"></canvas>
+                            		</div>
+                        	</div>
+                    	</div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="charts-single-pro responsive-mg-b-30">
+                                        <div class="alert-title">
+                                                <h2>AdBlocker status</h2>
+                                                <p>Number of users using Adblocker</p>
+                                        </div>
+                                        <div id="pie-chart">
+                                                <canvas style="height:300px;" id="adblocker-piechart"></canvas>
+                                        </div>
+                                </div>
+                        </div>
+		</div>
+		
+                <div class="row" style="margin-top : 40px;">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-sales-chart">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="caption pro-sl-hd">
+                                            <span class="caption-subject"><b>Ads and posts collection per interface version</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="actions graph-rp graph-rp-dl">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-inline cus-product-sl-rp">
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #006DF0;"></i>Users</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #933EC5;"></i>Users with ads</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #65b12d;"></i>Users with news posts</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle" style="color: #FF0000;"></i>Users with public posts</h5>
+                                </li>
+                            </ul>
+                            <div id="morris-bar-chart" style="height: 356px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top : 60px;">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="charts-single-pro responsive-mg-b-30">
+                                        <div class="alert-title">
+                                                <h2>Number of ads with visibility time</h2>
+                                                <p></p>
+                                        </div>
+                                        <div id="pie-chart">
+                                                <canvas style="height:300px;" id="visibility-ads-piechart"></canvas>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="charts-single-pro responsive-mg-b-30">
+                                        <div class="alert-title">
+                                                <h2>Number of users with ad visibility time</h2>
+                                                <p></p>
+                                        </div>
+                                        <div id="pie-chart">
+                                                <canvas style="height:300px;" id="visibility-users-piechart"></canvas>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+
+    </div>
+
+    <!-- jquery
+		============================================ -->
+    <script src="{% static 'report-scripts/jquery-1.12.4.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- bootstrap JS
+		============================================ -->
+    <script src="{% static 'report-scripts/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'report-scripts/bootstrap-table.js' %}"></script>
+    <script src="{% static 'report-scripts/tableExport.js' %}"></script>
+    <script src="{% static 'report-scripts/bootstrap-table-export.js' %}"></script>
+
+
+    <script src="{% static 'report-scripts/tableExport.js' %}"></script>
+
+    <script src="{% static 'report-scripts/raphael-min.js' %}"></script>
+
+    <script src="{% static 'report-scripts/morris.js' %}"></script>
+
+    <script src="{% static 'report-scripts/Chart.js' %}"></script>
+
+    <script src="{% static 'report-scripts/rounded-chart.js' %}"></script>
+
+    <script>
+
+
+	 function getData(timestamp) {
+                $('#information-div').css("visibility", "hidden");
+                $('#information-div').css("display", "none");
+
+                $('#loader').css("visibility", "visible");
+                $('#loader').css("display", "block");
+
+		sendRequest(timestamp);
+	 }
+
+	 function sendRequest(timestamp) {
+                $.ajax({
+                        type:'POST',
+                        url:'get_users_behavior?user='+user,
+                        data: {'timestamp':timestamp},
+                        success:function(resp){
+                                if (resp.status!=='success') {
+                                        return
+                                }
+
+				displayCharts(resp);
+				displayBars(resp["ads_posts_per_interface"]);
+                                $('#loader').css("visibility", "hidden");
+                                $('#loader').css("display", "none");
+                                $('#information-div').css("visibility", "visible");
+                                $('#information-div').css("display", "block");
+
+				window.setTimeout(function(){sendRequest(lastTimeStamp);}, 15 * 60 * 1000);
+                        }
+                })
+
+	 }
+
+	 function displayBars(data) {
+
+		Morris.Bar({
+        		element: 'morris-bar-chart',
+        		data: data,
+	        	xkey: 'interface',
+        		ykeys: ['users', 'ads', 'newsPosts', 'publicPosts'],
+        		labels: ['Users', 'Users with Ads', 'Users with news posts', 'users With public posts'],
+        		barColors:['#006DF0', '#933EC5', '#65b12d', '#FF0000'],
+        		hideHover: 'auto',
+         		barSizeRatio:0.45,
+        		gridLineColor: '#eef0f2',
+        		resize: true
+    		});
+                window.dispatchEvent(new Event('resize'));
+
+	 }
+
+	 function displayCharts(resp) {
+		var ctx = document.getElementById("interface-piechart");
+		var piechart = new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: ["users with old Interface", "Users with new Interface"],
+				datasets: [{
+					label: 'pie Chart',
+                			backgroundColor: [
+						'#65b12d',
+						'#006DF0'
+					],
+					data: [resp["new_interface"]["not-active"], resp["new_interface"]["active"]]
+            			}]
+			},
+			options: {
+				responsive: true
+			}
+		});
+
+                var ctx = document.getElementById("adblocker-piechart");
+                var piechart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                                labels: ["users that never used adblocker", "users that used AdBlocker"],
+                                datasets: [{
+                                        label: 'pie Chart',
+                                        backgroundColor: [
+                                                '#65b12d',
+                                                '#006DF0'
+                                        ],
+                                        data: [resp["adblocker"]["not-active"], resp["adblocker"]["active"]]
+                                }]
+                        },
+                	options: {
+                        	responsive: true
+                	}
+                });
+
+                var ctx = document.getElementById("visibility-users-piechart");
+                var piechart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                                labels: ["users with advisibility time occurences", "users with no ad visibility time occurences"],
+                                datasets: [{
+                                        label: 'pie Chart',
+                                        backgroundColor: [
+                                                '#65b12d',
+                                                '#006DF0'
+                                        ],		
+                                        data: [resp["users_visibility_time"]["active"], resp["users_visibility_time"]["not-active"]]
+                                }]
+                        },
+                        options: {
+                                responsive: true
+                        }
+                });
+
+                var ctx = document.getElementById("visibility-ads-piechart");
+                var piechart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                                labels: ["Ads with visibility time", "Ads with no ad visibility time"],
+                                datasets: [{
+                                        label: 'pie Chart',
+                                        backgroundColor: [
+                                                '#65b12d',
+                                                '#006DF0'
+                                        ],
+                                        data: [resp["ads_visibility_time"]["active"], resp["ads_visibility_time"]["not-active"]]
+                                }]
+                        },
+                        options: {
+                                responsive: true
+                        }
+                });
+
+
+	 }
+
+
+	 function displayGeneralInfo(resp) {
+		var totalAds = document.getElementById("totalAds");
+		totalAds.innerHTML = resp.totals.ads;
+                var totalNews = document.getElementById("totalNews");
+                totalNews.innerHTML = resp.totals.newsposts;
+                var totalPublic = document.getElementById("totalPublic");
+                totalPublic.innerHTML = resp.totals.publicposts;
+                var totalPosts = document.getElementById("totalPosts");
+                totalPosts.innerHTML = resp.totals.posts;
+
+                var totalAds = document.getElementById("adsPercent");
+                totalAds.innerHTML = resp.actives.ads + " active users out of " + resp.totalUsers;
+                var totalNews = document.getElementById("newsPercent");
+                totalNews.innerHTML = resp.actives.newsposts + " active users out of " + resp.totalUsers;
+                var totalPublic = document.getElementById("publicPercent");
+                totalPublic.innerHTML = resp.actives.publicposts + " active users out of " + resp.totalUsers;
+                var totalPosts = document.getElementById("postsPercent");
+                totalPosts.innerHTML = resp.actives.posts + " active users out of " + resp.totalUsers;
+
+                var totalAds = document.getElementById("adsPercent-bar");
+		totalAds.style.width = ((resp.actives.ads / resp.totalUsers) * 100) + "%";
+                var totalNews = document.getElementById("newsPercent-bar");
+                totalNews.style.width = ((resp.actives.newsposts / resp.totalUsers) * 100) +"%";
+                var totalPublic = document.getElementById("publicPercent-bar");
+                totalPublic.style.width = ((resp.actives.publicposts / resp.totalUsers) * 100) +"%";
+                var totalPosts = document.getElementById("postsPercent-bar");
+                totalPosts.style.width = ((resp.actives.posts / resp.totalUsers) * 100) +"%"
+	
+	 }
+
+	function displaySurveysChart(surveys) {
+		console.log(surveys);
+		Morris.Bar({
+		        element: 'morris-bar-chart',
+		        data: surveys,
+		        xkey: 'survey',
+       		 	ykeys: ['concerned', 'answered'],
+        		labels: ['Concerned', 'Answered'],
+        		barColors:['#006DF0', '#65b12d'],
+        		hideHover: 'auto',
+        		barSizeRatio:0.45,
+       		 	gridLineColor: '#eef0f2',
+        		resize: true
+   		});
+		window.dispatchEvent(new Event('resize'));
+	}
+
+        function displayTimelineChart(data) {
+
+                Morris.Area({
+                        element: 'active-users-chart',
+                        data: data,
+                        xkey: 'day',
+                        ykeys: ['users'],
+                        labels: ['Active users'],
+                        pointSize: 1,
+                        fillOpacity: 0,
+                        pointStrokeColors:['#FF0000'],
+                        behaveLikeLine: true,
+                        gridLineColor: '#e0e0e0',
+                        lineWidth: 1,
+                        hideHover: 'auto',
+                        lineColors: ['#FF0000'],
+                        resize: true
+                });
+
+		console.log(data);
+                Morris.Area({
+                        element: 'statistics-chart',
+                        data: data,
+                        xkey: 'day',
+                        ykeys: ['ads', 'newsposts', 'publicposts'],
+                        labels: ['Ads', 'News posts', 'Publicposts'],
+                        pointSize: 3,
+                        fillOpacity: 0,
+                     	pointStrokeColors:['#006DF0', '#933EC5', '#65b12d'],
+                        behaveLikeLine: true,
+                        gridLineColor: '#e0e0e0',
+                        lineWidth: 1,
+                        hideHover: 'auto',
+                        lineColors: ['#006DF0', '#933EC5', '#65b12d'],
+                        resize: true
+                });
+                window.dispatchEvent(new Event('resize'));
+
+        }
+
+
+	function timeConverter(UNIX_timestamp){
+		if(UNIX_timestamp == 0) return "" 
+  		var a = new Date(UNIX_timestamp);
+  		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  		var year = a.getFullYear();
+  		var month = months[a.getMonth()];
+  		var date = a.getDate();
+  		var hour = a.getHours();
+  		var min = a.getMinutes();
+  		var sec = a.getSeconds();
+  		var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  		return time;
+	}
+
+
+
+//	$("#select-interval").val($("#select-interval option:first").val());
+//	lastTimeStamp = $("#select-interval").val();
+
+        var date = new Date();
+        date.setHours(0,0,0,0);
+	lastTimeStamp = date.getTime()
+	getData(lastTimeStamp);
+	
+    </script>
+</body>
+
+</html>

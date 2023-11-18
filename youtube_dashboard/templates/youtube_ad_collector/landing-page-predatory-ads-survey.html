@@ -1,0 +1,262 @@
+     {% load static %}
+
+<html>
+  <head>
+          <link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+
+    <title>AdAnalyst: Survey Panel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+
+
+    <style type="text/css">
+      .carousel-caption{
+        font-size: 65px;
+        text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+      }
+
+      img:not(.media-img){
+    max-width: 100%;
+}
+    </style>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+        $('a[href*=\\#]').on('click', function(event){
+      event.preventDefault();
+      $('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
+    });
+      });
+
+  </script>
+
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118113605-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-118113605-1');
+</script>
+
+<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1137750199667219');
+  fbq('track', 'PageView');
+    fbq('track', 'ViewContent');
+
+
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1137750199667219&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand"><img src='{% static "enabled_48.png" %}' height="50" width="50" style="float:left;margin-top:-15px">AdAnalyst</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#about-transpad" onclick="$('html, body').animate({scrollTop: $('#about-transpad').offset().top}, 1000);">Overview</a></li>
+            <li><a href="#how-it-works" onclick="$('html, body').animate({scrollTop: $('#how-it-works').offset().top}, 1000);">How It Works</a></li>
+  <li><a href="#sign-up" onclick="$('html, body').animate({scrollTop: $('#sign-up').offset().top},1000);">Sign Up</a></li>
+	    <li><a href="#about-us" onclick="$('html, body').animate({scrollTop: $('#about-us').offset().top},1000);">Who are we?</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="about-transpad" style="color:white;background-color: #2C3E50">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 style="text-align: center;font-size: 35px; margin-top:100px">AdAnalyst Survey Panel</h1>
+            <p style="text-align: center;font-size: 17px;margin-top: 20px">Help researchers understand how to make Facebook ads safer and more fair.</p>
+            <div class="col-md-2 col-md-offset-5" style="">
+                <p style="margin-top:5%;margin-left: -7%"><a href="#sign-up" onclick="$('html, body').animate({scrollTop: $('#sign-up').offset().top}, 1000);" class="btn btn-lg"  >
+                <i class="glyphicon glyphicon-download" style="float:left;margin-top:2px"></i>&nbsp;&nbsp;Sign Up Now
+                </a></p>
+            </div>
+          </div>
+          <div class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">
+            <ul class="list-group">
+
+		    <li class="list-group-item" style="background-color: #2C3E50">Install an advertising transparency tool that will anonymously and safely collect the advertisements that appear on your Facebook Feed.<!--<br>$50 payment for initial installation and survey.--></span></li>
+		    <li class="list-group-item" style="background-color: #2C3E50">Take a 15 minute survey at the end of each month.<!--<br>$30 payment per completed survey.--></span></li>
+      <li class="list-group-item" style="background-color: #2C3E50">Earn up to  $400 for full participation in the year-long study.</span></li>
+      <li class="list-group-item" style="background-color: #2C3E50">Find out: Who is targeting you with Ads on Facebook, what Facebook knows about you, and why you're receiving the ads you see on Facebook. <!--Help researchers find out: how to make Facebook advertising more fair and accountable.--></span></li>
+</ul><br/><br/>
+
+<!-- <h3>If you seek answers to the previous questions, then <b>AdAnalyst</b> is for you!</h3>-->
+            <!--<p>If you are still interested, <a href=#overview><b>check out our short Overview!</b></a></p>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="how-it-works"><!-- style="color:white;background-color: #2C3E50">
+    --> <div class="container">
+        <div class="row">
+          <div class="col-md-12" style="margin-top: 15px">
+            <h2 style="text-align: center;font-size: 35px">How does it work?</h2>
+	    <p style="text-align: center;font-size: 17px; margin-left:20px; margin-top: 20px"> </p>
+	   <div-class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">
+		   <h3>What You Will Do: </h3>
+	    We will ask you to install AdAnalyst on your browser. AdAnalyst is a tool that we have built to anonymously collect the advertisements that you see on Facebook. We will also ask you to complete a 15-minute survey at the end of every month for 12 months (you may chose to skip a survey but continue with the study). <br> This study has been reviewed and approved by the Ethics Board of the University of Saarland on behalf of the Max Planck Institute</div> 
+	   <div class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">
+            <h3>Payment:</h3>
+           <br>  You will get paid $50 for installing AdAnalyst and completing the first survey. 
+	 <br> You will be paid $25 for completing each monthly survey.
+	 <br> You will be paid a $50 bonus for finishing all 12 months of the study. 
+	 <br> You can earn up to $400 for completing the study.
+	 <br> All payments will be Amazon.com giftcards that will be sent to your email address.   </p>
+          </div>
+          <div class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">
+            <h3>What data we collect from you:</h3>
+            <ul class="list-group">
+              <li class="list-group-item" >The ads you receive while you browse Facebook</li>
+              <li class="list-group-item" >The accompanied explanations that Facebook provides</li>
+              <li class="list-group-item">Periodically, your <a href="https://www.facebook.com/ads/preferences">Ads Preferences</a> page</li>
+	      <li class="list-group-item"> Your answers to our survey questions.
+		      <li class="list-group-item" >Hashed versions of your user id. <br>Hashing prevents us from knowing your actual user id. We will not store your actual user id. <!--We will ask you to enter your user id in the surveys you take to match your survey answers with your advertisements. This matching will be done WITHOUT storing your information.--></li>
+		      <li class="list-group-item"> Your email address. We will use your email address to distribute payments. We will not store your email address in connection to your data, nor will we ever release your email address to anyone else. We will delete your email address immediately after the conclusion of the study.</li>
+	    </ul>
+            <br/>
+            <br/>
+
+            <h3>What data we DO NOT collect from you:</h3>
+            <ul class="list-group">
+              <li class="list-group-item" >Your messages</li>
+              <li class="list-group-item" >Your posts</li>
+              <li class="list-group-item" >Your likes</li>
+              <li class="list-group-item" >Anything else that we do not explicitly state</li>
+            </ul>
+	    <br/>
+            <br/>
+
+            <h3>How is my data going to be used?</h3>
+            <p>Your data is going to be used in our research, we will only collect anonymous data. We will never pair your data with your identity (email, etc.) nor will we release any information about your identity. </p>
+            <br/>
+            <br/>
+            <h3>Is my data going to be safe?</h3>
+            <p>We will store your data in the servers of <a href="https://www.mpi-sws.org/">the Max Planck Institute for Software Systems (MPI-SWS)</a>,  protected by the MPI-SWS firewall. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <div id="sign-up" style="color:white;background-color: #2C3E50">
+         <div class="container">
+        <div class="row">
+          <div class="col-md-12" style="margin-top: 15px">
+           <h2 style="text-align: center;font-size: 35px">Sign Up</h2>
+	   <h3 style="text-align: center; font-size: 24px; margin-top: 30px">Click here to complete the sign up form: SURVEYURL.</h3>
+	  
+	   <p style="text-align: left; font-size: 18px; margin-top: 30px; margin-bottom:35px">If you would like to learn more about who is advertising to you on Facebook and why, but you don't want to participate in the study, go here to install the AdAnalyst tool: <a href="https://adanalyst.mpi-sws.org/">adanalyst.mpi-sws.org</a>
+	   </p> 
+	  </div></div></div></div> 
+	       
+		   <div id="about-us" style="">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12" style="margin-top: 15px">
+            <h2 style="text-align: center;font-size: 35px">Who are we?</h2>
+<!--            <p style="text-align: center;font-size: 17px;margin-top: 20px"> We are a team of researchers from <a href = "http://socialnetworks.mpi-sws.org/" target="_blank"> Social Computing Research Group </a> at <a href = "http://mpi-sws.org" target="_blank"> Max Planck Institute for Software Systems</a></p>                  -->
+          </div>
+            <br/>          <br/>  <br/>  <br/>
+            <ul class="list-group" style="margin-top: 10px">
+      <li class="list-group-item" style=""><a href="https://www.eurecom.fr/~andreou">Athanasios Andreou</a> - PhD student at <a href="https://www.eurecom.fr" target="_blank">EURECOM</a></li>
+      <li class="list-group-item" style=""><a href="http://precog.iiitd.edu.in/people/shrey/">Shrey Bagroy</a> - Student at <a href="https://www.iiitd.ac.in" target="_blank">IIIT-Delhi</a></li>
+      <li class="list-group-item" style=""><a href="https://people.mpi-sws.org/~giridhar/">Giridhari Venkatadri</a> - PhD student at <a href="https://www.northeastern.edu/" target="_blank">Northeastern University</a></li>
+      <li class="list-group-item" style=""><a href="https://lig-membres.imag.fr/gogao/">Oana Goga</a> - Researcher at <a href="http://www.cnrs.fr/" target="_blank">CNRS</a>  in the <a href="http://slide.liglab.fr/" target="_blank">SLIDE</a> team at <a href="http://liglab.fr/" target="_blank">LIG</a>, Grenoble. </li>
+      <li class="list-group-item" style=""><a href="https://people.mpi-sws.org/~gummadi/" target="_blank">Krishna P. Gummadi</a> - Faculty at <a href="http://www.mpi-sws.org/" target="_blank">MPI-SWS</a> & Head of Networked Systems Research Group</li>
+      <li class="list-group-item" style=""><a href="http://lig-membres.imag.fr/loiseapa/publications.html" target="_blank">Patrick Loiseau</a> - Holder of a Chair of Excellence at <a href="https://www.univ-grenoble-alpes.fr" target="_blank">Univ. Grenoble Alpes</a>,<a target="_blank" href="https://www.liglab.fr/en"> LIG</a>, Visiting researcher at <a href="http://www.mpi-sws.org/" target="_blank">MPI-SWS</a></li>
+    <li class="list-group-item" style=""><a href="http://www.ccs.neu.edu/home/amislove/" target="_blank">Alan Mislove</a> - Associate Professor at <a href="http://www.northeastern.edu/" target="_blank">Northeastern University</a></li>
+    <li class="list-group-item" style=""><a href="https://cs.umd.edu/~eredmiles" target="_blank">Elissa M. Redmiles</a> - Ph.D. Candidate at <a href="http://www.umd.edu/" target="_blank">University of Maryland</a></li>
+
+	    
+	    </ul><br/><br/>
+          <div class="col-md-12" style="margin-bottom: 10px">
+                          <div class="col-md-2">
+               <a href="http://www.eurecom.fr" target="_blank"><img src="static/eurecom-logo.png" ></a>
+            </div>
+            <div class="col-md-2">
+              <a href="http://www.mpi-sws.org/" target="_blank"><img src="static/mpi-logo.jpg"></a>
+            </div>
+            <div class="col-md-2">
+              <a href="http://www.northeastern.edu/" target="_blank"><img src="static/neu-seal.jpg"></a>
+            </div>
+
+
+
+                                  <div class="col-md-2">
+             <a href="https://www.univ-grenoble-alpes.fr" target="_blank"> <img src="static/logo-uga.png"></a>
+            </div>
+                          <div class="col-md-2">
+              <a href="http://www.grenoble.cnrs.fr/" target="_blank"><img src="static/logo-cnrs.jpg" ></a>
+            </div>
+            <div class="col-md-2">
+              <a href="http://liglab.fr/" target="_blank"><img src="static/LIG_coul.jpg"></a>
+            </div>
+
+          </div>
+
+            <br/><br/>            <br/><br/>            <br/><br/> <br/><br/>
+
+                      <div class="col-md-12" style="margin-bottom: 100;margin-top:50">
+                                      <h3> Supported by: </h3>
+
+                          <div class="col-md-2 col-md-offset-3">
+              <a href="https://www.imt.fr/" target="_blank"><img src="static/logo-imt.png"></a>
+            </div>
+  <div class="col-md-2">
+               <a href="http://datatransparencylab.org/" target="_blank"><img src="static/dtl-logo.png" ></a>
+            </div>
+
+            <div class="col-md-2">
+               <a href="http://www.agence-nationale-recherche.fr/" target="_blank"><img src="static/anr-logo.gif" ></a>
+            </div>
+          </div>
+<footer>
+         <p>You can find more information on the host of this internet web site here : <a href="https://imprint.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Imprint/Impressum</a> | <a href="https://data-protection.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Data Protection</a>
+ </p></footer>
+                      <!--<div class="col-md-12" style="margin-bottom: 100;margin-top:50">-->
+                          <!---->
+                    <!--</div>-->
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

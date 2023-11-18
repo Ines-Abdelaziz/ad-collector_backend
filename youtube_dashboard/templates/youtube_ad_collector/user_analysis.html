@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anaysis for user {{user_id}}</title>
+
+
+{% load staticfiles %}
+
+
+
+
+<!-- Resources -->
+<!--<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>-->
+<!--<script src="https://www.amcharts.com/lib/3/pie.js"></script>-->
+<!--<script src="https://www.amcharts.com/lib/3/plugins/animate/animate.min.js"></script>-->
+<!--<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>-->
+<!--<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />-->
+<!--<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" media="all" />
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.4/d3.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.js"></script>-->
+
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/css/epoch.min.css" type="text/css" media="all" />-->
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.4/dc.min.css"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.4/dc.min.js"></script>-->
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/css/epoch.min.css" type="text/css" media="all" />-->
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/epoch/0.8.4/js/epoch.js"></script>-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.css" type="text/css" media="all" />-->
+
+<style>
+    .chart {
+  width: 100%;
+  min-height: 450px;
+}
+</style>
+
+
+    <script type="text/javascript" >
+google.charts.load("current", {packages:["corechart"]});
+google.charts.setOnLoadCallback(drawChart1);
+google.charts.setOnLoadCallback(drawChart2);
+
+/**
+ * Define data for each year
+ */
+var chartData = {
+  "1995": [
+    { "label": "Agriculture", "y": 6.6 },
+    { "label": "Mining and Quarrying","y": 0.6 },
+    { "label": "Manufacturing", "y": 23.2 },
+    { "label": "Electricity and Water", "y": 2.2 },
+    { "label": "Construction", "y": 4.5 },
+    { "label": "Trade (Wholesale, Retail, Motor)", "y": 14.6 },
+    { "label": "Transport and Communication", "y": 9.3 },
+    { "label": "Finance, real estate and business services", "y": 22.5 } ],
+  "1996": [
+    { "label": "Agriculture", "y": 6.4 },
+    { "label": "Mining and Quarrying", "y": 0.5 },
+    { "label": "Manufacturing", "y": 22.4 },
+    { "label": "Electricity and Water", "y": 2 },
+    { "label": "Construction", "y": 4.2 },
+    { "label": "Trade (Wholesale, Retail, Motor)", "y": 14.8 },
+    { "label": "Transport and Communication", "y": 9.7 },
+    { "label": "Finance, real estate and business services", "y": 22 } ]
+
+};
+
+
+var chart = [];
+
+
+function drawChart1() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours Per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities',
+          is3D: true,
+        };
+         chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+        chart.draw(data, options);
+        }
+
+
+ function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours Per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities',
+          is3D: true,
+        };
+         chart = new google.visualization.PieChart(document.getElementById('chartdiv2'));
+        chart.draw(data, options);
+        }
+
+
+
+
+
+
+function setSelectBox(boxId,options) {
+    for (var i=0;i<options.length;i++) {
+        $(boxId).append($('<option>', {
+                value: options[i],
+                text: options[i]
+           }));
+    }
+
+}
+$(document).ready( function(){
+
+        //drawChart();
+
+        $(window).resize(function(){
+            drawChart1();
+        });
+
+
+
+        setSelectBox('#selectId',[1992,1993]);
+        $('#selectId').change(function(e) {
+            var str = "";
+            $( "#selectId option:selected" ).each(function() {
+                str = $( this ).text() ;
+            });
+            console.log(str)
+            //chart.options.title.text = "Data from "+str;
+            //chart.options.data[0].dataPoints = chartData[str];
+            //chart.render()
+        });
+
+
+});
+
+overview= {% overview %}
+</script>
+
+
+</head>
+<body>
+
+
+<!--{{user_desc}}lalal-->
+<!--<ul>-->
+<!--{% for id in facebook_ids %}-->
+    <!--<li>{{id}}</li>-->
+    <!--{% endfor %}-->
+
+<!--</ul>-->
+
+<!--<div id="chartdiv" style="height: 400px; width: 400px;"></div>-->
+<div class="container">
+
+
+<div class="row">
+  <div class="col-md-6"><span>Choose date: </span><select id="selectId" class="center"></select></div>
+  <div class="col-md-6"><span>Choose date: </span><select id="selectId2" class="center"></select></div>
+</div>
+
+<div class="row">
+  <div class="clearfix"></div>
+  <div class="col-md-6"><div class="chart" id="chartdiv"></div></div>
+  <div class="col-md-6"> <div class="chart" id="chartdiv2"></div></div>
+</div>
+
+    </div>
+
+
+</body>
+</html>

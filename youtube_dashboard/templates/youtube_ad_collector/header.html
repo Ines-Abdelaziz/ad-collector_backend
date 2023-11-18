@@ -1,0 +1,36 @@
+
+{% load static %}
+{% load i18n %}
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="" class="navbar-brand"><img src="{% static "enabled_48.png" %}" height="50" width="50" style="float:left;margin-top:-15px">{% trans "YouTube Ad Collector"%}</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+              <li><a class="menu_items" href="../survey_all">{% trans "Start Survey"%}</a></li>
+        <!--      <li><a class="menu_items" href="../rewards">{% trans "Rewards"%}</a></li> -->
+              <li><a class="menu_items" href="../contact_us">{% trans "Contact us"%}</a></li>
+          </ul>
+        </div>
+      </div>
+</div>
+
+
+    <script>
+        var url = new URL(window.location.href);
+        var user = url.searchParams.get("user");
+
+        var links = document.getElementsByClassName("menu_items");
+        for (let i=0; i < links.length; i++) {
+                links[i].href = links[i].href + "?user="+user
+
+        }
+    </script>
+

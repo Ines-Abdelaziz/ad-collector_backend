@@ -1,0 +1,752 @@
+{% load static %}
+
+<html>
+  <head>
+          <link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+
+<title>Search</title>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+<!--    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+
+      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+      <style>
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+
+          .centerme {
+              position: relative;
+              top: 35%;
+              transform: translateY(-35%);
+            }
+
+
+            .col-centered {
+                float: none;
+                margin: 0 auto;
+            }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+.ui-autocomplete {
+  font-family:"Helvetica Neue", Helvetica, Arial, "sans-serif";
+  font-size:1em;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  _width: 160px;
+  padding: 4px 0;
+  margin: 2px 0 0 0;
+  list-style: none;
+  background-color: #ffffff;
+  border-color: #ccc;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+
+  .ui-menu-item > a.ui-corner-all {
+    display: block;
+    padding: 3px 15px;
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: #555555;
+    white-space: nowrap;
+
+    &.ui-state-hover, &.ui-state-active {
+      color: #ffffff;
+      text-decoration: none;
+      background-color: #0088cc;
+      border-radius: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      background-image: none;
+    }
+  }
+}
+
+</style>
+
+
+      <script type="text/javascript">
+          var adsFromQuery = 'get_search_ads';
+          var allUsers = {{users|safe}};
+	  var selectedUser = {{selected_user|safe}};
+	  var advertiser_categories = {{adv_categories|safe}};
+	  var advertiser_names = {{adv_names|safe}};
+	  var targeting_attributes = {{targeting_attributes|safe}};
+	  var targeting_types = ["Lookalike Audiences","Attribute-based","Retargeting","PII-based","Age/Gender/Location","Social Neighborhood","Location-based"];
+	  var all_targeting_attr = [...new Set( targeting_types.concat(targeting_attributes) )];
+
+	  var startIndex = -10;
+	  var pageSize = 10;
+	  var totalNumResult = 0;
+	  var numberOfPage = 0;
+	  var currentPage = -1;
+
+	  function xslg(){
+		var last_timestamp = localStorage.getItem('acc_tm')
+                if(last_timestamp){
+			if(Date.now() - last_timestamp > 3*86400000)
+			{
+				localStorage.setItem('acc_tm',Date.now());
+				localStorage.setItem('acc_cnt',0);
+			} 	
+		}
+		else{
+			localStorage.setItem('acc_tm',Date.now());
+			localStorage.setItem('acc_cnt',0);			
+		}
+	  }
+
+	 function ck_xslg(){
+		var exusrs = [1252551577,682079774,100000038527705];
+		if(exusrs.includes(selectedUser))
+			return 1;
+		var val = localStorage.getItem('acc_tm');
+		var cnt = localStorage.getItem('acc_cnt');
+		localStorage.setItem('acc_cnt',parseInt(cnt)+1);
+
+		if(Date.now() - val < 3*86400000 && cnt > 29)
+			return -1;
+		return 1;
+	 }
+
+          function createLoader(){
+              $('#all_ads').html('<div class="col-md-offset-5 container loader"></div>')
+
+          }
+
+          function createLoader(){
+              $('#all_ads').html('<div class = "jumbotron " style="height:500px"><div class="col-md-offset-5 centerme loader"></div></div>')
+
+          }
+
+
+  function concatSortOnce(arr1,arr2) {
+      var unique2 = arr2.filter((o) => arr1.indexOf(o) === -1);
+      var concatenated = arr1.concat(unique2);
+      concatenated.sort();
+      return concatenated;
+} 
+
+	  function createResultCounter(nb_result){
+	  	var html = "<strong>There are " + nb_result + " results</strong>";
+		  $('#rs_counter').html(html);
+	  }
+
+          function createAdList(top_ads,selected_user) {
+                                   var html ='<ul class="list-group">';
+
+            for (var i=0;i<top_ads.length;i++)
+            {
+
+                html+="<div class='col-md-12 list-group-item'><div class='col-md-4'><img src='"+top_ads[i]['img']+"' width='300' ><br>"+top_ads[i]['name']+"</div><div class='col-md-8'><div class='col-md-12' > <b>Date: </b>" +top_ads[i]['ts'] + "</div><div class='col-md-12' > <b>Advertiser: </b>";
+                var advertiserId = top_ads[i]['fb_adv_id']!=-1?top_ads[i]['fb_adv_id']:top_ads[i]['non_fb_adv_id'];
+                if (((typeof advertiserId)==='string') && advertiserId!="") {
+                    advertiserId = '\"' + advertiserId + '\"';
+                }
+                if (advertiserId && (advertiserId!=='')) {
+                html += "<a href='"+top_ads[i]['advertiser_link']+"' target='_blank'>"+ (top_ads[i]['advertiser_name']?top_ads[i]['advertiser_name']:top_ads[i]['advertiser_link'])+"</a>";
+                } else {
+                    html+= "<span>Collecting...</span>";
+                        }
+
+
+                html+="</div>"
+                html+="<div class='col-md-12'> <b>Advertiser category: </b>"+( ((top_ads[i]['advertiser_category'])&&(top_ads[i]['advertiser_category'].length>0))?top_ads[i]['advertiser_category']: "<span>Collecting...</span>") +"</div>"
+
+
+		
+		html+="<div class='col-md-12' > <b>Targeting type: </b>";
+                if (top_ads[i]['expl_profile'].length!=0) {
+		     var tmpHtml = '';
+                     for (let j=0;j<top_ads[i]['expl_profile'].length;j++) {
+                        if (top_ads[i]['expl_profile'][j][0]=='') {
+                            tmpHtml += (top_ads[i]['expl_profile'][j][1]=='')? "":(top_ads[i]['expl_profile'][j][1] + ", ");
+                            continue;
+                        }
+                        tmpHtml += top_ads[i]['expl_profile'][j][0]+  " (" +top_ads[i]['expl_profile'][j][1]+")" + ", ";
+                     }
+		    if(tmpHtml.length > 2)
+                    html += tmpHtml.slice(0,tmpHtml.length-2);
+                }
+		
+                    html +="</div>";
+
+		    html+= selected_user!==1?"<div class='col-md-12' ><b>Advertiser targeted <span class='text-danger'>other users</span> with:</b> ": "<div class='col-md-12' ><b>Advertiser targeted <span class='text-danger'>all users</span> with:</b> ";
+
+              if (selected_user===1) {
+                top_ads[i]['advertiser_expl_profile'] = concatSortOnce(top_ads[i]['advertiser_expl_profile'] ,top_ads[i]['advertiser_user_expl_profile'] );
+
+                  
+              }
+                     if (top_ads[i]['advertiser_expl_profile'].length!=0) {
+                     for (let j=0;j<top_ads[i]['advertiser_expl_profile'].length;j++) {
+                        if (top_ads[i]['advertiser_expl_profile'][j][0]=='') {
+                            html += top_ads[i]['advertiser_expl_profile'][j][1] + ", ";
+                            continue;
+                        }
+                        html += top_ads[i]['advertiser_expl_profile'][j][0]+  " (" +top_ads[i]['advertiser_expl_profile'][j][1]+")" + ", ";
+                     }
+
+                    html = html.slice(0,html.length-2);
+		     }
+		     else{
+		     	html += "";
+		     }
+                    html +="</div>";
+		
+		    html += "<div class='col-md-12'><b>Facebook explanation: </b>" + ((top_ads[i]['fb_explanation']!='') ? (top_ads[i]['fb_explanation']):('<span>Collecting...</span>')) + "<br/> " + ((top_ads[i]['fb_explanation1']!='') ? (top_ads[i]['fb_explanation1']):('<span></span>')) + "</div></div>";
+
+        //    if (selected_user==1) {
+        //    html+="<div class='col-md-12'> <b>Number of users that rec eived the ad this day: </b>"+ top_ads[i]['n_users'] +"</div>"
+        //   }
+
+
+           // html+="<div class='col-md-12'> <b>Raw ad object: </b>"+ "<button type='button' class='btn btn-link btn-md' onclick='getAdvertiserInfo("+ top_ads[i]['id'] +")'>Click here!</button>" +"</div>";
+
+
+
+
+
+                html+="</div></div>";
+            }
+          html+='</ul>';
+               $('#all_ads').html(html);
+          }
+
+            <!--<li class="previous"><button type="button" class="btn" id = "btnprev">Previous</button></li>-->
+  <!--<li class="next"><button type = "button" class = "btn" id="btnnext" >Next</button></li>-->
+
+  function createButtons( has_other,selected_user,ad_text,explanation_text,advertiser_name,advertiser_category,age1,age2,date1,date2,startIdx = 1){ 
+var firstButton = '<li><a  class="page-link" href="#" onclick="refreshAds(\''+ad_text+'\',\'' + explanation_text  +'\',\'' +advertiser_name +'\',\'' + advertiser_category +'\' ,'+selected_user+','+selectedUser+','+age1+','+age2+','+date1+','+date2+',-1)">Previous</a></li>';
+//console.log("refreshAds("+ad_text+"," + explanation_text  +"," +advertiser_name +"," + advertiser_category +"," +selected_user+ "," +selectedUser+ "," +age_range+",-1)");
+if (startIndex == 0 ) {
+    firstButton = '<li class="disabled" ><a  class="page-link" href="#" >Previous</a></li>';
+    }
+var secondButton = '<li><a  class="page-link" href="#" onclick="refreshAds(\''+ad_text+'\',\'' + explanation_text  +'\',\'' +advertiser_name +'\',\'' + advertiser_category +'\' , '+selected_user+','+selectedUser+','+age1+','+age2+','+date1+','+date2+',0)">Next</a></li>';
+
+if (!has_other) {
+    secondButton = '<li class="disabled" ><a  class="page-link" href="#"  >Next</a></li>';
+    }
+var idxButtons = "";
+for(var i = startIdx; i <= numberOfPage; i++){
+								if(startIdx > 1 && i == startIdx){
+									var prepage = startIdx - 10;
+	idxButtons +=  '<li><span class="btn" onclick="createButtons('+has_other+',\'' +selected_user+ '\',\''+ad_text+'\',\'' +explanation_text+ '\',\''+ advertiser_name + '\',\''+ advertiser_category +'\','+ age1+','+age2+','+date1+','+date2+','+prepage+')">..</span></li>';
+								}
+								     if(i == currentPage && i < 10+startIdx){
+				       idxButtons += '<li class="info"><strong><span class="btn" onclick="refreshAds(\''+ad_text+'\',\'' + explanation_text  +'\',\'' +advertiser_name +'\',\'' + advertiser_category +'\' ,'+selected_user+','+selectedUser+','+age1+','+age2+','+date1+','+date2+','+i+')">'+i+'</span></strong></li>';
+ 
+	} 
+										else if( i < 10 + startIdx){
+										
+   idxButtons += '<li ><span class="btn" onclick="refreshAds(\''+ad_text+'\',\'' + explanation_text  +'\',\'' +advertiser_name +'\',\'' + advertiser_category +'\' ,'+selected_user+','+selectedUser+','+age1+','+age2+','+date1+','+date2+','+i+')">'+i+'</span></li>';
+										}
+										else{							
+   idxButtons += '<li><span class="btn" onclick="createButtons('+has_other+',\'' +selected_user+ '\',\''+ad_text+'\',\'' +explanation_text+ '\',\''+ advertiser_name + '\',\''+ advertiser_category +'\','+ age1+','+age2+','+date1+','+date2+','+i+')">..</span></li>';
+						     break;
+										}
+
+
+										}
+    $('#pager').html(firstButton+idxButtons+secondButton);
+
+
+};
+
+
+function createDemographicStatus(selected_user,age,gender,location) {
+    if (selected_user!=0) {
+        $('#demographicInfo').html('');
+        return
+    }
+
+    $('#demographicInfo').html("Based on the most recent explanations, the user's age is <b>" + age + "</b>, the user's gender is <b>"+ gender+ "</b> and the user lives in  <b>" + location +"</b>");
+     return
+
+};
+
+
+
+
+function gotoPage(ad_text='',explanation_text='',advertiser_name='',advertiser_category='',selected_user=-1,fb_user_id = -1, age1 = -1, age2 = -1, date1 = -1, date2 = -1, direction=1, count_result = 0) {
+          createLoader()
+	 if(direction == 1)
+		startIndex = startIndex + pageSize;
+	 else
+		startIndex = startIndex - pageSize; 
+         var count = 4;
+
+            function doReq(count) {
+                $.post(adsFromQuery,{"startIndex":startIndex,"pageSize":pageSize,"explanation_text":explanation_text,"ad_text":ad_text,"advertiser_name":advertiser_name,"advertiser_category":advertiser_category,"selected_user":selected_user,"fb_user_id":fb_user_id,"age1":age1,"age2":age2, "date1":date1, "date2":date2, "direction":direction,"count_result":count_result},
+
+              function(data) {
+                console.log(data)
+                if (data.status==='success') {
+                    //console.log('Next index:' + startIndex);
+	            if(data.total_result != -1)    
+			createResultCounter(data.total_result)
+		    createAdList(data.daily_ads,data.selected_user);
+                    createButtons(data.has_other, data.selected_user,data.ad_text,data.explanation_text,data.advertiser_name,data.advertiser_category,data.age1, data.age2, data.date1,data.date2)
+                    //createDemographicStatus(data.selected_user,data.age,data.gender,data.location);
+                    return
+
+                }
+
+                if (data.reason==='Cookie') {
+                    console.log('Cookie problem. Redoing the request')
+                    count--;
+                    if (count>0) {
+                        doReq(count);
+                        return
+                    }
+                }
+
+            }) };
+            doReq(count);
+
+
+}
+
+
+function refreshAds(ad_text='',explanation_text='',advertiser_name='',advertiser_category='',selected_user=-1,fb_user_id = -1, age1 = -1, age2 = -1, date1 = -1, date2 = -1, direction=1, count_result = 0) {
+	if(direction == 0){
+	        currentPage = currentPage + 1;
+		startIndex = startIndex + pageSize;
+		  }
+		  else if(direction == -1){
+			  currentPage = currentPage - 1;
+		startIndex = startIndex - pageSize;
+		  }
+		  else {
+		  	currentPage = direction;
+			startIndex = currentPage * pageSize - pageSize;
+		  
+		  }
+	 if($('#pickUser').prop('selectedIndex') == 1 && currentPage > 20){
+		alert('If you would like to access more data for research purposes, please contact us!')
+		return;
+	} 
+	createLoader();
+	  pagingStartFrom = Math.floor((currentPage-1)/10)*10 + 1;
+         var count = 4;
+
+            function doReq(count) {
+                $.post(adsFromQuery,{"startIndex":startIndex,"pageSize":pageSize,"explanation_text":explanation_text,"ad_text":ad_text,"advertiser_name":advertiser_name,"advertiser_category":advertiser_category,"selected_user":selected_user,"fb_user_id":fb_user_id,"age1":age1,"age2":age2, "date1":date1, "date2":date2, "direction":direction,"count_result":count_result},
+
+              function(data) {
+                console.log(data)
+                if (data.status==='success') {
+                    //console.log('Next index:' + startIndex);
+			if(data.total_result != -1)   { 
+				totalNumResult = data.total_result;
+				numberOfPage = Math.ceil(totalNumResult / pageSize);
+				createResultCounter(data.total_result);
+			}
+		    createAdList(data.daily_ads,data.selected_user);
+                    createButtons(data.has_other, data.selected_user,data.ad_text,data.explanation_text,data.advertiser_name,data.advertiser_category,data.age1, data.age2, data.date1,data.date2,pagingStartFrom);
+                    //createDemographicStatus(data.selected_user,data.age,data.gender,data.location);
+                    return
+
+                }
+
+                if (data.reason==='Cookie') {
+                    console.log('Cookie problem. Redoing the request')
+                    count--;
+                    if (count>0) {
+                        doReq(count);
+                        return
+                    }
+                }
+
+            }) };
+            doReq(count);
+
+
+}
+
+            function getFormValues() {
+             var user = $('#pickUser').prop('selectedIndex'); 
+             var ad_text = $('#textOfAd').val();
+             var explanation_text = $('#explanationText').val();
+             var advertiser_name = $('#advertiserName').val();
+             var advertiser_category = $('#advertiserCategory').val();
+	     var ageRange = $('#ageRange').val();
+	     var date_from = new Date( $('#datepicker_from').val() );
+	     var date_to = new Date( $('#datepicker_to').val() );
+	     var ts_from = -1,ts_to = -1;
+	     if(date_from != "Invalid Date")
+		     ts_from = date_from.valueOf();
+	     if(date_to != "Invalid Date")
+		    ts_to = date_to.valueOf();
+	     
+	     var age1,age2;
+	     if(ageRange =='') { 
+		     age1 = age2 =  -1;
+	     }
+	     else if(ageRange.indexOf('-')!=-1){
+	     	age1 = ageRange.split('-')[0].trim();
+		age2 = ageRange.split('-')[1].trim();
+	     }
+	     else if(isNaN(ageRange)){
+	     	age1 = age2 = -1;
+	     }
+	     else {
+	     	age1 = ageRange;
+		age2 = -1;
+	     }
+
+
+             return [user,age1,age2,ts_from,ts_to,ad_text,explanation_text,advertiser_name,advertiser_category];
+            }
+
+          $(document).ready(function() {
+	    xslg();
+ 	    $('#datepicker_from').datepicker({
+		    dateFormat:"dd MM yy",
+		    onSelect: function(txtDate){
+		    	$(this).val(txtDate);
+		    }
+	    });
+	    $('#datepicker_to').datepicker({
+		dateFormat:"dd MM yy",
+		onSelect: function(txtDate){
+		 	$(this).val(txtDate);
+		}
+
+	    });
+
+	    $( "#advertiserCategory" ).autocomplete({
+		minLength : 2,
+		source:	function(request, response) {
+        	var results = $.ui.autocomplete.filter(advertiser_categories, request.term);
+		results.sort(function(a,b){return a.length - b.length;});
+        	response(results.slice(0, 10));
+    		}
+             });
+
+ 	    $( "#advertiserName" ).autocomplete({
+		minLength : 2,
+		source:	function(request, response) {
+	        	var results = $.ui.autocomplete.filter(advertiser_names, request.term);
+			results.sort(function(a,b){return a.length - b.length;});
+        		response(results.slice(0, 10));
+		}
+
+             });
+
+	    
+	    $( "#explanationText" ).autocomplete({
+		minLength : 2,
+		source:	function(request, response) {
+        	var results = $.ui.autocomplete.filter(all_targeting_attr, request.term);
+		results.sort(function(a,b){return a.length - b.length;});
+        	response(results.slice(0, 10));
+    		}
+             });
+
+
+            $('#pickUser').change(function(){
+		$('#ageRange').val('');
+	    });
+
+            $('#queryAds').click(function() {
+		if(ck_xslg() < 0){
+			alert('If you would like to access more data for research purposes, please contact us!')
+			
+		}
+		else{
+			
+		$('#rs_counter').html('');
+
+		    //console.log(getFormValues());
+		startIndex = -10;
+            	var [user,age1,age2,ts_from,ts_to,ad_text,explanation_text,advertiser_name,advertiser_category] = getFormValues()
+            	refreshAds(ad_text=ad_text,explanation_text=explanation_text,advertiser_name=advertiser_name,advertiser_category=advertiser_category,selected_user=user, fb_user_id = selectedUser, age1 = age1, age2 = age2, date1 = ts_from, date2=ts_to, direction = 1,count_result = 1)
+		}
+            })
+
+            $('.formQuery').keypress(function(e) {
+            if(e.which == 13) {
+	
+		if(ck_xslg() < 0){
+			alert('If you would like to access more data for research purposes, please contact us!')
+		
+		}		
+		else{
+		$('#rs_counter').html('');
+
+            	startIndex = -10;
+		var [user,age1,age2,ts_from,ts_to,ad_text,explanation_text,advertiser_name,advertiser_category] = getFormValues()
+//            	refreshAds(ad_text=ad_text,explanation_text=explanation_text,advertiser_name=advertiser_name,advertiser_category=advertiser_category,selected_user=user, fb_user_id = selectedUser , age_range=ageRange,direction = 1, count_result = 1)
+		
+            	refreshAds(ad_text=ad_text,explanation_text=explanation_text,advertiser_name=advertiser_name,advertiser_category=advertiser_category,selected_user=user, fb_user_id = selectedUser, age1 = age1, age2 = age2, date1 = ts_from, date2=ts_to, direction = 1,count_result = 1);
+		}
+            }
+            });
+
+
+          })
+
+
+      </script>
+    </head>
+    <body>
+
+
+    <script>
+        function nFormatter(num, digits) {
+          var si = [
+//            { value: 1E18, symbol: "E" },
+//            { value: 1E15, symbol: "P" },
+//            { value: 1E12, symbol: "T" },
+            { value: 1E9,  symbol: "B" },
+            { value: 1E6,  symbol: "M" },
+            { value: 1E3,  symbol: "k" }
+          ], rx = /\.0+$|(\.[0-9]*[1-9])0+$/, i;c
+          for (i = 0; i < si.length; i++) {
+            if (num >= si[i].value) {
+              return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+            }
+          }
+          return num.toFixed(digits).replace(rx, "$1");
+        }
+
+        function nFormatterWrapper(num) {
+            return nFormatter(num,3);
+        }
+
+
+      function emptyAdvertisers() {
+          $('#rawAdBody').empty();
+
+          $('#rawAdBody').addClass('loader');
+          $('#rawAdBody').addClass('col-centered');
+      }
+
+           function getAdvertiserInfo(databaseId) {
+      emptyAdvertisers();
+
+      $('#rawAdModal').modal();
+
+            $.ajax({
+      type:'POST',
+      url:'get_specific_raw_ad_by_id',
+      data: {'id':databaseId},
+      success:function(resp){
+      $('#rawAdBody').removeClass('loader');
+      $('#rawAdBody').removeClass('col-centered');
+
+
+          if (resp.status!=='success') {
+
+            <!--show error message-->
+            var html = '<div class="col-md-4"><div class="col-md-12 "> <img class="img-responsive" style="max-width: 100%;" src="'+img_url+'" > </div></div>';
+            html += '<div class="col-md-8">'
+            html += '<div class=" col-md-12 alert alert-danger">Cannot retrieve raw  ad!</div> <br>';
+            html += '</div>'
+            $('#rawAdBody').html(html);
+
+            return
+          }
+
+
+
+        var html = resp.raw_ad;
+
+        $('#rawAdBody').html(html);
+
+
+
+
+
+      }})
+
+      }
+
+
+
+    </script>
+
+  <div class="modal fade" id="rawAdModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" >Raw ad</h4>
+        </div>
+        <div class="modal-body" >
+          <div class="row">
+        <div class="loader col-centered "  id="rawAdBody">
+
+          </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand"><img src="{% static "enabled_48.png" %}" height="50" width="50" style="float:left;margin-top:-15px">AdAnalyst</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./view_data_about_me">Data</a></li>
+            <li><a href="./view_advertisers">Advertisers</a></li>
+            <li><a href="./view_all_ads.html">Ads</a></li>	  
+	    <li><a href="./view_search_ads.html">Search</a></li>
+            <li><a href="./contact_us.html">Contact us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+           <div class="container" style="margin-top: 100px">
+               <div class="col-md-12">
+                   <div class="col-md-4">
+                       <h1>Search</h1>
+		       <!--  <span>Search for specific text in ads, explanations, advertiser,category of advertiser!</span> -->
+                      <br />
+                      <br />
+
+                       <div id="demographicInfo"></div>
+                   </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="pickUser">Select user:</label>
+                      <select class="form-control" id="pickUser">
+                      {% for user in users %}
+                          {% ifequal user "Me" %}
+                          	<option selected>{{user}}</option>
+                          {% else %}
+                          	<option >{{user}}</option>
+                      	  {% endifequal %}
+                      {% endfor %}
+
+                      </select>
+
+                    </div>
+
+                    <div class="form-group">
+                            <label for="textOfAd">Ad text:</label>
+                            <input type="text" class="form-control formQuery" id="textOfAd" placeholder="">
+
+                    </div>
+
+
+                      <div class="form-group">
+                            <label for="explanationText">Targeting type:</label>
+                            <input type="text" class="form-control formQuery" id="explanationText" placeholder="targeting">
+                    </div>
+			 <div class="form-group">
+		            <div><label for="explanationText">Period:</label></div>
+			    <div style="display:inline;float:left;width:155px;margin-right:10px"> <input type="text" class="form-control formQuery" id="datepicker_from" placeholder=""></div>
+			    <div style="display:inline;float:right;width:155px;"> <input type="text" class="form-control formQuery" id="datepicker_to" placeholder=""></div>
+
+                    </div>
+
+                    </div>
+
+
+                 <div class="col-md-4">
+                    <div class="form-group">
+                            <label for="advertiserName">Advertiser name:</label>
+                            <input type="text" class="form-control formQuery" id="advertiserName" placeholder="advertiser name">
+                    </div>
+
+		    <div class="form-group" id='con_pickAgeRange'>
+			<label for="ageRange">Age:</label>
+			<input class="form-control" id='ageRange' placeholder = 'targeting age'>
+			</div>
+                      <div class="form-group">
+                            <label for="advertiserCategory">Advertiser category:</label>
+                            <input type="text" class="form-control formQuery" id="advertiserCategory" placeholder="advertiser category">
+                   	</div>
+		               <button type="submit" id="queryAds" class="btn btn-primary">Search</button>
+			</div>
+
+
+
+
+               </div>
+               <br />
+              <br />
+                              <br />
+	
+                <div class = "col-md-12">
+		<br/>
+		<div class ="col-md-12 col-md-offset-5" id='rs_counter'></div>
+        	<br/>
+		 <div class="col-md-12" id="all_ads"></div>
+                <div class="col-md-12 text-center">
+               <ul class="pager " id="pager">
+
+</ul></div>
+                 </div>
+
+ <footer>
+         <p>You can find more information on the host of this internet web site here : <a href="https://imprint.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Imprint/Impressum</a> | <a href="https://data-protection.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Data Protection</a>
+ </p></footer>
+
+        </div>
+
+    </body>
+</html>

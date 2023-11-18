@@ -1,0 +1,643 @@
+  <html>
+  <head>
+    <title>Advertisers</title>
+<!--      <script src="//www.google.com/jsapi"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <style type="text/css">
+        .loader {
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 80px;
+          height: 80px;
+          -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+        }
+          
+          .centerme {
+              position: relative;
+              top: 35%;
+              transform: translateY(-35%);
+            }
+
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+    {% load static %}
+
+    <script type="text/javascript">
+      var newest_pii={{latest_pii|safe}};            
+
+      var newest_clicked={{latest_clicked|safe}}; 
+
+      var newest_rest={{latest_rest|safe}}; 
+
+      var rare_adv={{rare_advertisers|safe}};      
+
+      $(document).ready(function() {
+        var html="";
+
+        if (newest_clicked.length === 0)
+        {
+          html+="<div class='col-md-4 col-md-offset-5' style='margin-top:50px;margin-bottom:40px'><p style='font-size:15px'>No such advertisers!</p></div>";
+        }        
+
+        for (var x=0;x<newest_clicked.length;x++)
+        {
+          html += "<div class=\"col-md-2\"><a href=\""+newest_clicked[x]['facebook_page']+"\" target=\"_blank\"><img src=\""+newest_clicked[x]['logo']+"\" height=\"150\" width=\"150\"/></a><p style=\"font-size: 12px;text-align: center;margin-top: 5px;\">"+newest_clicked[x]['name']+"</p><p style=\"font-size: 10px;text-align: center;margin-top: -9px;\"> Added on:"+newest_clicked[x]['category']+"</p></div>";
+        }
+        $('#newest_clicked').empty();
+        $('#newest_clicked').append(html);
+
+        html="";
+
+        if (newest_pii.length === 0)
+        {
+          html+="<div class='col-md-4 col-md-offset-5' style='margin-top:50px;margin-bottom:40px'><p style='font-size:15px'>No such advertisers!</p></div>";
+        }        
+
+        for (var x=0;x<newest_pii.length;x++)
+        {
+          html += "<div class=\"col-md-2\"><a href=\""+newest_pii[x]['facebook_page']+"\" target=\"_blank\"><img src=\""+newest_pii[x]['logo']+"\" height=\"150\" width=\"150\"/></a><p style=\"font-size: 12px;text-align: center;margin-top: 2px;\">"+newest_pii[x]['name']+"</p><p style=\"font-size: 8px;text-align: center;margin-top: -9px;\">"+newest_pii[x]['category']+"</p></div>";
+        }
+        $('#newest_pii').empty();
+        $('#newest_pii').append(html);        
+
+        html="";
+
+        if (newest_rest.length === 0)
+        {
+          html+="<div class='col-md-4 col-md-offset-5' style='margin-top:50px;margin-bottom:40px'><p style='font-size:15px'>No such advertisers!</p></div>";
+        }
+
+        for (var x=0;x<newest_rest.length;x++)
+        {
+          html += "<div class=\"col-md-2\"><a href=\""+newest_rest[x]['facebook_page']+"\" target=\"_blank\"><img src=\""+newest_rest[x]['logo']+"\" height=\"150\" width=\"150\"/></a><p style=\"font-size: 12px;text-align: center;margin-top: 2px;\">"+newest_rest[x]['name'].replace("'","").replace("'","")+"</p><p style=\"font-size: 8px;text-align: center;margin-top: -9px;\">"+newest_rest[x]['category']+"</p></div>";
+        }
+        $('#newest_rest').empty();
+        $('#newest_rest').append(html);    
+
+        html="";
+
+        if (rare_adv.length === 0)
+        {
+          html+="<div class='col-md-4 col-md-offset-5' style='margin-top:50px;margin-bottom:40px'><p style='font-size:15px'>No such advertisers!</p></div>";
+        }
+
+        for (var x=0;x<rare_adv.length;x++)
+        {
+          html += "<div class=\"col-md-2\"><a href=\""+rare_adv[x]['facebook_page']+"\" target=\"_blank\"><img src=\""+rare_adv[x]['logo']+"\" height=\"150\" width=\"150\"/></a><p style=\"font-size: 12px;text-align: center;margin-top: 2px;\">"+rare_adv[x]['name'].replace("'","").replace("'","")+"</p><p style=\"font-size: 8px;text-align: center;margin-top: -9px;\"> Likes: "+rare_adv[x]['category']+"</p></div>";
+        }
+        $('#rare_adv').empty();
+        $('#rare_adv').append(html);              
+      });           
+    </script>
+
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['geochart','corechart','bar']});
+        google.charts.setOnLoadCallback(drawMap);
+        function drawMap() {
+          var locs={{locs|safe}};
+
+          locs.splice(0, 0,["Country","# ads",{type: 'string', role: 'tooltip'}]);
+          var data = google.visualization.arrayToDataTable(locs);
+          
+          var options = {
+            height:350,
+            width:470,
+            legend: 'none',
+            colorAxis: {
+              colors:['#009933','#006600']
+            },
+            magnifyingGlass: {enable: true, zoomFactor: 7.5}            
+          };
+          options['dataMode'] = 'regions';
+
+          var container = document.getElementById('ad_loc');
+          var geomap = new google.visualization.GeoChart(container);
+
+          geomap.draw(data, options);
+        };
+      </script>
+
+
+      <!-- How I'm targeted donut -->
+      <script type="text/javascript">
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChartDonut);
+
+          function donutReq(count,type) {
+            var getAdvsForExpl='get_advs_for_expl';
+            $('#top-objects-targ').hide();
+            $.post(getAdvsForExpl,{"type":String(type)}, 
+              function(resp) {
+                if (resp.status==='success') {
+                    console.log(resp.advertisers);
+                    var top_advertisers=resp.advertisers;                      
+                    $("#top-objects-targ").empty();
+
+                    if (top_advertisers.length==0){
+                      var html="<div class=\"col-md-12\" style=\"text-align:center;margin-top:25%\"><p>No advertisers available yet!</p><br/><br/>";
+                      $("#top-objects-targ").append(html);
+                      $("#top-objects-targ").show("slow");                      
+                      return;
+                    }
+
+                    var html="<div class=\"col-md-12\" style=\"text-align:center\"><h5>Top advertisers targeting me using "+type+"</h5><br/><br/>";
+
+                    for (var i=0;i<top_advertisers.length;i++)
+                    {
+                      html+="<div class=\"col-md-3\"><a href=\"https://www.facebook.com/"+top_advertisers[i]['facebook_page']+"\" target=\"_blank\"><img src=\""
+                      if (top_advertisers[i]['logo'] != null) {
+                        html += top_advertisers[i]['logo'];
+                      }
+                      else {
+                        html += "http://defense.hughes.com/images/missing-visual.png";
+                      }
+                      html+="\" height=\"150\" width=\"150\"/></a><p style=\"font-size: 12px;\">"+top_advertisers[i]['name'].replace("'","").replace("'","")+"</p><p style=\"font-size: 8px;\"> Number of ads: "+top_advertisers[i]['freq']+"</p></div>";
+                    }
+    
+                  html+="<br/><br/><br/><br/><br/><br/><br/><br/>";            
+                  $("#top-objects-targ").append(html);
+                  $("#top-objects-targ").show("slow");
+                    return          
+                  }
+            
+                if (data.reason==='Cookie') {
+                    console.log('Cookie problem. Redoing the request')
+                    count--;
+                    if (count>0) {
+                        donutReq(count,data,cat);
+                        return
+                    }
+                }              
+              }) 
+            };
+
+          var data_map={{ov_divs|safe}};
+          
+          function selectHandler(e) {
+            var data = google.visualization.arrayToDataTable({{overview|safe}});
+            var selection=chart.getSelection();
+            var type=data['og'][selection[0]['row']]['c'][0]['v'];            
+            if (selection.length === 0)
+            {
+              $('#donutchart').removeClass("col-md-3");
+              $('#donutchart').addClass("col-md-12");
+              // $('html,body').animate({scrollTop: $("#donutchart").offset().top},'slow');          
+            }
+            else
+            {
+              $('#donutchart').removeClass("col-md-12");              
+              $('#donutchart').addClass("col-md-3");
+              $('#b1').show();
+
+              var options = {
+                pieHole: 0.4,
+                pieSliceText: 'none',
+                legend:'none'
+              };              
+
+              chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+              chart.draw(data, options);  
+              google.visualization.events.addListener(chart, 'select', selectHandler); 
+              
+              donutReq(4,type);
+              
+              // $("#"+data_map[selection[0]['row']+1]).show("slow")
+            }
+          } 
+
+          function drawChartDonut() {
+            $('#b1').hide("slow");
+            $('#top-objects-targ').hide();
+            $('#donutchart').removeClass("col-md-3");
+            $('#donutchart').addClass("col-md-12");
+
+            for (var x=0;x<10;x++)
+              { 
+                $("#"+data_map[x+1]).hide();
+              }          
+
+            var data = google.visualization.arrayToDataTable({{overview|safe}});
+
+
+            var options = {
+              pieHole: 0.4,
+              pieSliceText: 'none'
+            };
+
+            chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+            google.visualization.events.addListener(chart, 'select', selectHandler);  
+          }
+      </script>
+               
+    <script type="text/javascript">
+        //google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable({{ages|safe}});
+
+          var view = new google.visualization.DataView(data);
+
+          var options = {
+            width: 700,
+            height: 370,
+            bar: {groupWidth: "100%"},
+            legend: { position: "none" },
+          hAxis: {
+                title: 'Age group'
+              }
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById("age_range"));
+          chart.draw(view, options);
+      }
+    </script>      
+
+    <script type="text/javascript">
+      //google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      var exp_cats_daily = {{exp_cats_daily|safe}}
+      for (let i=1;i<exp_cats_daily.length;i++) {
+            exp_cats_daily[i][0] = new Date(exp_cats_daily[i][0])
+        }
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(exp_cats_daily);
+
+        var options = {
+        isStacked: 'relative',
+        height: 500,
+        legend: {position: 'top', maxLines: 3},
+        vAxis: {
+          minValue: 0,
+          ticks: [0, .25, .5, .75, 1]
+        },
+        hAxis: {              gridlines: {
+          color: 'transparent'
+          }},
+        areaOpacity:1
+        };          
+
+        var chart = new google.visualization.SteppedAreaChart(document.getElementById('area_plot'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+        //google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart2);
+
+//        function createCustomReport(date) {
+//          return '<div class="pre-scrollable container" style="padding:5px 5px 5px 5px;width:300px;height:400px">'+
+//          '<h5> Likes for '+$.format.date(date,"ddd, MMM, D, yyyy") +' </h5>'+
+//         '<hr style="width: 100%; color: black; height: 1px; background-color:black;" />'+
+//         
+//            '<h6 class="text-primary">Total: 232 </h6> '+
+//
+//          '<h6 class="text-success">New likes: </h6> '+
+//          
+//
+//          '<ul class="list-group">'+
+//            '<li class="list-group-item">Game Of Thrones</li>'+
+//           ' <li class="list-group-item">Grimm</li>'+
+//            '<li class="list-group-item">Attack On Titan</li>'+
+//          '</ul>'+
+//          
+//            '<h6 class="text-danger">Removed likes: </h6>'+
+//          
+//
+//          '<ul class="list-group">'+
+//            '<li class="list-group-item">Pawn Stars</li>'+
+//            '<li class="list-group-item">Mortal Kombat</li>'+
+//          '</ul>'+
+//
+//        '</div>'
+//        }
+        
+                       function createCustomReport(date,name,added) {
+//                   console.log(date,name,added)
+          var html ='<div class="pre-scrollable container" style="padding:5px 5px 5px 5px;width:300px;height:400px">'+
+//          '<h5> '+name+' for '+$.format.date(new Date(date),"ddd, MMM, D, yyyy") +' </h5>'+
+                        '<h5> '+name+' for '+date +' </h5>'+
+
+         '<hr style="width: 100%; color: black; height: 1px; background-color:black;" />'
+         
+//            '<h6 class="text-primary">Total: '+total_number+' </h6> ';
+        if (added.length>0) {
+            html+='<h6 class="text-success">New '+name+': </h6> '+
+          
+
+          '<ul class="list-group">';
+            for (let i=0;i<added.length;i++) {
+                if (added[i].constructor === Array){
+                  html+= '<li class="list-group-item"><a target="_blank" href="https://www.facebook.com/'+added[i][1]+'">'+ added[i][0] +'</a></li>';
+                }
+                else{
+                  html+= '<li class="list-group-item">'+ added[i] +'</li>';                  
+                }
+            }
+
+          html+='</ul>';
+        }
+        
+
+        
+
+        html+='</div>';
+        return html
+        }
+
+
+        function drawChart2() {
+          var data = google.visualization.arrayToDataTable({{advertisers_diffs|safe}});
+
+          var options = {
+        legend: { position: 'top' },
+        height: 300,
+        vAxis: { 
+          textPosition: 'none',
+          viewWindow: {
+              max:0.3,
+            min:3
+          },
+      gridlines: {
+          color: 'transparent'
+          }},
+      tooltip: { isHtml: true,trigger: 'both' },
+            pointSize: 15,
+            pointShape: 'circle'
+          };
+
+          var chart = new google.visualization.ScatterChart(document.getElementById('chart_div2'));
+
+          chart.draw(data, options);
+        }
+           
+        var  likeReport = {newEntries:['Game Of Thrones','Pokemon'],oldEntries:['Series'],total:250}
+    </script>
+
+
+    <script type="text/javascript">
+        // top_advertisers['explanations'] = {{top_ads_expl|safe}}
+        // top_advertisers['categories'] = {{top_advertisers_cat|safe}}
+
+        var data_map_expl = {{ov_divs|safe}}
+        
+        var data_cat;
+
+        //google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChartDonutCat);        
+        var prev_sel="";
+        
+        function closeDonutAds(){
+            $("#top-objects").hide("slow");
+            $("#top-objects").empty();
+            $('html,body').animate({scrollTop: $("#donut_cat").offset().top}, 'slow');
+            chart_cat.setSelection();
+        }
+
+        function createLoader(){
+          $('#top-objects').hide();
+          $('#top-objects').html('<div class = "jumbotron " style="height:250px;"><div class="col-md-offset-5 centerme loader"></div></div>');
+          $('#top-objects').show();
+            // $('html,body').animate({scrollTop: $("#objects").offset().top}, 'slow');       
+        }        
+
+        function doReq(count,cat) {
+            var getAdvsForCategory='get_advs_for_category';
+            
+            // $.post(getAdvsForCategory,{"cat":cat,"user_id":{{user_id|safe}}},
+            $.post(getAdvsForCategory,{"cat":cat},
+          
+          function(resp) {
+            if (resp.status==='success') {
+                console.log(resp.advertisers);
+                var top_advertisers=resp.advertisers;     
+                console.log(top_advertisers);
+                $("#top-objects").hide();
+                $("#top-objects").empty();
+                var html="<div class=\"col-md-12\" style=\"text-align:center\"><h5>Top " + cat + " advertisers I'm targeted by</h5><br/><br/>";
+
+            for (var i=0;i<top_advertisers.length;i++)
+            {
+              html+="<div class=\"col-md-3\"><a href=\"https://www.facebook.com/"+top_advertisers[i]['facebook_page']+"\" target=\"_blank\"><img src=\""
+              if (top_advertisers[i]['logo'] != null) {
+                html += top_advertisers[i]['logo'];
+              }
+              else {
+                html += "http://defense.hughes.com/images/missing-visual.png";
+              }
+              html+="\" height=\"150\" width=\"150\"/></a><p style=\"font-size: 12px;\">"+top_advertisers[i]['name'].replace("'","").replace("'","")+"</p><p style=\"font-size: 8px;\"> Number of ads: "+top_advertisers[i]['freq']+"</p></div>";
+            }
+            html+="<br/><br/><br/><br/><br/><br/><br/><br/>";            
+            $("#top-objects").append(html);
+            $("#top-objects").show("slow");
+              return          
+            }
+        
+            if (resp.reason==='Cookie') {
+                console.log('Cookie problem. Redoing the request')
+                count--;
+                if (count>0) {
+                    doReq(count,cat);
+                    return
+                }
+            }
+            
+        }) };
+        function selectHandlerCat(e) {
+          var cat_title_map = {{adv_types|safe}}
+          cat_title_map.pop();
+          console.log(cat_title_map);
+          for (var i=0;i<cat_title_map.length;i++) {
+            cat_title_map[i]=cat_title_map[i].replace("'","").replace("'","");
+          }
+          var selection_cat=chart_cat.getSelection();
+          // chart_expl.setSelection();
+          if (selection_cat.length === 0)
+          {
+            $("#top-objects").hide("slow");
+            $("#top-objects").empty();
+            $('#donut_cat').removeClass("col-md-3");
+            $('#donut_cat').addClass("col-md-12");
+            $('html,body').animate({scrollTop: $("#donut_cat").offset().top}, 'slow');                      
+          }
+          else
+          {
+            $('#donut_cat').removeClass("col-md-12");
+            $('#donut_cat').addClass("col-md-3");
+            $('#b2').show();
+
+            var options = {
+              pieHole: 0.4,
+              pieSliceText: 'none',
+              legend:'none'        
+            };            
+
+            chart_cat = new google.visualization.PieChart(document.getElementById('donut_cat'));
+            chart_cat.draw(data_cat, options);
+            google.visualization.events.addListener(chart_cat, 'select', selectHandlerCat);       
+
+            // createLoader();
+            var count = 4;            
+            doReq(count,cat_title_map[selection_cat[0]['row']])
+          }
+        }
+
+
+        function drawChartDonutCat() {
+          $('#b2').hide("slow");
+          
+          $('#donut_cat').removeClass("col-md-3");
+          $('#donut_cat').addClass("col-md-12");
+          $('#top-objects').hide("slow");
+
+          donut_data={{advertiser_cat_overview|safe}};
+          donut_data.pop();
+          for (var i=1;i<donut_data.length;i++) {
+            donut_data[i][0]=donut_data[i][0].replace("'","").replace("'","");
+          }
+          data_cat = google.visualization.arrayToDataTable(donut_data);
+
+
+          var options = {
+            pieHole: 0.4,
+            pieSliceText: 'none',
+            height:450
+          };
+
+          chart_cat = new google.visualization.PieChart(document.getElementById('donut_cat'));
+          chart_cat.draw(data_cat, options);
+          google.visualization.events.addListener(chart_cat, 'select', selectHandlerCat);       
+        }                 
+      
+    </script>    
+  </head>
+
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="./view_digest" class="navbar-brand"><img src="{% static "enabled_48.png" %}" height="50" width="50" style="float:left;margin-top:-15px">TranspAd</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./view_digest">Digest</a></li>
+            <li><a href="./view_data_about_me">Data About Me</a></li>
+            <li><a href="./view_advertisers">Advertisers</a></li>
+          <li><a href="./view_all_ads.html">All Ads</a></li>
+	  <li><a href="./view_search_ads.html">Search</a></li>
+            <li><a href="./contact_us.html">Contact us</a></li>
+
+<!--            <li><a href="#">Advertisements</a></li>-->
+<!--            <li><a href="#">Log Out</a></li>-->
+          </ul>
+        </div>
+      </div>
+    </div> 
+
+    <div class="container" style="margin-top: 100px">
+      <div class="row">
+        
+        <div class="col-md-12" style="margin-top: 40px">
+          <h3>Latest advertisers with my contact information</h3><hr>
+          <div class="col-md-12">
+            <div id="newest_pii"></div>
+          </div>
+        </div>       
+        
+        <div class="col-md-12" style="margin-top: 40px">
+          <h3>Latest advertisers whose website or app I used</h3><hr>
+          <div class="col-md-12">
+            <div id="newest_clicked"></div>
+          </div>
+        </div>
+
+        <div class="col-md-12" style="margin-top: 40px">
+          <h3>Rare advertisers targeting me</h3><hr>
+          <div class="col-md-12">
+            <div id="rare_adv"></div>
+          </div>
+        </div>                
+
+        <div class="col-md-12">
+          <h3>Other latest advertisers targeting me</h3><hr>
+          <div class="col-md-12" style="margin-bottom:70px">
+            <div id="newest_rest"></div>
+          </div>
+          <p>Timeline of when advertisers with my PII appeared in my profile:</p>
+          <br/>
+          <div id="chart_div2"></div>
+        </div>        
+
+        <div class="col-md-12" style="margin-top: 40px">
+          <h3>How are advertisers targeting me</h3><hr><p>Advertisers use the following types of attributes to target me (<a target="_blank" href="https://www.facebook.com/ads/about/">See more...</a>):</p>
+          <div id="b1" style="display:none;cursor: pointer;" onclick="drawChartDonut()">
+            <span class="glyphicon glyphicon-arrow-left" style="font-size: 25px;"></span>
+          </div>                
+          <div id="donutchart" style="height: 450px;" class="col-md-12"></div>        
+            <div class="col-md-8">
+              <div id="top-objects-targ"></div>
+            </div>                       
+        </div> 
+        
+        <div class="col-md-12">
+          <h3>How am I targeted by advertisers over time?</h3><hr>
+          <div class="col-md-12">
+            <div id="area_plot" style="margin-left:-55px;width: 1200px"></div>
+          </div>          
+        </div>
+
+        <div class="col-md-12" style="margin-top: 35px">
+          <div class="col-md-6">
+            <h3>I receive advertisements because I have visited:</h3><hr>
+            <div id="ad_loc" style="height: 350px;width: 470px"></div>            
+          </div>
+          <div class="col-md-6">
+            <h3>I receive advertisements that target users of the following ages:</h3><hr>
+            <div id="age_range" style="height: 350px;width: 1120px"></div>            
+          </div>
+        </div>
+
+        <div class="col-md-12" style="margin-top: 40px">
+          <h3>What kind of advertisers are targeting me?</h3><hr>
+          <div class="col-md-12">
+            <p>The following categories of advertisers target me:</p>
+            <div id="b2" style="display:none;cursor: pointer;" onclick="drawChartDonutCat()">
+              <span class="glyphicon glyphicon-arrow-left" style="font-size: 25px;"></span>
+            </div>                
+
+            <div id="donut_cat"></div>
+            
+            <div class="col-md-8">
+              <div id="top-objects"></div>
+            </div>               
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

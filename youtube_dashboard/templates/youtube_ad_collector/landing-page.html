@@ -1,0 +1,479 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href='{% static "favicon.ico" %}' type="image/x-icon">
+		<title>{% trans "YouTube Ad Collector"%}</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<style type="text/css">
+.carousel-caption{
+	font-size: 65px;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;}
+      img:not(.media-img){
+	      max-width: 100%;}
+      p{      font-size: medium;}
+      li{     font-size: medium;}
+      h1{     font-size: xxx-medium;}
+      h2{     font-size: xx-medium;}
+      h3{     font-size: x-medium;}
+      h4{     font-size: x-medium;}
+
+      .headerp{font-size: x-medium;}
+		</style>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('a[href*=\\#]').on('click', function(event){     
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top}, 1000);
+				});      
+			});
+		</script>
+
+
+		<!-- YouTube Pixel Code -->
+		<script>
+			!function(f,b,e,v,n,t,s)
+				{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+				n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+			if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+			n.queue=[];t=b.createElement(e);t.async=!0;
+			t.src=v;s=b.getElementsByTagName(e)[0];
+			s.parentNode.insertBefore(t,s)}(window, document,'script',
+			'https://connect.YouTube.net/en_US/fbevents.js');
+			fbq('init', '1137750199667219');
+			fbq('track', 'PageView'	);
+			fbq('track', 'ViewContent');
+		</script>
+
+
+		<!-- Global site tag (gtag.js) - Google Ads: 1008903699 -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1008903699"></script>
+		<script>
+  			window.dataLayer = window.dataLayer || [];
+  			function gtag(){dataLayer.push(arguments);}
+  			gtag('js', new Date());
+			gtag('config', 'AW-1008903699');
+		</script>
+
+		<noscript><img height="1" width="1" style="display:none"
+				      src="https://www.YouTube.com/tr?id=1137750199667219&ev=PageView&noscript=1"
+	  /></noscript>
+		<!-- End YouTube Pixel Code -->
+
+		<meta name="YouTube-domain-verification" content="fk6x1utwllwpchbokylx4kge4hjmx6" />
+
+
+
+
+
+	</head>
+
+
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header" >
+<!--					<a href="#" class="navbar-brand"><img src='{% static "enabled_48.png" %}' height="50" width="50" style="float:left;margin-top:-15px">YouTube Ad Collector</a>-->
+
+   					<a href="#"  class="navbar-brand"> <img src='{% static "brand.png" %}' height="40" width="40" style="float:left;margin-top:-10px">{% trans "YouTube Ad Collector"%}</a>
+
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+
+				</div>
+				<div class="navbar-collapse collapse" id="navbar-main">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#about-transpad" onclick="$('html, body').animate({scrollTop: $('#about-transpad').offset().top}, 1000);">{% trans "About"%}</a></li>
+                                                <li><a href="#getting-started" onclick="$('html, body').animate({scrollTop: $('#getting-started').offset().top}, 1000);">{% trans "Installation"%}</a></li>
+
+						<li><a href="#how-it-works" onclick="$('html, body').animate({scrollTop: $('#how-it-works').offset().top}, 1000);">{% trans "How does it work"%}</a></li>
+						<li><a href="#research" onclick="$('html, body').animate({scrollTop: $('#research').offset().top}, 1000);">{% trans "Research"%}</a></li>
+
+						<li><a href="#about-us" onclick="$('html, body').animate({scrollTop: $('#about-us').offset().top}, 1000);">{% trans "Who are we"%}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top: 40px;">
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+
+			<div class="carousel-inner" style="height: 350px">
+				<div class="item active">
+					<img src="{% static 'youtubeads.png' %}" height="300px" width="700px" style="margin-left: 20%">
+				</div>
+
+<!--
+				<div class="item">
+					<img src='{% static "dasrters.png" %}' height="350px" width="800px" style="margin-left: 20%">
+				</div>
+
+				<div class="item">
+					<img src='{% static "das.png" %}' height="350px" width="800px" style="margin-left: 20%">
+				</div>
+
+-->
+			</div>
+
+<!--
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span class="sr-only">Next</span>
+			</a>
+-->
+		</div>
+
+		<div id="about-transpad" style="color:white;background-color: #77777770">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 style="text-align: center">{% trans "YouTube Ad Collector"%}</h1>
+					</div>
+
+					<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+						<div class="media mb-10">
+							<div class="media-body" >
+
+								<p class = "headerp">
+
+									{% trans "We have designed YouTube Ad Collector to understand the content targeted at users while using YouTube plateform. Our first study was about content targeted at children-friendly content, we wanted to understand to what extent advertiser and Google are respecting the different rules that aim to protect children online. " %}
+									<br/>
+									<br/>
+									{% trans "YouTube Ad Collector also provides you with statistics about the ads targeted at you while watching content on YouTube." %}
+									<br/>
+									<br/>
+									{% trans "Help us hold online platforms accountable by installing our browser extension, which sends us information about the ads you receive while watching videos on YouTube. The data transfers are anonymous; we do not collect your name or any other identifiable information. " %}
+
+								</p>
+
+<!--	  <p style="margin-top:5%;margin-left: -7%"><a href="#getting-started" onclick="$('html, body').animate({scrollTop: $('#getting-started').offset().top}, 1000);" class="btn btn-lg"  >
+	  <i class="glyphicon glyphicon-download" style="float:left;margin-top:2px; font-size:25px"></i>Install Now -->
+	  </a></p>
+	  </div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="getting-started" >
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 15px">
+						<h1 style="text-align: center">{% trans "Installation"%}</h1>
+					</div>
+
+					<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+						<div class="media mb-10">
+							<div class="media-body" >
+								<p style="text-align: center" class="headerp">
+
+
+
+									<a target="_blank" href="https://chrome.google.com/webstore/detail/adcollector/hiiokhndcneopaahlaecaenapncokode">
+										<button class="btn-primary btn-lg" style="background:#77777770">
+											<i class="glyphicon glyphicon-download" style="margin-top:3px;float:left; ">
+											</i>&nbsp;{% trans "Add to" %}&nbsp;Chrome
+
+
+											<div></div>
+										</button>
+									</a>
+
+<!--
+									<a href='https://chrome.google.com/webstore/detail/adimpact/lppioklandnfafbgedffnihjhnmgjbdn' target="_blank" class="btn btn-lg"  >
+										<i class="glyphicon glyphicon-download" style="margin-top:3px;float:left;"></i>&nbsp;&nbsp;Chrome
+									</a>
+-->
+								</p>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12" style="margin-top:40px">
+						<div class="col-md-6">
+							<img src="{% static 'consent1.png' %}" class= "media-object media-img" style="height:150px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#cform_modal"/>
+						</div>
+
+						<div class="col-md-6" style="margin-top:40px">
+							<p>{% trans "Sign the consent on the page that appears after installing the extension" %}</p>
+						</div>
+
+						<div id="cform_modal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<img src="{% static 'consent1.png' %}" class="media-img" height="40%"/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-md-12" style="margin-top:40px">
+						<div class="col-md-6">
+							<img src="{% static 'pin.png' %}" class= "media-object media-img" style="height:150px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;cursor: pointer;" data-toggle="modal" data-target="#cform_modal2">
+						</div>
+
+						<div class="col-md-6" style="margin-top:40px">
+							<p>{% trans "Pin the extension to the chrome interface" %}</p>
+						</div>
+
+						<div id="cform_modal2" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<img src="{% static 'pin.png' %}" class="media-img" height="40%">
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+
+
+				<div class="alert alert-danger" style="margin-top:40px">
+					<strong>{% trans "Warning!" %}</strong> {% trans "If you are using some ad blocker like" %} <a href="https://adblockplus.org/" target="_blank" >{% trans "AdBlock Plus" %}</a>, {% trans "you need to" %}<a href="https://adblockplus.org/faq_basics#disable" target="_blank"> {% trans "disable" %}</a> {% trans "it on YouTube in order to get the most out of YouTube Ad Collector. Also, YouTube Ad Collector is not compatible with tracking protection settings, and third-party cookies should be allowed in your browser. Finally, you need to set your " %}<a href="https://www.YouTube.com/help/327850733950290?helpref=faq_content" target="_blank">{% trans "language in YouTube" %}</a> {% trans "to Portuguese (Brazil), English (US) or French (France). Currently, we do not support other languages." %}
+				</div>
+
+			</div>
+
+
+
+
+			<div id="how-it-works" style="color:white;background-color: #77777770">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12" style="margin-top: 15px">
+							<h1 style="text-align: center">{% trans "How does it work" %}?</h1>
+							<p class = "headerp"  style="text-align: center;margin-top: 20px"> </p>
+						</div>
+
+						<p> {% trans "YouTube Ad Collector works silently in the background while you are browsing YouTube without any overhead to your browsing experience. It analyzes the content you receive in YouTube to show you aggregate statistics about the ads you receive from advertisers." %}</p>
+
+						<div class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">
+							<h3>{% trans "What data we collect from you:" %}</h3>
+							<ul class="list-group">
+								<li class="list-group-item" style="background-color: #77777770">{% trans "Data about ads you receive while you browse YouTube" %} </li>
+								<li class="list-group-item" style="background-color: #77777770">{% trans "The accompanied explanations that YouTube provides" %}</li>
+                                <li class="list-group-item" style="background-color: #77777770">{% trans "Data about videos you watch" %}</li>
+
+								<li class="list-group-item" style="background-color: #77777770">{% trans "Data about channels where the videos are from" %}</li>
+
+								<li class="list-group-item" style="background-color: #77777770">{% trans "Hashed versions of your user id" %}</li>
+							</ul>
+							<br/>
+							<br/>
+
+							<!--							<h3>{% trans "What data we DO NOT collect from you:" %}</h3>
+							<ul class="list-group">
+								<li class="list-group-item" style="background-color: #77777770">{% trans "Your messages and comments" %}</li>
+								<li class="list-group-item" style="background-color: #77777770">{% trans "Your posts" %}</li>
+								<li class="list-group-item" style="background-color: #77777770">{% trans "Anything else that we do not explicitly state" %}</li>
+							</ul>
+							<br/>
+							<br/>
+							-->
+
+							<h3>{% trans "How is my data going to be used" %}</h3>
+							<p>{% trans "Your data is going to be used in our research, but only in an aggregated way. All traces of data are pseudonymized before they arrive on our servers." %}</p>
+							<br/>
+							<br/>
+							<h3>{% trans "Is my data going to be safe?" %}</h3>
+							<p>
+								{% trans "We will store your data in the servers of"%} <a href='https://www.liglab.fr/en' target='_blank'>{% trans "the Grenoble Computer Science Laboratory (LIGLAB)"%} </a>,  {% trans "protected by the LIGLAB firewall." %}
+								<!--You are the only one who can access your data through the <a href="https://developers.YouTube.com/docs/YouTube-login">YouTube Authentication</a> process.-->
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="overview" >
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12" style="margin-top: 15px">
+							<h1 style="text-align: center">{% trans "Statistics" %}</h1>
+						</div>
+
+						<div class="col-md-12" style="margin-bottom: 15px;margin-top: 30px">
+
+							<div class="col-md-12" style="margin-top:40px">
+								<div class="col-md-4">
+									<img src="{% static 'popup.png' %}" style="height:150px;box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;;cursor: pointer;" data-toggle="modal" data-target="#popup_modal">
+								</div>
+
+								<div class="col-md-8" style="margin-top:40px">
+									<p>{% trans "Click on the popup menu of the extension to access the services we provide." %}</p>
+								</div>
+
+								<div id="popup_modal" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<img  src="{% static 'popup.png' %}" class="media-img" height="500px">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-12" style="margin-top:40px">
+									<div class="col-md-4">
+											<img src="{% static 'service.png' %}" style="box-shadow: 0px 0px 5px #333, inset 0px 0px 2px #333;height:150px;cursor: pointer;" data-toggle="modal" data-target="#dam_modal">
+									</div>
+
+									<div class="col-md-8">
+											<h3>{% trans "General statistics" %}</h3>
+											<p> {% trans "See how many ads you are targeted with on YouTube and what are the information gathered about you to reach you by the advertisers and the platfrom." %}<p>
+									</div>
+
+									<div id="dam_modal" class="modal fade" role="dialog">
+											<div class="modal-dialog">
+
+													<div class="modal-content">
+															<img src="{% static 'service.png' %}"  class="media-img" height="60%">
+													</div>
+											</div>
+									</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="research" style="color:white;background-color: #77777770">
+				<div class="container">
+					<div class="col-md-12" style="margin-top: 15px">
+						<h1 style="text-align: center;">{% trans "Research" %}</h1>
+					</div>
+
+					<div class="col-md-12" style="margin-top: 40px">
+
+						<p>{% trans "Here is the research we managed to produce thanks to data donations from users:" %} <p>
+						<ul class="list-group">
+							<li class="list-group-item" style="background-color: #77777770; border: none"><a href="#"> S. Chouaki, I. Bouzenia, O. Goga, B. Roussillon. <b>Exploring the Online Micro-targeting Practices of Small, Medium, and Large Businesses, </b> <i><b>CSCW 2022 </b> (ACM Conference on Computer-Supported Cooperative Work and Social Computing)</i></a> </li>
+
+							<li class="list-group-item" style="background-color: #77777770; border: none"><a href="https://lig-membres.imag.fr/gogao/papers/pol_ads_WWW2020.pdf" target="_blank"> M. Silva, L. Santos de Oliveira, A. Andreou, P. Olmo Vaz de Melo, O. Goga, F. Benevenuto. <b>Facebook Ads Monitor: An Independent Auditing System for Political Ads on Facebook, </b> <i><b>WWW '20 </b> (The Web Conference 2020)</i></a> </li>
+
+
+							<li class="list-group-item" style="background-color: #77777770; border: none"><a href="https://lig-membres.imag.fr/gogao/papers/YouTube-NDSS.pdf" target="_blank"> A. Andreou, M. Silva, F. Benevenuto, O. Goga, P. Loiseau, A. Mislove. <b>Measuring the Facebook Advertising Ecosystem, </b> <i><b>NDSS 2019</b> (The Network and Distributed System Security Symposium)</i></a> </li>
+							<li class="list-group-item" style="background-color: #77777770; border:none"><a href="https://lig-membres.imag.fr/gogao/papers/fb_ad_transparency_NDSS2018.pdf" target="_blank"> A. Andreou, G. Venkatadri, O. Goga, K. Gummadi, P. Loiseau, A. Mislove. <b>Investigating Ad Transparency Mechanisms in Social Media: A Case Study of Facebook’s Explanations, </b> <i><b>NDSS 2018</b> (The Network and Distributed System Security Symposium)</i></a> </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div id="about-us" style="">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12" style="margin-top: 15px">
+							<h1 style="text-align: center;">{% trans "Who are we?" %}</h1>
+						</div>
+
+						<div class="col-md-12" style="margin-top: 40px">
+							<ul class="list-group" style="margin-top: 10px">
+								<li class="list-group-item" style="border: none"><a href="#">Tinhinane Medjkoune</a> - {% trans "Research engineer at "%} <a href="https://www.cnrs.fr" target="_blank">CNRS</a>-<a href="https://www.liglab.fr">LIG</a>, {% trans "France" %}</li>
+								<li class="list-group-item" style="border: none"><a href="https://lig-membres.imag.fr/gogao/">Oana Goga</a> - {% trans "Research Scientist at"%} <a href="http://www.cnrs.fr/" target="_blank">CNRS</a>, {% trans "France" %}</li>
+
+		<!--						<li class="list-group-item" style="border: none"><a href="https://people.mpi-sws.org/~gummadi/" target="_blank">Krishna P. Gummadi</a> - Scientific Director at <a href="http://www.mpi-sws.org/" target="_blank">MPI-SWS</a>, Germany</li>
+								<li class="list-group-item" style="border: none"><a href="http://lig-membres.imag.fr/loiseapa/" target="_blank">Patrick Loiseau</a> - Research Scientist at <a href="https://www.inria.fr" target="_blank">Inria</a>, France</li>
+								<li class="list-group-item" style="border: none"><a href="http://www.ccs.neu.edu/home/amislove/" target="_blank">Alan Mislove</a> - Professor at <a href="http://www.northeastern.edu/" target="_blank">Northeastern University</a>, USA</li> -->
+							</ul><br/><br/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="logos" style="">
+				<div class="container">
+					<div class="row">
+
+<div class="col-md-2"> </div>
+<!--
+						<div class="col-md-2">
+							<a href="http://www.mpi-sws.org/" target="_blank"><img src="static/mpi-logo.jpg"></a>
+						</div>
+-->
+<!--
+						<div class="col-md-2">
+							<a href="http://www.northeastern.edu/" target="_blank"><img src="static/neu-seal.jpg"></a>
+						</div>
+-->
+						<div class="col-md-2">
+							<a href="https://www.univ-grenoble-alpes.fr" target="_blank"> <img src='{% static "logo-uga.png" %}'></a>
+						</div>
+						<div class="col-md-2">
+							<a href="http://www.grenoble.cnrs.fr/" target="_blank"><img src='{% static "logo-cnrs.jpg" %}'></a>
+						</div>
+						<div class="col-md-2">
+							<a href="http://liglab.fr/" target="_blank"><img src='{% static "LIG_coul.jpg" %}'></a>
+						</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+<!--
+			<div id="support" style="">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-md-12" style="margin-bottom: 100;margin-top:50">
+							<h3> Supported by: </h3>
+
+							<div class="col-md-2 col-md-offset-3">
+								<a href="https://www.imt.fr/" target="_blank"><img src="static/logo-imt.png"></a>
+							</div>
+							<div class="col-md-2">
+								<a href="http://datatransparencylab.org/" target="_blank"><img src="static/dtl-logo.png" ></a>
+							</div>
+
+							<div class="col-md-2">
+								<a href="http://www.agence-nationale-recherche.fr/" target="_blank"><img src="static/anr-logo.gif" ></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+-->
+		</div>
+		</div>
+
+	</body>
+</html>

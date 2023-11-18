@@ -1,0 +1,438 @@
+{% load static %}
+
+<html>
+
+
+<head>
+    <title>Ads</title>
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'report-styles/bootstrap.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/meanmenu.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/morris.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'report-styles/responsive.css' %}">
+
+    <script src="{% static 'report-scripts/modernizr-2.8.3.min.js' %}"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'report-styles/bootstrap.min.css' %}">
+
+
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=1137750199667219&ev=PageView&noscript=1"
+    /></noscript>
+    <style>
+        .tag {
+      background: #eee;
+      border-radius: 3px 0 0 3px;
+      color: #999;
+      display: inline-block;
+      height: 26px;
+      line-height: 26px;
+      padding: 0 20px 0 23px;
+      position: relative;
+
+      text-decoration: none;
+      -webkit-transition: color 0.2s;
+    }
+      .tag::before {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+      content: '';
+      height: 5px;
+      left: 10px;
+      position: absolute;
+      width: 5px;
+      top: 10px;
+    }
+
+    .tag::after {
+      background: #fff;
+      border-bottom: 13px solid transparent;
+      border-left: 10px solid #eee;
+      border-top: 13px solid transparent;
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .tag:hover {
+      background-color: crimson;
+      color: white;
+    }
+
+    .tag:hover::after {
+       border-left-color: crimson;
+    }
+
+#containsIt {
+  display: inline-block;
+  height: 25em;
+  overflow-y: scroll;
+  width : 100%;
+}
+#task-list-tbl thead th {
+  position: sticky;
+
+}
+
+    </style>
+
+
+</head>
+
+<body>
+
+
+{% include "users_statistics/users_statistics-header.html" %}
+
+
+<div class="container" style="margin-top: 50px;width:100%; margin-left:0; padding-left:0; padding-right:0">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <h3 style="margin-left: 0px;"><b>Ads</b></h3>
+            <div class='text-secondary' style="font-size:16px;margin-top:5px; margin-bottom: 15px">
+                All your ads in one place, discover the content you receive and why you received them.
+            </div>
+            <div class='text-secondary' style="font-size:14px;margin-top:5px; margin-bottom: 15px">
+                <p><img width="30px" height="30px" src="{% static 'warning.png' %}"> The lines underlined in red are the
+                    ads our tool detects as malicious</p>
+            </div>
+        </div>
+
+
+        <div class="col-md-12" id="all_ads">
+            <div class="container" style="margin-left:0;padding-left:0;width:100%; ">
+                <div class="row">
+
+                    <table class="table">
+                        <thead>
+                        <tr class="filters">
+                            <th>Type
+                                <select id="type-filter" class="form-control">
+                                    <option>None</option>
+                                    <option>Video Ad</option>
+                                    <option>Float Ad</option>
+                                </select>
+                            </th>
+                            <th>Advertiser
+                                <select id="assigned-user-filter" class="form-control">
+
+                                </select>
+                            </th>
+                            <th>Reason why
+                                <select id="milestone-filter" class="form-control">
+
+                                </select>
+                            </th>
+                            <th>Date from
+                                <input type="date" id="dateFrom-filter" name="q" class="form-control">
+                            </th>
+                            <th>Date to
+                                <input type="date" id="dateTo-filter" name="q" class="form-control">
+
+                            </th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div id="containsIt" class="panel panel-primary filterable">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Ads</h3>
+                            <div class="pull-right"></div>
+                        </div>
+
+
+                        <table id="task-list-tbl" class="table">
+                            <thead>
+                            <tr>
+                                <th>Logo</th>
+                                <th>Type</th>
+                                <th>Advertiser</th>
+                                <th>Video watched</th>
+                                <th>When</th>
+                                <th>Reason Why</th>
+
+                            </tr>
+                            </thead>
+                            <tbody id="tableAdContent">
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+                             <footer>
+                 <p>You can find more information on the host of this internet web site here : <a href="https://imprint.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Imprint/Impressum</a> | <a href="https://data-protection.mpi-klsb.mpg.de/sws/adanalyst.mpi-sws.org">Data Protection</a>
+         </p></footer>
+        -->
+    </div>
+    <script>
+
+
+    $.fn.pageMe = function(opts){
+    var $this = this,
+        defaults = {
+            perPage: 7,
+            showPrevNext: false,
+            hidePageNumbers: false
+        },
+        settings = $.extend(defaults, opts);
+
+    var listElement = $this;
+    var perPage = settings.perPage;
+    var children = listElement.children();
+    var pager = $('.pager');
+
+    if (typeof settings.childSelector!="undefined") {
+        children = listElement.find(settings.childSelector);
+    }
+
+    if (typeof settings.pagerSelector!="undefined") {
+        pager = $(settings.pagerSelector);
+    }
+
+    var numItems = children.length;
+    var numPages = Math.ceil(numItems/perPage);
+
+    pager.data("curr",0);
+
+    if (settings.showPrevNext){
+        $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+    }
+
+    var curr = 0;
+    while(numPages > curr && (settings.hidePageNumbers==false)){
+        $('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo(pager);
+        curr++;
+    }
+
+    if (settings.showPrevNext){
+        $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+    }
+
+    pager.find('.page_link:first').addClass('active');
+    pager.find('.prev_link').hide();
+    if (numPages<=1) {
+        pager.find('.next_link').hide();
+    }
+  	pager.children().eq(1).addClass("active");
+
+    children.hide();
+    children.slice(0, perPage).show();
+
+    pager.find('li .page_link').click(function(){
+        var clickedPage = $(this).html().valueOf()-1;
+        goTo(clickedPage,perPage);
+        return false;
+    });
+    pager.find('li .prev_link').click(function(){
+        previous();
+        return false;
+    });
+    pager.find('li .next_link').click(function(){
+        next();
+        return false;
+    });
+
+    function previous(){
+        var goToPage = parseInt(pager.data("curr")) - 1;
+        goTo(goToPage);
+    }
+
+    function next(){
+        goToPage = parseInt(pager.data("curr")) + 1;
+        goTo(goToPage);
+    }
+
+    function goTo(page){
+        var startAt = page * perPage,
+            endOn = startAt + perPage;
+
+        children.css('display','none').slice(startAt, endOn).show();
+
+        if (page>=1) {
+            pager.find('.prev_link').show();
+        }
+        else {
+            pager.find('.prev_link').hide();
+        }
+
+        if (page<(numPages-1)) {
+            pager.find('.next_link').show();
+        }
+        else {
+            pager.find('.next_link').hide();
+        }
+
+        pager.data("curr",page);
+      	pager.children().removeClass("active");
+        pager.children().eq(page+1).addClass("active");
+
+    }
+};
+
+
+    var filters = {
+    user: null,
+    status: null,
+    milestone: null,
+    type: null,
+    dateFrom: null,
+    dateTo: null,
+  };
+
+function updateFilters() {
+  $('.task-list-row').hide().filter(function() {
+    var
+      self = $(this),
+      result = true; // not guilty until proven guilty
+
+    Object.keys(filters).forEach(function (filter) {
+    console.log(filter)
+      if (filters[filter] && (filters[filter] != 'None') && (filters[filter] != 'Any')&& (filter != "dateFrom")&& (filter != "dateTo")&& (filter != "milestone"))  {
+        result = result && filters[filter] === self.data(filter);
+
+      }
+      if (filters[filter] && (filters[filter] != 'None') && (filters[filter] != 'Any')  && (filter == "dateFrom")) {
+            var dateFromFilter = moment(filters[filter], 'YYYY-MM-DD')
+            var data = moment(self.data("status"), 'DD/MM/YYYY')
+
+        result = result && dateFromFilter <= data;
+      }
+      if (filters[filter] && (filters[filter] != 'None') && (filters[filter] != 'Any')  && (filter == "dateTo")) {
+            var dateFromFilter = moment(filters[filter], 'YYYY-MM-DD')
+            var data = moment(self.data("status"), 'DD/MM/YYYY')
+
+        result = result && dateFromFilter >= data;
+      }
+      if (filters[filter] && (filters[filter] != 'None') && (filters[filter] != 'Any')  && (filter == "milestone")) {
+
+        result = result && self.data("milestone").includes(filters[filter]);
+      }
+    });
+
+    return result;
+  }).show();
+}
+
+function changeFilter(filterName) {
+  filters[filterName] = this.value;
+  console.log(filters[filterName])
+  updateFilters();
+}
+
+// Assigned User Dropdown Filter
+$('#assigned-user-filter').on('change', function() {
+  changeFilter.call(this, 'user');
+});
+
+// Task Status Dropdown Filter
+$('#status-filter').on('change', function() {
+  changeFilter.call(this, 'status');
+});
+
+// Task Milestone Dropdown Filter
+$('#milestone-filter').on('change', function() {
+  changeFilter.call(this, 'milestone');
+});
+
+// Task Priority Dropdown Filter
+$('#type-filter').on('change', function() {
+  changeFilter.call(this, 'type');
+});
+
+// Task Tags Dropdown Filter
+$('#dateFrom-filter').on('change', function() {
+  changeFilter.call(this, 'dateFrom');
+});
+
+$('#dateTo-filter').on('change', function() {
+  changeFilter.call(this, 'dateTo');
+});
+
+/*
+future use for a text input filter
+$('#search').on('click', function() {
+    $('.box').hide().filter(function() {
+        return $(this).data('order-number') == $('#search-criteria').val().trim();
+    }).show();
+});*/
+
+    $(document).ready(function(){
+
+        advertiserList = JSON.parse("{{advertisers|escapejs}}");
+        console.log(advertiserList)
+        html = ""
+
+        for (var i=0;i<advertiserList.length;i++)
+            {
+                html+=" <option >"+advertiserList[i]+"</option>"
+            }
+        $('#assigned-user-filter').html(html);
+        targetingList = JSON.parse("{{targetings|escapejs}}".split("'").join("\""));
+        console.log(targetingList)
+        html2 = ""
+	
+        for (var i=0;i<targetingList.length;i++)
+            {
+                html2+=" <option >"+targetingList[i]+"</option>"
+            }
+        $('#milestone-filter').html(html2);
+
+        adslist = JSON.parse("{{ads|escapejs}}".split("'").join("\""));
+        console.log(adslist)
+        html3 = ""
+
+        for (var i=0;i<adslist.length;i++)
+            {
+                dataTargeting = adslist[i]["Reason_why"][0]
+                dataTargetinghtml = "<span class='tag'>"+adslist[i]["Reason_why"][0]+" </span>"
+
+                if (adslist[i]["Reason_why"].length > 1){
+                dataTargeting = dataTargeting+" "+adslist[i]["Reason_why"][1]
+                dataTargetinghtml = dataTargetinghtml+"<span class='tag'>"+adslist[i]["Reason_why"][1]+" </span>"
+                }
+                html3+="<tr id='task-"+adslist[i]["id"]+"' class='task-list-row' data-task-id='"+adslist[i]["id"]+"' data-user='"+adslist[i]["advertiser"]+"' data-status='"+adslist[i]["when"]+"' data-milestone='"+dataTargeting+"' data-type='"+adslist[i]["tyqe"]+"'> <td style='vertical-align: middle;'><img width='50px' height='50px' src=\"{% static 'youtubeadvertising.png' %}\" /></td><td style='vertical-align: middle;'>"+adslist[i]["tyqe"]+"</td> <td style='vertical-align: middle;'>"+adslist[i]["advertiser"]+"</td><td style='vertical-align: middle;'><a href='"+adslist[i]["video_watched"]+"'> here </a></td><td style='vertical-align: middle;'>"+adslist[i]["when"]+"</td> <td style='vertical-align: middle;'><p>"+dataTargetinghtml+"</p></td> </tr>"
+            }
+        $('#tableAdContent').html(html3);
+
+        $('#tableAdContent').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:20});
+
+         });
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<div class="col-md-2">
+                        <p style="text-align:center;" href=""><img width="80px" height="80px"
+                                                                   src="{% static 'Your gender.png' %}"/></p>
+                        <p style="font-size: 14px;text-align: center;margin-top: 5px;">Your gender</p>
+                        <p style="font-size: 10px;text-align: center;margin-top: -9px;"> 50 ads </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p style="text-align:center;" href=""><img width="80px" height="80px"
+                                                                   src="{% static 'Your age.png' %}"/></p>
+                        <p style="font-size: 14px;text-align: center;margin-top: 5px;">Your age</p>
+                        <p style="font-size: 10px;text-align: center;margin-top: -9px;"> 10 ads </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p style="text-align:center;" href=""><img width="80px" height="80px"
+                                                                   src="{% static 'Your parental status.png' %}"/></p>
+                        <p style="font-size: 14px;text-align: center;margin-top: 5px;">Your parental statut </p>
+                        <p style="font-size: 10px;text-align: center;margin-top: -9px;"> 3 ads </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p style="text-align:center;" href=""><img width="80px" height="80px"
+                                                                   src="{% static 'Your Location.png' %}"/></p>
+                        <p style="font-size: 14px;text-align: center;margin-top: 5px;">Your Location</p>
+                        <p style="font-size: 10px;text-align: center;margin-top: -9px;"> 3 ads </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p style="text-align:center;" href=""><img width="80px" height="80px"
+                                                                   src="{% static 'Your education level.png' %}"/></p>
+                        <p style="font-size: 14px;text-align: center;margin-top: 5px;">Your education level</p>
+                        <p style="font-size: 10px;text-align: center;margin-top: -9px;"> 1 ads </p>
+                    </div>

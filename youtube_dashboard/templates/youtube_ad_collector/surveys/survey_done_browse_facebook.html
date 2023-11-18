@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{title}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <style>
+	.link_button {
+    		-webkit-border-radius: 4px;
+    		-moz-border-radius: 4px;
+    		border-radius: 4px;
+    		border: solid 1px #20538D;
+    		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    		-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    		background: #4479BA;
+    		color: #FFF;
+    		padding: 8px 12px;
+    		text-decoration: none;
+	}
+    </style>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        {% load static %}
+
+<meta charset="UTF-8">
+
+    <style>
+
+	a.disabled {
+  		pointer-events: none;
+  		cursor: default;
+		background-color : gray;
+	}
+
+    </style>
+</head>
+<body>
+
+    {% include "header.html" %}
+
+
+
+    <div class="container" style="margin-top: 100px">
+        <div class="jumbotron">
+            <h2>One more step to setup the study</h2>
+	    <br>
+            <h4>Please browse your Facebook timeline for a few moments and then come back to submit your study. 
+           
+	    <br><br><br>
+            <div style="margin:auto; width:450px;">
+                 <a style="float:left;" class="link_button" href="https://www.facebook.com/" target="_blank"> Go to Facebook </a> 
+                {% if displayProlific is True %}
+	                <a id="linkToRewards" style="float:right;" class="link_button disabled" href="" target="_blank"> Submit study </a>
+                {% endif %}
+                {% if displayAmazon is True %}
+	                 <span id="amazonReward" style="float:right;">Your completion code is : </span>
+                {% endif %}
+             <div>
+	    <div style = "margin:auto; width:650px" id="errorMsg">
+                {% if displayProlific is True %}
+	                <span style="float: right;color: red;font-size: 12px;margin-top: 5px;"> The submit study button will be enabled as soon as we detect activity on Facebook. </span>
+                {% endif %}
+                {% if displayAmazon is True %}
+	                <span style="float: right;color: red;font-size: 12px;margin-top: 5px;"> Your completion code will apprear as soon as we detect activity on Facebook. </span>
+                {% endif %}
+	    </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+	function checkIfGenerated() {
+
+	      $.ajax({
+                        type:'POST',
+                        url:'check_installation_code',
+                        data: {'user_id':user},
+                        success:function(resp){
+                                if (resp.status!=='success') {
+					window.setTimeout(checkIfGenerated, 5000)
+                                        return
+                                }
+				if(resp["generated"] === true) {
+					var button = document.getElementById("linkToRewards");
+					if(button) {
+	                    			button.classList.remove("disabled");
+						button.href = "https://app.prolific.co/submissions/complete?cc=3EA62D6A";
+						var error = document.getElementById("errorMsg");
+						error.style.display = "none";
+						error.style.visibility = "hidden";
+						return
+					}
+					else{
+					        rewardText = document.getElementById("amazonReward");
+						rewardText.textContent = rewardText.textContent + "3EA62D6A"
+					}
+				}				
+				window.setTimeout(checkIfGenerated, 30000);
+                        }
+                })
+	}
+
+	window.setTimeout(checkIfGenerated, 30000);
+
+    </script>
+<script>
+</script>
+</body>
+</html>
